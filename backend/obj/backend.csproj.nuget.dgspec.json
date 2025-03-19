@@ -1,31 +1,30 @@
 {
   "format": 1,
   "restore": {
-    "/Users/agnethe/RiderProjects/backend/backend/backend.csproj": {}
+    "/Users/agnethe/idatt2900_group35/backend/backend.csproj": {}
   },
   "projects": {
-    "/Users/agnethe/RiderProjects/backend/backend/backend.csproj": {
+    "/Users/agnethe/idatt2900_group35/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/agnethe/RiderProjects/backend/backend/backend.csproj",
+        "projectUniqueName": "/Users/agnethe/idatt2900_group35/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "/Users/agnethe/RiderProjects/backend/backend/backend.csproj",
+        "projectPath": "/Users/agnethe/idatt2900_group35/backend/backend.csproj",
         "packagesPath": "/Users/agnethe/.nuget/packages/",
-        "outputPath": "/Users/agnethe/RiderProjects/backend/backend/obj/",
+        "outputPath": "/Users/agnethe/idatt2900_group35/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/agnethe/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
-          "net7.0"
+          "net8.0"
         ],
         "sources": {
-          "/Users/agnethe/.dotnet/sdk/7.0.306/Sdks/Microsoft.NET.Sdk.Web/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
-          "net7.0": {
-            "targetAlias": "net7.0",
+          "net8.0": {
+            "targetAlias": "net8.0",
             "projectReferences": {}
           }
         },
@@ -33,19 +32,25 @@
           "warnAsError": [
             "NU1605"
           ]
-        }
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        },
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
-        "net7.0": {
-          "targetAlias": "net7.0",
+        "net8.0": {
+          "targetAlias": "net8.0",
           "dependencies": {
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
-              "version": "[7.0.9, )"
+              "version": "[8.0.14, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
-              "version": "[6.5.0, )"
+              "version": "[6.6.2, )"
             }
           },
           "imports": [
@@ -67,7 +72,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/Users/agnethe/.dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/9.0.202/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
