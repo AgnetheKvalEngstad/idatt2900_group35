@@ -1,0 +1,267 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Homepage > should render Homepage 1`] = `
+<div
+  className="flex justify-center items-center h-screen pb-9"
+>
+  <ForwardRef(Grid)
+    alignItems="center"
+    container={true}
+    justifyContent="center"
+    spacing={2}
+    style={
+      {
+        "maxWidth": "800px",
+      }
+    }
+  >
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="ingen"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="litt"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="mye"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="ingen"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="litt"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="mye"
+      />
+    </ForwardRef(Grid)>
+  </ForwardRef(Grid)>
+</div>
+`;
+
+exports[`Tests for Homepage component > should render Homepage 1`] = `
+<div
+  className="flex justify-center items-center h-screen pb-9"
+>
+  <ForwardRef(Grid)
+    alignItems="center"
+    container={true}
+    justifyContent="center"
+    spacing={2}
+    style={
+      {
+        "maxWidth": "800px",
+      }
+    }
+  >
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="ingen"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="litt"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="mye"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="ingen"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="litt"
+      />
+    </ForwardRef(Grid)>
+    <ForwardRef(Grid)
+      padding={3}
+      size={4}
+    >
+      <TopicCard
+        cardIcon={
+          {
+            "$$typeof": Symbol(react.memo),
+            "compare": null,
+            "type": {
+              "$$typeof": Symbol(react.forward_ref),
+              "render": [Function],
+            },
+          }
+        }
+        cardTitle="Insert title here"
+        difficulty="mye"
+      />
+    </ForwardRef(Grid)>
+  </ForwardRef(Grid)>
+</div>
+`;

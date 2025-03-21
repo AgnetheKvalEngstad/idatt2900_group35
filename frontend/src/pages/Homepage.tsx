@@ -3,11 +3,7 @@ import CookieIcon from "@mui/icons-material/Cookie";
 import { Grid2 } from "@mui/material";
 
 export default function Homepage() {
-  const [cardTitle, cardIcon, difficulty] = [
-    "Insert title here",
-    CookieIcon,
-    "ingen",
-  ];
+  const [cardTitle, cardIcon] = ["Insert title here", CookieIcon];
 
   const numberOfCards: number = 6;
   const difficulties: Array<string> = ["ingen", "litt", "mye"];
