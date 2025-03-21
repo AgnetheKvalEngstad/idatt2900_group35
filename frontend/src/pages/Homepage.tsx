@@ -29,7 +29,7 @@ export default function Homepage() {
         style={{ maxWidth: "800px" }}
       >
         {cards.map((card, index) => (
-          <Grid2 key={index} size={4} padding={3}>
+          <Grid2 key={index} size={{ xs: 6, sm: 6, md: 4 }} padding={3}>
             {card}
           </Grid2>
         ))}
