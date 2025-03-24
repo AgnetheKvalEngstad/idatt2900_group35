@@ -1,5 +1,4 @@
-import { Card, CardContent, Grid2, Typography } from "@mui/material";
-import { Button } from "@mui/material";
+import { Card, CardContent, Grid2, Typography, Button } from "@mui/material";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 

@@ -1,6 +1,5 @@
-import { Button } from "@mui/material";
+import { Button, Grid2 } from "@mui/material";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
-import { Grid2 } from "@mui/material";
 
 /**
  * Component for the footer of the page
