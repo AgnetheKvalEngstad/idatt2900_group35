@@ -3,6 +3,11 @@ import { Button } from "@mui/material";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 
+/**
+ * Component for the header of the page
+ *
+ * @returns Header component
+ */
 export default function Header() {
   let points: number = 1000;
   return (

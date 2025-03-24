@@ -2,6 +2,10 @@ import { Button } from "@mui/material";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import { Grid2 } from "@mui/material";
 
+/**
+ * Component for the footer of the page
+ * @returns Footer component
+ */
 export default function Footer() {
   return (
     <Grid2

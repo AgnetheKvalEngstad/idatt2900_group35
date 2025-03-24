@@ -2,6 +2,9 @@ import { render, screen } from "@testing-library/react";
 import Header from "../../components/Header";
 import "@testing-library/jest-dom";
 
+/**
+ * Tests for Header component
+ */
 describe("Tests for component Header", () => {
   beforeEach(() => {
     render(<Header />);
