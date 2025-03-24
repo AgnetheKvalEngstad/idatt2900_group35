@@ -1,0 +1,28 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tests for component Footer > should render Footer 1`] = `
+<ForwardRef(Grid)
+  className="mt-auto flex pl-4 py-2"
+  container={true}
+  direction="column"
+  spacing={2}
+>
+  <ForwardRef(Grid)>
+    <ForwardRef(Button)
+      color="primary"
+      variant="contained"
+    >
+      Stor skrift
+    </ForwardRef(Button)>
+  </ForwardRef(Grid)>
+  <ForwardRef(Grid)>
+    <ForwardRef(Button)
+      color="primary"
+      startIcon={<Memo />}
+      variant="contained"
+    >
+      Hjelp
+    </ForwardRef(Button)>
+  </ForwardRef(Grid)>
+</ForwardRef(Grid)>
+`;
