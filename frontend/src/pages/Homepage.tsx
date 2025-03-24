@@ -20,7 +20,7 @@ export default function Homepage() {
 
   return (
     // er div ok mtp universell utforming og skjermlesere?
-    <div className="flex justify-center items-center h-screen pb-9">
+    <div className="flex justify-center items-center flex-grow py-22">
       <Grid2
         container
         spacing={2}
@@ -29,7 +29,7 @@ export default function Homepage() {
         style={{ maxWidth: "800px" }}
       >
         {cards.map((card, index) => (
-          <Grid2 key={index} size={4} padding={3}>
+          <Grid2 key={index} size={{ xs: 6, sm: 4, md: 4 }} padding={3}>
             {card}
           </Grid2>
         ))}
