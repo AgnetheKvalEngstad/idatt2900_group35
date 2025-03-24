@@ -49,7 +49,11 @@ export default function Header() {
         </Card>
       </Grid2>
       <Grid2>
-        <Button variant="contained" color="primary">
+        <Button
+          variant="contained"
+          color="primary"
+          data-testid="points-my-page-button"
+        >
           <OfflineBoltOutlinedIcon style={{ marginRight: "2px" }} />
           {points}
           <PersonOutlineOutlinedIcon style={{ marginLeft: "14px" }} />
