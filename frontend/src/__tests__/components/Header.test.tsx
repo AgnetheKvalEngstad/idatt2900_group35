@@ -1,4 +1,5 @@
 import { render, screen } from "@testing-library/react";
+import { MemoryRouter } from "react-router-dom";
 import Header from "../../components/Header";
 import "@testing-library/jest-dom";
 
@@ -7,7 +8,11 @@ import "@testing-library/jest-dom";
  */
 describe("Tests for component Header", () => {
   beforeEach(() => {
-    render(<Header />);
+    render(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>
+    );
   });
 
   it("should render the header title 'Trygg på nett.no'", () => {
