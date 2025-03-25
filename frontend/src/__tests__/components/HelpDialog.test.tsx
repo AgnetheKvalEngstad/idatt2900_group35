@@ -2,6 +2,9 @@ import { render, screen, cleanup } from "@testing-library/react";
 import HelpDialog from "../../components/HelpDialog";
 import "@testing-library/jest-dom";
 
+/**
+ * Tests for the HelpDialog component.
+ */
 describe("HelpDialog Component", () => {
   beforeEach(() => {
     render(<HelpDialog open={true} onClose={() => {}} />);

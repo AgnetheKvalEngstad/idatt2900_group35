@@ -2,6 +2,9 @@ import { render, screen, fireEvent, cleanup } from "@testing-library/react";
 import TextSizeDialog from "../../components/TextSizeDialog";
 import "@testing-library/jest-dom";
 
+/**
+ * Tests for the TextSizeDialog component.
+ */
 describe("TextSizeDialog", () => {
   beforeEach(() => {
     render(<TextSizeDialog open={true} onClose={() => {}} />);

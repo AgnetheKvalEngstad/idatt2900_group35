@@ -1,16 +1,17 @@
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 
 function App() {
   return (
-    <div className="min-h-screen max-h-screen flex flex-col">
+    <Router>
       <Header />
-      <div className="flex-grow overflow-auto">
-        <Homepage />
-      </div>
+      <Routes>
+        <Route path="/" element={<Homepage />} />
+      </Routes>
       <Footer />
-    </div>
+    </Router>
   );
 }
 
