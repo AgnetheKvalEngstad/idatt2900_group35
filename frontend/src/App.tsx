@@ -5,13 +5,17 @@ import Homepage from "./pages/Homepage";
 
 function App() {
   return (
-    <Router>
-      <Header />
-      <Routes>
-        <Route path="/" element={<Homepage />} />
-      </Routes>
-      <Footer />
-    </Router>
+    <div className="flex flex-col min-h-screen">
+      <Router>
+        <Header />
+        <div className="flex-grow flex">
+          <Routes>
+            <Route path="/" element={<Homepage />} />
+          </Routes>
+        </div>
+        <Footer />
+      </Router>
+    </div>
   );
 }
 
