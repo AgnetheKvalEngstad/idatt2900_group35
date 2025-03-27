@@ -3,10 +3,15 @@ import TopicMenu from "../components/TopicMenu";
 import TopicPageCard from "../components/TopicPageCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useLocation } from "react-router-dom";
 
 import { useState } from "react";
 
 export default function TopicPage() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const difficulty = queryParams.get("difficulty") ?? "ingen";
+
   const variants: Array<"text" | "trueFalse" | "multipleChoice" | "input"> = [
     "text",
     "trueFalse",
@@ -61,7 +66,7 @@ export default function TopicPage() {
       </Grid2>
       <Grid2 container className="flex flex-1 ml-auto items-center pr-8 ">
         <TopicMenu
-          difficulty="ingen"
+          difficulty={difficulty}
           index={menuIndex}
           onButtonClick={handleMenuClick}
         />

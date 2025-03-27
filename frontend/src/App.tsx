@@ -2,6 +2,7 @@ import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Homepage from "./pages/Homepage";
+import TopicPage from "./pages/TopicPage";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <div className="flex-grow flex">
           <Routes>
             <Route path="/" element={<Homepage />} />
+            <Route path="/topic/" element={<TopicPage />} />
           </Routes>
         </div>
         <Footer />
