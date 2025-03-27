@@ -70,6 +70,16 @@ const inputQuestions = [
   { id: 4, question: "What is 8 / 2?", correctAnswer: "4" },
 ];
 
+/**
+ * A React component that renders a card with different content
+ * based on the `variant` prop.
+ *
+ * @param {TopicPageCardProps} props - The props for the component.
+ * @param {string} props.variant - Determines the type of content to display
+ * inside the card. Possible values are "text", "trueFalse", "multipleChoice", and "input".
+ *
+ * @returns A card component with the specified content variant.
+ */
 export default function TopicPageCard({ variant }: TopicPageCardProps) {
   const [selectedValue, setSelectedValue] = useState<string | null>(null);
 

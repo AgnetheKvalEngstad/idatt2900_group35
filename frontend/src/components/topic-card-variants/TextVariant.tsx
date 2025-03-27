@@ -1,5 +1,13 @@
 import { Typography } from "@mui/material";
 
+/**
+ * A React functional component that renders a text variant card.
+ *
+ * This component displays a title and text
+ * using Material-UI's `Typography` component.
+ *
+ * @returns The rendered text variant card component.
+ */
 export default function TextVariant() {
   return (
     <>

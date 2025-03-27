@@ -16,6 +16,17 @@ interface MultipleChoiceVariantProps {
   questions: QuestionMultipleChoice[];
 }
 
+/**
+ * A React component that renders a multiple-choice question variant.
+ * Displays a list of questions with a set of options.
+ *
+ * @param {MultipleChoiceVariantProps} props The props for the component.
+ * @param {Array<{ question: string, options: string[] }>} props.questions
+ * An array of question objects, where each object contains a `question` string
+ * and an `options` array of possible answers.
+ *
+ * @returns The rendered multiple-choice question variant component.
+ */
 export default function MultipleChoiceVariant({
   questions,
 }: MultipleChoiceVariantProps) {

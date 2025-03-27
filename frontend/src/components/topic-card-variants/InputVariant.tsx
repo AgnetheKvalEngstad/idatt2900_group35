@@ -9,6 +9,16 @@ interface InputVariantProps {
   questions: QuestionInput[];
 }
 
+/**
+ * A React component that renders a list of input fields for answering questions.
+ * Each question is displayed with a corresponding text field and a button to check the answer.
+ *
+ * @param {InputVariantProps} props The props for the component.
+ * @param {Array<{ question: string }>} props.questions An array of question objects,
+ * each containing a `question` string to be displayed.
+ *
+ * @returns A Material-UI Grid2 layout containing the questions, input fields, and buttons.
+ */
 export default function InputVariant({ questions }: InputVariantProps) {
   return (
     <Grid2 container spacing={1}>

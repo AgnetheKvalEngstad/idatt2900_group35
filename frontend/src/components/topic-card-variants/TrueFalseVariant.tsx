@@ -11,6 +11,16 @@ interface TrueFalseVariantProps {
   selectedValue: string | null;
 }
 
+/**
+ * A React component that renders a "True or False" question variant.
+ *
+ * @param {TrueFalseVariantProps} props The props for the component.
+ * @param {Array<{ question: string }>} props.questions An array of question objects, each containing a `question` string.
+ * @param {(value: string) => void} props.handleButtonClick A callback function triggered when a button is clicked, receiving the selected value ("true" or "false").
+ * @param {string} props.selectedValue The currently selected value, either "true" or "false".
+ *
+ * @returns The rendered "True or False" question variant component.
+ */
 export default function TrueFalseVariant({
   questions,
   handleButtonClick,

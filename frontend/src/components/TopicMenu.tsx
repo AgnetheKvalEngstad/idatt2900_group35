@@ -8,6 +8,17 @@ interface TopicMenuProps {
   onButtonClick: (newIndex: number) => void;
 }
 
+/**
+ * A React component that renders a menu with buttons representing different subtopics.
+ * The appearance of the buttons changes based on the selected index and the difficulty level.
+ *
+ * @param {TopicMenuProps} props The props for the `TopicMenu` component.
+ * @param {string} props.difficulty The difficulty level, which determines the button background color.
+ * @param {number} props.index The index of the currently selected button.
+ * @param {(index: number) => void} props.onButtonClick Function triggered when a button is clicked.
+ *
+ * @returns A Material-UI Grid2 layout containing buttons styled based on the difficulty and selection state.
+ */
 export default function TopicMenu({
   difficulty,
   index,
