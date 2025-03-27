@@ -1,7 +1,7 @@
 import { Typography } from "@mui/material";
 
 /**
- * A React functional component that renders a text variant card.
+ * A React component that renders a text variant card.
  *
  * This component displays a title and text
  * using Material-UI's `Typography` component.
@@ -11,10 +11,10 @@ import { Typography } from "@mui/material";
 export default function TextVariant() {
   return (
     <>
-      <Typography variant="h5" className="text-center pb-4">
+      <Typography variant="h5" className="pb-4">
         Eksempel på tittel
       </Typography>
-      <Typography variant="body1" className="text-center">
+      <Typography variant="body1">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
@@ -24,7 +24,7 @@ export default function TextVariant() {
         mollit anim id est laborum.
       </Typography>
       <br />
-      <Typography variant="body1" className="text-center">
+      <Typography variant="body1">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
