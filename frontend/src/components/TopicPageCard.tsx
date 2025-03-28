@@ -88,7 +88,10 @@ export default function TopicPageCard({ variant }: TopicPageCardProps) {
   };
 
   return (
-    <Card className="relative w-full max-w-3xl overflow-auto border-1 border-black">
+    <Card
+      data-testid="topic-page-card"
+      className="relative w-full max-w-3xl overflow-auto border-1 border-black"
+    >
       <CardContent className="p-6 h-108 overflow-y-auto">
         {variant === "text" && <TextVariant />}
         {variant === "trueFalse" && (

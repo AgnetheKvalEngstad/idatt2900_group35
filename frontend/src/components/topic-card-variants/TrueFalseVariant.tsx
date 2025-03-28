@@ -39,12 +39,14 @@ export default function TrueFalseVariant({
               <Button
                 variant={selectedValue === "true" ? "contained" : "outlined"}
                 onClick={() => handleButtonClick("true")}
+                role="true"
               >
                 Sant
               </Button>
               <Button
                 variant={selectedValue === "false" ? "contained" : "outlined"}
                 onClick={() => handleButtonClick("false")}
+                role="false"
               >
                 Usant
               </Button>
