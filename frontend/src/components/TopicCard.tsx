@@ -10,6 +10,20 @@ interface TopicCardProps {
   difficulty: string;
 }
 
+/**
+ * A React component that renders a card representing a topic.
+ * The card displays a title, an icon, and a difficulty level, with the background
+ * color based on difficulty.
+ *
+ * @component
+ * @param {TopicCardProps} props The props for the TopicCard component.
+ * @param {string} props.cardTitle The title displayed on the card.
+ * @param {React.ElementType} props.cardIcon The icon component to render on the card.
+ * @param {string} props.difficulty The difficulty level of the topic, which determines
+ * the background color of the card.
+ *
+ * @returns A styled card component with the provided title, icon, and difficulty level.
+ */
 export default function TopicCard({
   cardTitle,
   cardIcon,

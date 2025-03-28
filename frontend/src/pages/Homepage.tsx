@@ -1,6 +1,7 @@
 import TopicCard from "../components/TopicCard";
 import CookieIcon from "@mui/icons-material/Cookie";
 import { Grid2 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 export default function Homepage() {
   const [cardTitle, cardIcon] = ["Insert title here", CookieIcon];
@@ -10,12 +11,18 @@ export default function Homepage() {
   const cards: Array<React.ReactNode> = Array(numberOfCards)
     .fill(null)
     .map((_, index) => (
-      <TopicCard
+      <Link
         key={index}
-        cardTitle={cardTitle}
-        cardIcon={cardIcon}
-        difficulty={difficulties[index % difficulties.length]}
-      />
+        to={`/topic/?difficulty=${difficulties[index % difficulties.length]}`}
+        style={{ textDecoration: "none" }}
+      >
+        <TopicCard
+          key={index}
+          cardTitle={cardTitle}
+          cardIcon={cardIcon}
+          difficulty={difficulties[index % difficulties.length]}
+        />
+      </Link>
     ));
 
   return (

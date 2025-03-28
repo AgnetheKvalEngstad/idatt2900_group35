@@ -25,20 +25,29 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
         }
       }
     >
-      <TopicCard
-        cardIcon={
+      <Link
+        style={
           {
-            "$$typeof": Symbol(react.memo),
-            "compare": null,
-            "type": {
-              "$$typeof": Symbol(react.forward_ref),
-              "render": [Function],
-            },
+            "textDecoration": "none",
           }
         }
-        cardTitle="Insert title here"
-        difficulty="ingen"
-      />
+        to="/topic/?difficulty=ingen"
+      >
+        <TopicCard
+          cardIcon={
+            {
+              "$$typeof": Symbol(react.memo),
+              "compare": null,
+              "type": {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              },
+            }
+          }
+          cardTitle="Insert title here"
+          difficulty="ingen"
+        />
+      </Link>
     </ForwardRef(Grid)>
     <ForwardRef(Grid)
       padding={3}
@@ -50,20 +59,29 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
         }
       }
     >
-      <TopicCard
-        cardIcon={
+      <Link
+        style={
           {
-            "$$typeof": Symbol(react.memo),
-            "compare": null,
-            "type": {
-              "$$typeof": Symbol(react.forward_ref),
-              "render": [Function],
-            },
+            "textDecoration": "none",
           }
         }
-        cardTitle="Insert title here"
-        difficulty="litt"
-      />
+        to="/topic/?difficulty=litt"
+      >
+        <TopicCard
+          cardIcon={
+            {
+              "$$typeof": Symbol(react.memo),
+              "compare": null,
+              "type": {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              },
+            }
+          }
+          cardTitle="Insert title here"
+          difficulty="litt"
+        />
+      </Link>
     </ForwardRef(Grid)>
     <ForwardRef(Grid)
       padding={3}
@@ -75,20 +93,29 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
         }
       }
     >
-      <TopicCard
-        cardIcon={
+      <Link
+        style={
           {
-            "$$typeof": Symbol(react.memo),
-            "compare": null,
-            "type": {
-              "$$typeof": Symbol(react.forward_ref),
-              "render": [Function],
-            },
+            "textDecoration": "none",
           }
         }
-        cardTitle="Insert title here"
-        difficulty="mye"
-      />
+        to="/topic/?difficulty=mye"
+      >
+        <TopicCard
+          cardIcon={
+            {
+              "$$typeof": Symbol(react.memo),
+              "compare": null,
+              "type": {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              },
+            }
+          }
+          cardTitle="Insert title here"
+          difficulty="mye"
+        />
+      </Link>
     </ForwardRef(Grid)>
     <ForwardRef(Grid)
       padding={3}
@@ -100,20 +127,29 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
         }
       }
     >
-      <TopicCard
-        cardIcon={
+      <Link
+        style={
           {
-            "$$typeof": Symbol(react.memo),
-            "compare": null,
-            "type": {
-              "$$typeof": Symbol(react.forward_ref),
-              "render": [Function],
-            },
+            "textDecoration": "none",
           }
         }
-        cardTitle="Insert title here"
-        difficulty="ingen"
-      />
+        to="/topic/?difficulty=ingen"
+      >
+        <TopicCard
+          cardIcon={
+            {
+              "$$typeof": Symbol(react.memo),
+              "compare": null,
+              "type": {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              },
+            }
+          }
+          cardTitle="Insert title here"
+          difficulty="ingen"
+        />
+      </Link>
     </ForwardRef(Grid)>
     <ForwardRef(Grid)
       padding={3}
@@ -125,20 +161,29 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
         }
       }
     >
-      <TopicCard
-        cardIcon={
+      <Link
+        style={
           {
-            "$$typeof": Symbol(react.memo),
-            "compare": null,
-            "type": {
-              "$$typeof": Symbol(react.forward_ref),
-              "render": [Function],
-            },
+            "textDecoration": "none",
           }
         }
-        cardTitle="Insert title here"
-        difficulty="litt"
-      />
+        to="/topic/?difficulty=litt"
+      >
+        <TopicCard
+          cardIcon={
+            {
+              "$$typeof": Symbol(react.memo),
+              "compare": null,
+              "type": {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              },
+            }
+          }
+          cardTitle="Insert title here"
+          difficulty="litt"
+        />
+      </Link>
     </ForwardRef(Grid)>
     <ForwardRef(Grid)
       padding={3}
@@ -150,20 +195,29 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
         }
       }
     >
-      <TopicCard
-        cardIcon={
+      <Link
+        style={
           {
-            "$$typeof": Symbol(react.memo),
-            "compare": null,
-            "type": {
-              "$$typeof": Symbol(react.forward_ref),
-              "render": [Function],
-            },
+            "textDecoration": "none",
           }
         }
-        cardTitle="Insert title here"
-        difficulty="mye"
-      />
+        to="/topic/?difficulty=mye"
+      >
+        <TopicCard
+          cardIcon={
+            {
+              "$$typeof": Symbol(react.memo),
+              "compare": null,
+              "type": {
+                "$$typeof": Symbol(react.forward_ref),
+                "render": [Function],
+              },
+            }
+          }
+          cardTitle="Insert title here"
+          difficulty="mye"
+        />
+      </Link>
     </ForwardRef(Grid)>
   </ForwardRef(Grid)>
 </div>
