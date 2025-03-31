@@ -12,6 +12,12 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import CookieIcon from "@mui/icons-material/Cookie";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * OnboardingPage component which introduces the user to the application.
+ * It provides information about the app's purpose and how to navigate through it.
+ *
+ * @returns The rendered OnboardingPage component.
+ */
 export default function OnboardingPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const navigate = useNavigate();
