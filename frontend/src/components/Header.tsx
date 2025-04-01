@@ -19,7 +19,7 @@ export default function Header() {
       className="mt-auto flex px-4 py-2"
     >
       <Grid2>
-        <Link to="/" style={{ textDecoration: "none" }}>
+        <Link to="/home" style={{ textDecoration: "none" }}>
           <Card
             raised={true}
             sx={{

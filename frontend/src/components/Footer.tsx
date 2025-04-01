@@ -3,6 +3,8 @@ import { Grid2, Button } from "@mui/material";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
 import TextSizeDialog from "./TextSizeDialog";
 import HelpDialog from "./HelpDialog";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 /**
  * A React component that renders a footer with buttons for increasing text size
@@ -13,6 +15,8 @@ import HelpDialog from "./HelpDialog";
 export default function Footer() {
   const [openTextSize, setOpenTextSize] = React.useState(false);
   const [openHelp, setOpenHelp] = React.useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleTextSizeOpen = () => setOpenTextSize(true);
   const handleTextSizeClose = () => setOpenTextSize(false);
@@ -21,13 +25,8 @@ export default function Footer() {
   const handleHelpClose = () => setOpenHelp(false);
 
   return (
-    <Grid2
-      container
-      spacing={2}
-      direction={"column"}
-      className="mt-auto flex pl-4 py-2"
-    >
-      <Grid2>
+    <Grid2 className="sticky bottom-0 mt-auto flex flex-row items-center justify-between pl-4 py-2 bg-white">
+      <Grid2 className="flex flex-col gap-2">
         <Button
           variant="contained"
           color="primary"
@@ -36,9 +35,7 @@ export default function Footer() {
           Stor skrift
         </Button>
         <TextSizeDialog open={openTextSize} onClose={handleTextSizeClose} />
-      </Grid2>
 
-      <Grid2>
         <Button
           variant="contained"
           color="primary"
@@ -49,6 +46,18 @@ export default function Footer() {
         </Button>
         <HelpDialog open={openHelp} onClose={handleHelpClose} />
       </Grid2>
+
+      {location.pathname === "/" && (
+        <Grid2 className="pr-8">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => navigate("/home")}
+          >
+            Hopp over
+          </Button>
+        </Grid2>
+      )}
     </Grid2>
   );
 }
