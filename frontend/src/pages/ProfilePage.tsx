@@ -4,6 +4,11 @@ import DeleteDialog from "../components/dialogs/DeleteDialog";
 import TopicCard from "../components/TopicCard";
 import CookieIcon from "@mui/icons-material/Cookie";
 
+/**
+ * A React component that renders the profile page.
+ *
+ * @returns The rendered ProfilePage component.
+ */
 export default function ProfilePage() {
   const [open, setOpen] = React.useState(false);
   const [cardIcon] = [CookieIcon];
