@@ -95,7 +95,10 @@ export default function OnboardingPage() {
       <Typography variant="h4" className="pb-10">
         Velkommen til Trygg på nett!
       </Typography>
-      <Card className="w-full max-w-3xl border-1 border-black flex flex-col">
+      <Card
+        className="w-full max-w-3xl border-1 border-black flex flex-col"
+        data-testid="onboarding-card"
+      >
         <CardContent className="flex flex-col h-108 overflow-y-auto text-center flex-grow">
           {renderCardContent()}
         </CardContent>
