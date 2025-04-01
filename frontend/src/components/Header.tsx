@@ -56,16 +56,18 @@ export default function Header() {
         </Link>
       </Grid2>
       <Grid2>
-        <Button
-          variant="contained"
-          color="primary"
-          data-testid="points-my-page-button"
-        >
-          <OfflineBoltOutlinedIcon style={{ marginRight: "2px" }} />
-          {points}
-          <PersonOutlineOutlinedIcon style={{ marginLeft: "14px" }} />
-          Min side
-        </Button>
+        <Link to="/profile" style={{ textDecoration: "none" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            data-testid="points-my-page-button"
+          >
+            <OfflineBoltOutlinedIcon style={{ marginRight: "2px" }} />
+            {points}
+            <PersonOutlineOutlinedIcon style={{ marginLeft: "14px" }} />
+            Min side
+          </Button>
+        </Link>
       </Grid2>
     </Grid2>
   );

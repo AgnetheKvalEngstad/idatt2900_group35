@@ -1,5 +1,5 @@
 import { render, screen, fireEvent, cleanup } from "@testing-library/react";
-import TextSizeDialog from "../../components/TextSizeDialog";
+import TextSizeDialog from "../../../components/dialogs/TextSizeDialog";
 import "@testing-library/jest-dom";
 
 /**

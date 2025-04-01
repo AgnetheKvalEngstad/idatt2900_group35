@@ -1,5 +1,5 @@
 import { render, screen, cleanup } from "@testing-library/react";
-import HelpDialog from "../../components/HelpDialog";
+import HelpDialog from "../../../components/dialogs/HelpDialog";
 import "@testing-library/jest-dom";
 
 /**

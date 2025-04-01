@@ -1,8 +1,8 @@
 import React from "react";
 import { Grid2, Button } from "@mui/material";
 import QuestionMarkIcon from "@mui/icons-material/QuestionMark";
-import TextSizeDialog from "./TextSizeDialog";
-import HelpDialog from "./HelpDialog";
+import TextSizeDialog from "./dialogs/TextSizeDialog";
+import HelpDialog from "./dialogs/HelpDialog";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 
