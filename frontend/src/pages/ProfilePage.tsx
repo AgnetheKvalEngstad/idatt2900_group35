@@ -42,6 +42,9 @@ export default function ProfilePage() {
 
   return (
     <Grid2 className="flex flex-col justify-center items-center space-y-4  w-full">
+      <Typography variant="h4" className="pb-6">
+        Min side
+      </Typography>
       <Grid2 className="flex flex.row justify-center items-center space-x-4">
         <Card
           className="flex flex-col items-center justify-center w-56 text-center p-6 border-1 border-black"
