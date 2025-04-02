@@ -7,7 +7,8 @@ describe("Tests for component TopicCard", () => {
     const cardTitle = "Test card";
     const cardIcon = CookieIcon;
     const difficulty = "ingen";
-    const card = TopicCard({ cardTitle, cardIcon, difficulty });
+    const size = "medium";
+    const card = TopicCard({ cardTitle, cardIcon, difficulty, size });
     expect(card).toMatchSnapshot();
   });
 });
