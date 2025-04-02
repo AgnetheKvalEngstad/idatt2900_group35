@@ -81,10 +81,15 @@ const inputQuestions = [
  * @returns A card component with the specified content variant.
  */
 export default function TopicPageCard({ variant }: TopicPageCardProps) {
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);
+  const [selectedValues, setSelectedValues] = useState<{
+    [key: number]: string | null;
+  }>({});
 
-  const handleButtonClick = (value: string) => {
-    setSelectedValue(value);
+  const handleButtonClick = (questionId: number, value: string) => {
+    setSelectedValues((prev) => ({
+      ...prev,
+      [questionId]: value,
+    }));
   };
 
   return (
@@ -98,7 +103,7 @@ export default function TopicPageCard({ variant }: TopicPageCardProps) {
           <TrueFalseVariant
             questions={trueFalseQuestions}
             handleButtonClick={handleButtonClick}
-            selectedValue={selectedValue}
+            selectedValues={selectedValues}
           />
         )}
         {variant === "multipleChoice" && (

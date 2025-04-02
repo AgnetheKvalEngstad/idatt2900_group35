@@ -1,14 +1,9 @@
 import { Typography, Button, ButtonGroup, Grid2 } from "@mui/material";
 
-interface QuestionTrueFalse {
-  question: string;
-  correctAnswer: boolean;
-}
-
 interface TrueFalseVariantProps {
-  questions: QuestionTrueFalse[];
-  handleButtonClick: (value: string) => void;
-  selectedValue: string | null;
+  questions: { id: number; question: string; correctAnswer: boolean }[];
+  handleButtonClick: (questionId: number, value: string) => void;
+  selectedValues: { [key: number]: string | null };
 }
 
 /**
@@ -24,7 +19,7 @@ interface TrueFalseVariantProps {
 export default function TrueFalseVariant({
   questions,
   handleButtonClick,
-  selectedValue,
+  selectedValues,
 }: TrueFalseVariantProps) {
   return (
     <>
@@ -32,20 +27,24 @@ export default function TrueFalseVariant({
         Sant eller usant?
       </Typography>
       <Grid2 container spacing={1}>
-        {questions.map((q, index) => (
-          <Grid2 key={index} size={4}>
+        {questions.map((q) => (
+          <Grid2 key={q.id} size={4}>
             <Typography className="pt-2">{q.question}</Typography>
             <ButtonGroup>
               <Button
-                variant={selectedValue === "true" ? "contained" : "outlined"}
-                onClick={() => handleButtonClick("true")}
+                variant={
+                  selectedValues[q.id] === "true" ? "contained" : "outlined"
+                }
+                onClick={() => handleButtonClick(q.id, "true")}
                 role="true"
               >
                 Sant
               </Button>
               <Button
-                variant={selectedValue === "false" ? "contained" : "outlined"}
-                onClick={() => handleButtonClick("false")}
+                variant={
+                  selectedValues[q.id] === "false" ? "contained" : "outlined"
+                }
+                onClick={() => handleButtonClick(q.id, "false")}
                 role="false"
               >
                 Usant

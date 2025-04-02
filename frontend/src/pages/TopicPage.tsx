@@ -7,6 +7,12 @@ import { useLocation } from "react-router-dom";
 
 import { useState } from "react";
 
+/**
+ * Creates a React component that represents a page where users can learn
+ * about a specific topic and complete exercises related to that topic.
+ *
+ * @returns The TopicPage component.
+ */
 export default function TopicPage() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
