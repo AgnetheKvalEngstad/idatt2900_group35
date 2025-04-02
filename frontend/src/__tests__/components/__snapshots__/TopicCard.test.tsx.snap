@@ -4,18 +4,20 @@ exports[`Tests for component TopicCard > should render TopicCard 1`] = `
 <ForwardRef(Card)
   sx={
     {
+      "alignItems": "center",
       "backgroundColor": "#66DB68",
       "border": 3,
       "borderRadius": 6,
+      "display": "flex",
+      "flexDirection": "column",
       "height": 184,
+      "padding": 0,
       "width": 184,
     }
   }
   variant="outlined"
 >
-  <ForwardRef(CardContent)
-    className="text-center"
-  >
+  <ForwardRef(CardContent)>
     <ForwardRef(Typography)
       component="div"
       variant="h6"
@@ -23,17 +25,13 @@ exports[`Tests for component TopicCard > should render TopicCard 1`] = `
       Test card
     </ForwardRef(Typography)>
   </ForwardRef(CardContent)>
-  <ForwardRef(CardContent)
-    className="text-center"
-  >
-    <Memo
-      sx={
-        {
-          "fontSize": 48,
-        }
+  <Memo
+    sx={
+      {
+        "fontSize": 64,
       }
-    />
-  </ForwardRef(CardContent)>
+    }
+  />
   <ForwardRef(CardContent)
     className="text-center"
   >
@@ -45,6 +43,5 @@ exports[`Tests for component TopicCard > should render TopicCard 1`] = `
        erfaring
     </ForwardRef(Typography)>
   </ForwardRef(CardContent)>
-  <ForwardRef(CardActions) />
 </ForwardRef(Card)>
 `;

@@ -41,7 +41,7 @@ export default function ProfilePage() {
     .map((card) => card.component);
 
   return (
-    <Grid2 className="flex flex-col justify-center items-center space-y-4 bg-pink-100 w-full">
+    <Grid2 className="flex flex-col justify-center items-center space-y-4  w-full">
       <Grid2 className="flex flex.row justify-center items-center space-x-4">
         <Card
           className="flex flex-col items-center justify-center w-56 text-center p-6 border-1 border-black"
