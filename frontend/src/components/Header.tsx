@@ -59,7 +59,7 @@ export default function Header() {
         <Link to="/profile" style={{ textDecoration: "none" }}>
           <Button
             variant="contained"
-            color="primary"
+            color="success"
             data-testid="points-my-page-button"
           >
             <OfflineBoltOutlinedIcon style={{ marginRight: "2px" }} />

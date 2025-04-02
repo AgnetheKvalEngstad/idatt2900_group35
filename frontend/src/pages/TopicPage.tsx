@@ -49,6 +49,7 @@ export default function TopicPage() {
         >
           <Button
             variant="contained"
+            color="secondary"
             onClick={handleBack}
             startIcon={<ArrowBackIcon />}
           >
@@ -56,6 +57,7 @@ export default function TopicPage() {
           </Button>
           <Button
             variant="contained"
+            color="secondary"
             onClick={handleNext}
             endIcon={<ArrowForwardIcon />}
           >

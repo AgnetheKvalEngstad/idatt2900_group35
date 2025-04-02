@@ -96,16 +96,17 @@ export default function OnboardingPage() {
         Velkommen til Trygg på nett!
       </Typography>
       <Card
-        className="w-full max-w-3xl border-1 border-black flex flex-col"
+        className="w-full h-full max-h-115 max-w-3xl border-1 border-black flex flex-col"
         data-testid="onboarding-card"
       >
-        <CardContent className="flex flex-col h-108 overflow-y-auto text-center flex-grow">
+        <CardContent className="flex flex-col h-108 overflow-y-auto text-center justify-center flex-grow">
           {renderCardContent()}
         </CardContent>
         <CardActions className="flex justify-between items-center p-4">
           <Button
             startIcon={<ArrowBackIcon />}
             variant="contained"
+            color="secondary"
             onClick={handleBack}
             disabled={currentIndex === 0}
           >
@@ -115,6 +116,7 @@ export default function OnboardingPage() {
           <Button
             endIcon={<ArrowForwardIcon />}
             variant="contained"
+            color="secondary"
             onClick={handleNext}
           >
             {currentIndex === 1 ? "Til hovedsiden" : "Neste"}
