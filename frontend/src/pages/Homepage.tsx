@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function Homepage() {
   const [cardTitle, cardIcon] = ["Insert title here", CookieIcon];
+  const cardSize: string = "medium";
 
   const numberOfCards: number = 6;
   const difficulties: Array<string> = ["ingen", "litt", "mye"];
@@ -21,6 +22,7 @@ export default function Homepage() {
           cardTitle={cardTitle}
           cardIcon={cardIcon}
           difficulty={difficulties[index % difficulties.length]}
+          size={cardSize}
         />
       </Link>
     ));

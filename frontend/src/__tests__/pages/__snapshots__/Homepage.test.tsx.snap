@@ -46,6 +46,7 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
           }
           cardTitle="Insert title here"
           difficulty="ingen"
+          size="medium"
         />
       </Link>
     </ForwardRef(Grid)>
@@ -80,6 +81,7 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
           }
           cardTitle="Insert title here"
           difficulty="litt"
+          size="medium"
         />
       </Link>
     </ForwardRef(Grid)>
@@ -114,6 +116,7 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
           }
           cardTitle="Insert title here"
           difficulty="mye"
+          size="medium"
         />
       </Link>
     </ForwardRef(Grid)>
@@ -148,6 +151,7 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
           }
           cardTitle="Insert title here"
           difficulty="ingen"
+          size="medium"
         />
       </Link>
     </ForwardRef(Grid)>
@@ -182,6 +186,7 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
           }
           cardTitle="Insert title here"
           difficulty="litt"
+          size="medium"
         />
       </Link>
     </ForwardRef(Grid)>
@@ -216,6 +221,7 @@ exports[`Tests for Homepage component > should render Homepage 1`] = `
           }
           cardTitle="Insert title here"
           difficulty="mye"
+          size="medium"
         />
       </Link>
     </ForwardRef(Grid)>
