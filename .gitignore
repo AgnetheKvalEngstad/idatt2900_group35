@@ -2,3 +2,4 @@
 .DS_Store
 Folder.DotSettings.user
 backend/bin/
+backend/obj/
