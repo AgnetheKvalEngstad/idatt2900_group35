@@ -10,6 +10,7 @@ exports[`Tests for component TopicMenu > should render TopicMenu 1`] = `
   spacing={3}
 >
   <ForwardRef(Button)
+    className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
     fullWidth={true}
     onClick={[Function]}
     size="large"
@@ -26,6 +27,7 @@ exports[`Tests for component TopicMenu > should render TopicMenu 1`] = `
     Første oppgave
   </ForwardRef(Button)>
   <ForwardRef(Button)
+    className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
     fullWidth={true}
     onClick={[Function]}
     size="large"
@@ -42,6 +44,7 @@ exports[`Tests for component TopicMenu > should render TopicMenu 1`] = `
     Andre oppgave
   </ForwardRef(Button)>
   <ForwardRef(Button)
+    className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
     fullWidth={true}
     onClick={[Function]}
     size="large"

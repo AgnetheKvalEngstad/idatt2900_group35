@@ -10,8 +10,21 @@ describe("InputVariant", () => {
     { id: 4, question: "What is 5 + 5?", correctAnswer: "10" },
   ];
 
+  const handleButtonClick = () => {};
+  const handleInputChange = () => {};
+  const selectedValues = {};
+  const isCorrect = {};
+
   beforeEach(() => {
-    render(<InputVariant questions={questions} />);
+    render(
+      <InputVariant
+        questions={questions}
+        handleButtonClick={handleButtonClick}
+        handleInputChange={handleInputChange}
+        selectedValues={selectedValues}
+        isCorrect={isCorrect}
+      />
+    );
   });
 
   it("should render the questions and input fields correctly", () => {

@@ -20,8 +20,6 @@ const trueFalseQuestions = [
   { id: 7, question: "Is the ocean salty?", correctAnswer: true },
   { id: 8, question: "Is the grass green?", correctAnswer: true },
   { id: 9, question: "Is the wind cold?", correctAnswer: false },
-  { id: 10, question: "Is the snow black?", correctAnswer: false },
-  { id: 11, question: "Is the snow white?", correctAnswer: true },
 ];
 
 const multipleChoiceQuestions = [
@@ -43,31 +41,12 @@ const multipleChoiceQuestions = [
     options: ["Paris", "London", "Berlin", "Madrid"],
     correctAnswer: "Madrid",
   },
-  {
-    id: 4,
-    question: "What is the capital of England?",
-    options: ["Paris", "London", "Berlin", "Madrid"],
-    correctAnswer: "London",
-  },
-  {
-    id: 5,
-    question: "What is the capital of Norway?",
-    options: ["Oslo", "Bergen", "Stavanger", "Trondheim"],
-    correctAnswer: "Oslo",
-  },
-  {
-    id: 6,
-    question: "What is the capital of Sweden?",
-    options: ["Oslo", "Stockholm", "Copenhagen", "Helsinki"],
-    correctAnswer: "Stockholm",
-  },
 ];
 
 const inputQuestions = [
   { id: 1, question: "What is 2 + 2?", correctAnswer: "4" },
   { id: 2, question: "What is 10 - 5?", correctAnswer: "5" },
   { id: 3, question: "What is 3 * 3?", correctAnswer: "9" },
-  { id: 4, question: "What is 8 / 2?", correctAnswer: "4" },
 ];
 
 /**
@@ -84,11 +63,44 @@ export default function TopicPageCard({ variant }: TopicPageCardProps) {
   const [selectedValues, setSelectedValues] = useState<{
     [key: number]: string | null;
   }>({});
+  const [isCorrect, setIsCorrect] = useState<{
+    [key: number]: boolean | null;
+  }>({});
+
+  const handleInputChange = (questionId: number, value: string) => {
+    setSelectedValues((prev) => ({
+      ...prev,
+      [questionId]: value,
+    }));
+  };
 
   const handleButtonClick = (questionId: number, value: string) => {
     setSelectedValues((prev) => ({
       ...prev,
       [questionId]: value,
+    }));
+
+    let correctAnswer: string | boolean | undefined;
+    if (variant === "trueFalse") {
+      correctAnswer = trueFalseQuestions.find(
+        (q) => q.id === questionId
+      )?.correctAnswer;
+    } else if (variant === "multipleChoice") {
+      correctAnswer = multipleChoiceQuestions.find(
+        (q) => q.id === questionId
+      )?.correctAnswer;
+    } else if (variant === "input") {
+      correctAnswer = inputQuestions.find(
+        (q) => q.id === questionId
+      )?.correctAnswer;
+    }
+
+    const parsedValue =
+      variant === "trueFalse" ? value === "true" : value.trim();
+
+    setIsCorrect((prev) => ({
+      ...prev,
+      [questionId]: correctAnswer === parsedValue,
     }));
   };
 
@@ -104,12 +116,26 @@ export default function TopicPageCard({ variant }: TopicPageCardProps) {
             questions={trueFalseQuestions}
             handleButtonClick={handleButtonClick}
             selectedValues={selectedValues}
+            isCorrect={isCorrect}
           />
         )}
         {variant === "multipleChoice" && (
-          <MultipleChoiceVariant questions={multipleChoiceQuestions} />
+          <MultipleChoiceVariant
+            questions={multipleChoiceQuestions}
+            handleButtonClick={handleButtonClick}
+            selectedValues={selectedValues}
+            isCorrect={isCorrect}
+          />
         )}
-        {variant === "input" && <InputVariant questions={inputQuestions} />}
+        {variant === "input" && (
+          <InputVariant
+            questions={inputQuestions}
+            handleButtonClick={handleButtonClick}
+            handleInputChange={handleInputChange}
+            selectedValues={selectedValues}
+            isCorrect={isCorrect}
+          />
+        )}
       </CardContent>
     </Card>
   );

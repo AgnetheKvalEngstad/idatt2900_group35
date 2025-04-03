@@ -2,6 +2,7 @@
 
 exports[`Tests for component TopicCard > should render TopicCard 1`] = `
 <ForwardRef(Card)
+  className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
   sx={
     {
       "alignItems": "center",

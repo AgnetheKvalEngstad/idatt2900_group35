@@ -4,22 +4,20 @@ interface TrueFalseVariantProps {
   questions: { id: number; question: string; correctAnswer: boolean }[];
   handleButtonClick: (questionId: number, value: string) => void;
   selectedValues: { [key: number]: string | null };
+  isCorrect: { [key: number]: boolean | null };
 }
 
 /**
  * A React component that renders a "True or False" question variant.
  *
  * @param {TrueFalseVariantProps} props The props for the component.
- * @param {Array<{ question: string }>} props.questions An array of question objects, each containing a `question` string.
- * @param {(value: string) => void} props.handleButtonClick A callback function triggered when a button is clicked, receiving the selected value ("true" or "false").
- * @param {string} props.selectedValue The currently selected value, either "true" or "false".
- *
  * @returns The rendered "True or False" question variant component.
  */
 export default function TrueFalseVariant({
   questions,
   handleButtonClick,
   selectedValues,
+  isCorrect,
 }: TrueFalseVariantProps) {
   return (
     <>
@@ -50,6 +48,15 @@ export default function TrueFalseVariant({
                 Usant
               </Button>
             </ButtonGroup>
+            {isCorrect[q.id] !== undefined && (
+              <Typography
+                variant="body2"
+                className="pt-2"
+                color={isCorrect[q.id] ? "green" : "red"}
+              >
+                {isCorrect[q.id] ? "Riktig!" : "Feil"}
+              </Typography>
+            )}
           </Grid2>
         ))}
       </Grid2>

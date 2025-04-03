@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 
 interface QuestionMultipleChoice {
+  id: number;
   question: string;
   options: string[];
   correctAnswer: string;
@@ -14,6 +15,9 @@ interface QuestionMultipleChoice {
 
 interface MultipleChoiceVariantProps {
   questions: QuestionMultipleChoice[];
+  handleButtonClick: (questionId: number, value: string) => void;
+  selectedValues: { [key: number]: string | null };
+  isCorrect: { [key: number]: boolean | null };
 }
 
 /**
@@ -29,6 +33,9 @@ interface MultipleChoiceVariantProps {
  */
 export default function MultipleChoiceVariant({
   questions,
+  handleButtonClick,
+  selectedValues,
+  isCorrect,
 }: MultipleChoiceVariantProps) {
   return (
     <>
@@ -36,10 +43,13 @@ export default function MultipleChoiceVariant({
         Velg riktig svar
       </Typography>
       <Grid2 container spacing={1}>
-        {questions.map((q, index) => (
-          <Grid2 key={index} size={4}>
+        {questions.map((q) => (
+          <Grid2 key={q.id} size={4}>
             <Typography className="pt-2">{q.question}</Typography>
-            <RadioGroup>
+            <RadioGroup
+              value={selectedValues[q.id] || ""}
+              onChange={(e) => handleButtonClick(q.id, e.target.value)}
+            >
               {q.options.map((option: string, i: number) => (
                 <FormControlLabel
                   key={i}
@@ -49,6 +59,15 @@ export default function MultipleChoiceVariant({
                 />
               ))}
             </RadioGroup>
+            {isCorrect[q.id] !== undefined && (
+              <Typography
+                variant="body2"
+                className="pt-2"
+                color={isCorrect[q.id] ? "green" : "red"}
+              >
+                {isCorrect[q.id] ? "Riktig!" : "Feil"}
+              </Typography>
+            )}
           </Grid2>
         ))}
       </Grid2>
