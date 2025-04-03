@@ -51,7 +51,7 @@ export default function TopicPage() {
       <Grid2 className="flex flex-col justify-center items-center flex-grow w-100">
         <Grid2
           container
-          className="flex flex-row w-full max-w-3xl justify-between"
+          className="flex flex-row w-full max-w-3xl justify-between p-2"
         >
           <Button
             variant="contained"

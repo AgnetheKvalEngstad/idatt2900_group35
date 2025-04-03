@@ -88,6 +88,11 @@ export default function TopicCard({
         padding: size === "small" ? 1 : 0,
       }}
       variant="outlined"
+      className={`${
+        size !== "small"
+          ? "hover:shadow-lg hover:scale-105 transition-transform duration-200"
+          : ""
+      }`}
     >
       <CardContent>
         <Typography variant={getFontSize(size)} component="div">

@@ -73,6 +73,7 @@ export default function TopicMenu({
                 }
           }
           onClick={() => onButtonClick(i)}
+          className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
         >
           {button.label}
         </Button>

@@ -48,7 +48,7 @@ export default function OnboardingPage() {
               bokser som denne:
             </Typography>
             <Card
-              className="w-36 h-36 border-2 border-black self-center cursor-pointer"
+              className="w-36 h-36 border-2 border-black self-center cursor-pointer hover:shadow-lg hover:scale-105 transition-transform duration-200"
               sx={{ backgroundColor: "#66DB68", borderRadius: 6 }}
               onClick={handleNext}
               raised={true}
