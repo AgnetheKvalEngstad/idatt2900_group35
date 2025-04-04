@@ -3,7 +3,16 @@ import { Typography, Button, Grid2 } from "@mui/material";
 interface CompletedVariantProps {
   content: { title: string; text: string[] };
 }
-
+/**
+ * A React component that's a variant of a topic card. Is shown when the user has completed the topic.
+ *
+ * @param {CompletedVariantProps} props - The props for the component.
+ * @param {{ title: string; text: string[] }} props.content - The content to display in the card.
+ * @param {string} props.content.title - The title of the card.
+ * @param {string[]} props.content.text - An array of text lines to display below the title.
+ *
+ * @returns The CompletedVariant component.
+ */
 export default function CompletedVariant({ content }: CompletedVariantProps) {
   const textLines: Array<React.ReactNode> = Array(content.text.length)
     .fill(null)
