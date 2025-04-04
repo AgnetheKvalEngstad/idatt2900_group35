@@ -4,9 +4,16 @@ import TextVariant from "./topic-card-variants/TextVariant";
 import TrueFalseVariant from "./topic-card-variants/TrueFalseVariant";
 import MultipleChoiceVariant from "./topic-card-variants/MultipleChoiceVariant";
 import InputVariant from "./topic-card-variants/InputVariant";
+import CompletedVariant from "./topic-card-variants/CompletedVariant";
 
 interface TopicPageCardProps {
-  variant: "text" | "text2" | "trueFalse" | "multipleChoice" | "input";
+  variant:
+    | "text"
+    | "text2"
+    | "completed"
+    | "trueFalse"
+    | "multipleChoice"
+    | "input";
 }
 
 const trueFalseQuestions = [
@@ -63,6 +70,16 @@ const textContent2 = {
    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
     fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
    mollit anim id est laborum.",
+};
+
+const completedContent = {
+  title: "Hurra!",
+  text: [
+    "Du har fullført oppgaveseksjonen om test tema.",
+    "Bra jobba! ",
+    "Du fikk xxx mynter! ",
+    "Har du lyst til å prøve oppgaven en gang til, eller gå videre til neste tema?",
+  ],
 };
 
 /**
@@ -160,6 +177,9 @@ export default function TopicPageCard({
             selectedValues={selectedValues}
             isCorrect={isCorrect}
           />
+        )}
+        {variant === "completed" && (
+          <CompletedVariant content={completedContent} />
         )}
       </CardContent>
     </Card>

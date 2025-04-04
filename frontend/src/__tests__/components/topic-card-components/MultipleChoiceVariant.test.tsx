@@ -25,6 +25,7 @@ describe("MultipleChoiceVariant component testing", () => {
       />
     );
   });
+
   it("should render the questions and options correctly", () => {
     questions.forEach((q) => {
       expect(screen.getByText(q.question)).toBeInTheDocument();

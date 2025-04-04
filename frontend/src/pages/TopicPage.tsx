@@ -3,9 +3,9 @@ import TopicMenu from "../components/TopicMenu";
 import TopicPageCard from "../components/TopicPageCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
-import { useLocation } from "react-router-dom";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
 
 /**
@@ -28,26 +28,32 @@ export default function TopicPage() {
     };
   }>({});
 
+  const navigate = useNavigate();
+
   const topicPageCards: Array<
-    "text" | "text2" | "trueFalse" | "multipleChoice" | "input"
+    "text" | "text2" | "completed" | "trueFalse" | "multipleChoice" | "input"
   > = (() => {
     const initialCards: Array<
-      "text" | "text2" | "trueFalse" | "multipleChoice" | "input"
+      "text" | "text2" | "completed" | "trueFalse" | "multipleChoice" | "input"
     > = ["text", "text2"];
     switch (difficulty) {
       case "ingen":
-        return [...initialCards, "trueFalse"];
+        return [...initialCards, "trueFalse", "completed"];
       case "litt":
-        return [...initialCards, "multipleChoice"];
+        return [...initialCards, "multipleChoice", "completed"];
       case "mye":
-        return [...initialCards, "input"];
+        return [...initialCards, "input", "completed"];
       default:
         return initialCards;
     }
   })();
 
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => prevIndex + 1);
+    if (currentIndex === topicPageCards.length - 1) {
+      navigate("/home");
+    } else {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
+    }
   };
 
   const handleBack = () => {
@@ -109,7 +115,9 @@ export default function TopicPage() {
           >
             {currentIndex === topicPageCards.length - 1
               ? "Fullfør kurs"
-              : "Neste"}
+              : currentIndex === topicPageCards.length - 2
+                ? "Lever oppgave"
+                : "Neste"}
           </Button>
         </Grid2>
         <TopicPageCard
