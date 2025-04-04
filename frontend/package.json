@@ -19,6 +19,8 @@
     "@react-router/fs-routes": "^7.4.0",
     "@tailwindcss/vite": "^4.0.14",
     "@testing-library/user-event": "^13.5.0",
+    "glob": "^11.0.1",
+    "inflight": "^1.0.6",
     "react": "^19.0.0",
     "react-confetti": "^6.4.0",
     "react-dom": "^19.0.0",
