@@ -11,6 +11,11 @@ interface TrueFalseVariantProps {
  * A React component that renders a "True or False" question variant.
  *
  * @param {TrueFalseVariantProps} props The props for the component.
+ * @param {Array<{ question: string }>} props.questions An array of questions.
+ * @param {function} props.handleButtonClick A function to handle button clicks.
+ * @param {Object} props.selectedValues An object containing the current selected values for each question.
+ * @param {Object} props.isCorrect An object indicating whether the answers are correct for each question.
+ *
  * @returns The rendered "True or False" question variant component.
  */
 export default function TrueFalseVariant({

@@ -19,8 +19,11 @@ interface InputVariantProps {
  * Each question is displayed with a corresponding text field and a button to check the answer.
  *
  * @param {InputVariantProps} props The props for the component.
- * @param {Array<{ question: string }>} props.questions An array of question objects,
- * each containing a `question` string to be displayed.
+ * @param {Array<{ question: string }>} props.questions An array of questions.
+ * @param {function} props.handleButtonClick A function to handle button clicks.
+ * @param {function} props.handleInputChange A function to handle input changes.
+ * @param {Object} props.selectedValues An object containing the current input values for each question.
+ * @param {Object} props.isCorrect An object indicating whether the answers are correct for each question.
  *
  * @returns A Material-UI Grid2 layout containing the questions, input fields, and buttons.
  */

@@ -24,7 +24,7 @@ exports[`Tests for component TopicMenu > should render TopicMenu 1`] = `
     }
     variant="contained"
   >
-    Første oppgave
+    Subtopic 1
   </ForwardRef(Button)>
   <ForwardRef(Button)
     className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
@@ -41,7 +41,7 @@ exports[`Tests for component TopicMenu > should render TopicMenu 1`] = `
     }
     variant="contained"
   >
-    Andre oppgave
+    Subtopic 2
   </ForwardRef(Button)>
   <ForwardRef(Button)
     className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
@@ -58,7 +58,7 @@ exports[`Tests for component TopicMenu > should render TopicMenu 1`] = `
     }
     variant="contained"
   >
-    Tredje oppgave
+    Subtopic 3
   </ForwardRef(Button)>
 </ForwardRef(Grid)>
 `;

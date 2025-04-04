@@ -6,7 +6,7 @@ import MultipleChoiceVariant from "./topic-card-variants/MultipleChoiceVariant";
 import InputVariant from "./topic-card-variants/InputVariant";
 
 interface TopicPageCardProps {
-  variant: "text" | "trueFalse" | "multipleChoice" | "input";
+  variant: "text" | "text2" | "trueFalse" | "multipleChoice" | "input";
 }
 
 const trueFalseQuestions = [
@@ -47,6 +47,23 @@ const inputQuestions = [
   { id: 2, question: "What is 10 - 5?", correctAnswer: "5" },
   { id: 3, question: "What is 3 * 3?", correctAnswer: "9" },
 ];
+
+const textContent = {
+  title: "Velkommen til et kurs!",
+  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore\
+   et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip\
+    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
+     fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
+    mollit anim id est laborum.",
+};
+const textContent2 = {
+  title: "Velkommen til et kurs! 2",
+  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore\
+  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip\
+   ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
+    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
+   mollit anim id est laborum.",
+};
 
 /**
  * A React component that renders a card with different content
@@ -116,7 +133,9 @@ export default function TopicPageCard({
       className="relative w-full max-w-3xl overflow-auto border-1 border-black"
     >
       <CardContent className="p-6 h-108 overflow-y-auto">
-        {variant === "text" && <TextVariant />}
+        {variant === "text" && <TextVariant content={textContent} />}
+        {variant === "text2" && <TextVariant content={textContent2} />}
+
         {variant === "trueFalse" && (
           <TrueFalseVariant
             questions={trueFalseQuestions}

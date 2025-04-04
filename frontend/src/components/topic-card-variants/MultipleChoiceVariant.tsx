@@ -25,9 +25,10 @@ interface MultipleChoiceVariantProps {
  * Displays a list of questions with a set of options.
  *
  * @param {MultipleChoiceVariantProps} props The props for the component.
- * @param {Array<{ question: string, options: string[] }>} props.questions
- * An array of question objects, where each object contains a `question` string
- * and an `options` array of possible answers.
+ * @param {Array<{ question: string, options: string[] }>} props.questions An array of question objects.
+ * @param {function} props.handleButtonClick A function to handle button clicks.
+ * @param {Object} props.selectedValues An object containing the selected values for each question.
+ * @param {Object} props.isCorrect An object containing the correctness of each question's answer.
  *
  * @returns The rendered multiple-choice question variant component.
  */

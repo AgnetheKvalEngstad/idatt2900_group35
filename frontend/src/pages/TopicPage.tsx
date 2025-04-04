@@ -4,7 +4,8 @@ import TopicPageCard from "../components/TopicPageCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useLocation } from "react-router-dom";
-
+import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
+import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { useState } from "react";
 
 /**
@@ -18,14 +19,7 @@ export default function TopicPage() {
   const queryParams = new URLSearchParams(location.search);
   const difficulty = queryParams.get("difficulty") ?? "ingen";
 
-  const variants: Array<"text" | "trueFalse" | "multipleChoice" | "input"> = [
-    "text",
-    "trueFalse",
-    "multipleChoice",
-    "input",
-  ];
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [menuIndex, setMenuIndex] = useState(0);
 
   const [answers, setAnswers] = useState<{
     [key: number]: {
@@ -34,18 +28,36 @@ export default function TopicPage() {
     };
   }>({});
 
+  const topicPageCards: Array<
+    "text" | "text2" | "trueFalse" | "multipleChoice" | "input"
+  > = (() => {
+    const initialCards: Array<
+      "text" | "text2" | "trueFalse" | "multipleChoice" | "input"
+    > = ["text", "text2"];
+    switch (difficulty) {
+      case "ingen":
+        return [...initialCards, "trueFalse"];
+      case "litt":
+        return [...initialCards, "multipleChoice"];
+      case "mye":
+        return [...initialCards, "input"];
+      default:
+        return initialCards;
+    }
+  })();
+
   const handleNext = () => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % variants.length);
+    setCurrentIndex((prevIndex) => prevIndex + 1);
   };
 
   const handleBack = () => {
     setCurrentIndex((prevIndex) =>
-      prevIndex === 0 ? variants.length - 1 : prevIndex - 1
+      prevIndex === 0 ? topicPageCards.length - 1 : prevIndex - 1
     );
   };
 
   const handleMenuClick = (newIndex: number) => {
-    setMenuIndex(newIndex);
+    setCurrentIndex(newIndex);
   };
 
   const updateAnswers = (
@@ -60,6 +72,12 @@ export default function TopicPage() {
       [cardIndex]: newAnswers,
     }));
   };
+
+  const menuItems = [
+    { title: "Første kurs", icon: <MenuBookRoundedIcon /> },
+    { title: "Andre kurs", icon: <MenuBookRoundedIcon /> },
+    { title: "Oppgave!", icon: <CreateOutlinedIcon /> },
+  ];
 
   return (
     <Grid2
@@ -78,6 +96,7 @@ export default function TopicPage() {
             color="secondary"
             onClick={handleBack}
             startIcon={<ArrowBackIcon />}
+            disabled={currentIndex === 0}
           >
             Tilbake
           </Button>
@@ -86,12 +105,15 @@ export default function TopicPage() {
             color="secondary"
             onClick={handleNext}
             endIcon={<ArrowForwardIcon />}
+            disabled={currentIndex === topicPageCards.length}
           >
-            Neste
+            {currentIndex === topicPageCards.length - 1
+              ? "Fullfør kurs"
+              : "Neste"}
           </Button>
         </Grid2>
         <TopicPageCard
-          variant={variants[currentIndex]}
+          variant={topicPageCards[currentIndex]}
           selectedValues={answers[currentIndex]?.selectedValues || {}}
           isCorrect={answers[currentIndex]?.isCorrect || {}}
           updateAnswers={(newAnswers: {
@@ -103,8 +125,9 @@ export default function TopicPage() {
       <Grid2 container className="flex flex-1 ml-auto items-center pr-8 ">
         <TopicMenu
           difficulty={difficulty}
-          index={menuIndex}
+          index={currentIndex}
           onButtonClick={handleMenuClick}
+          menuItems={menuItems}
         />
       </Grid2>
     </Grid2>
