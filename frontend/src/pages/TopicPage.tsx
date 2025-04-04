@@ -27,6 +27,13 @@ export default function TopicPage() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [menuIndex, setMenuIndex] = useState(0);
 
+  const [answers, setAnswers] = useState<{
+    [key: number]: {
+      selectedValues: { [key: number]: string | null };
+      isCorrect: { [key: number]: boolean | null };
+    };
+  }>({});
+
   const handleNext = () => {
     setCurrentIndex((prevIndex) => (prevIndex + 1) % variants.length);
   };
@@ -39,6 +46,19 @@ export default function TopicPage() {
 
   const handleMenuClick = (newIndex: number) => {
     setMenuIndex(newIndex);
+  };
+
+  const updateAnswers = (
+    cardIndex: number,
+    newAnswers: {
+      selectedValues: { [key: number]: string | null };
+      isCorrect: { [key: number]: boolean | null };
+    }
+  ) => {
+    setAnswers((prevAnswers) => ({
+      ...prevAnswers,
+      [cardIndex]: newAnswers,
+    }));
   };
 
   return (
@@ -70,7 +90,15 @@ export default function TopicPage() {
             Neste
           </Button>
         </Grid2>
-        <TopicPageCard variant={variants[currentIndex]} />
+        <TopicPageCard
+          variant={variants[currentIndex]}
+          selectedValues={answers[currentIndex]?.selectedValues || {}}
+          isCorrect={answers[currentIndex]?.isCorrect || {}}
+          updateAnswers={(newAnswers: {
+            selectedValues: { [key: number]: string | null };
+            isCorrect: { [key: number]: boolean | null };
+          }) => updateAnswers(currentIndex, newAnswers)}
+        />
       </Grid2>
       <Grid2 container className="flex flex-1 ml-auto items-center pr-8 ">
         <TopicMenu

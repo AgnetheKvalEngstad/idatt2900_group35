@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import TextVariant from "./topic-card-variants/TextVariant";
@@ -59,26 +58,29 @@ const inputQuestions = [
  *
  * @returns A card component with the specified content variant.
  */
-export default function TopicPageCard({ variant }: TopicPageCardProps) {
-  const [selectedValues, setSelectedValues] = useState<{
-    [key: number]: string | null;
-  }>({});
-  const [isCorrect, setIsCorrect] = useState<{
-    [key: number]: boolean | null;
-  }>({});
-
+export default function TopicPageCard({
+  variant,
+  selectedValues,
+  isCorrect,
+  updateAnswers,
+}: TopicPageCardProps & {
+  selectedValues: { [key: number]: string | null };
+  isCorrect: { [key: number]: boolean | null };
+  updateAnswers: (newAnswers: {
+    selectedValues: { [key: number]: string | null };
+    isCorrect: { [key: number]: boolean | null };
+  }) => void;
+}) {
   const handleInputChange = (questionId: number, value: string) => {
-    setSelectedValues((prev) => ({
-      ...prev,
-      [questionId]: value,
-    }));
+    const newSelectedValues = { ...selectedValues, [questionId]: value };
+    updateAnswers({
+      selectedValues: newSelectedValues,
+      isCorrect,
+    });
   };
 
   const handleButtonClick = (questionId: number, value: string) => {
-    setSelectedValues((prev) => ({
-      ...prev,
-      [questionId]: value,
-    }));
+    const newSelectedValues = { ...selectedValues, [questionId]: value };
 
     let correctAnswer: string | boolean | undefined;
     if (variant === "trueFalse") {
@@ -97,11 +99,15 @@ export default function TopicPageCard({ variant }: TopicPageCardProps) {
 
     const parsedValue =
       variant === "trueFalse" ? value === "true" : value.trim();
-
-    setIsCorrect((prev) => ({
-      ...prev,
+    const newIsCorrect = {
+      ...isCorrect,
       [questionId]: correctAnswer === parsedValue,
-    }));
+    };
+
+    updateAnswers({
+      selectedValues: newSelectedValues,
+      isCorrect: newIsCorrect,
+    });
   };
 
   return (
