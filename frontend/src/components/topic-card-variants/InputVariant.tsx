@@ -36,11 +36,11 @@ export default function InputVariant({
 }: InputVariantProps) {
   return (
     <Grid2 container spacing={1}>
-      <Typography variant="h5" className="pt-2">
+      <Typography variant="h5" className="pt-2 w-full">
         Skriv inn svaret i feltene under
       </Typography>
       {questions.map((q) => (
-        <Grid2 key={q.id} size={16} spacing={1}>
+        <Grid2 key={q.id} size={6} className="flex flex-col gap-1">
           <Grid2 className="flex flex-row">
             <Typography className="p-2">{q.question}</Typography>
             {isCorrect[q.id] !== undefined && (
@@ -53,20 +53,24 @@ export default function InputVariant({
               </Typography>
             )}
           </Grid2>
-          <TextField
-            label="Svar her"
-            variant="outlined"
-            value={selectedValues[q.id] || ""}
-            className="w-lg pr-8"
-            onChange={(e) => handleInputChange(q.id, e.target.value)}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => handleButtonClick(q.id, selectedValues[q.id] || "")}
-          >
-            Sjekk svar
-          </Button>
+          <Grid2 className="flex flex-row items-center gap-2">
+            <TextField
+              label="Svar her"
+              variant="outlined"
+              value={selectedValues[q.id] || ""}
+              className="w-40 pr-8"
+              onChange={(e) => handleInputChange(q.id, e.target.value)}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                handleButtonClick(q.id, selectedValues[q.id] || "")
+              }
+            >
+              Sjekk svar
+            </Button>
+          </Grid2>
         </Grid2>
       ))}
     </Grid2>

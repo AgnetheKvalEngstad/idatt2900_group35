@@ -17,42 +17,45 @@ interface TopicPageCardProps {
 }
 
 const trueFalseQuestions = [
-  { id: 1, question: "Is the sky blue?", correctAnswer: true },
-  { id: 2, question: "Is fire cold?", correctAnswer: false },
-  { id: 3, question: "Is the earth flat?", correctAnswer: false },
-  { id: 4, question: "Is water wet?", correctAnswer: true },
-  { id: 5, question: "Is the sun hot?", correctAnswer: true },
-  { id: 6, question: "Is the moon made of cheese?", correctAnswer: false },
-  { id: 7, question: "Is the ocean salty?", correctAnswer: true },
-  { id: 8, question: "Is the grass green?", correctAnswer: true },
-  { id: 9, question: "Is the wind cold?", correctAnswer: false },
+  { id: 1, question: "Er himmelen blå?", correctAnswer: true },
+  { id: 2, question: "Er ilden kald?", correctAnswer: false },
+  { id: 3, question: "Er jorden flat?", correctAnswer: false },
+  { id: 4, question: "Er vann vått?", correctAnswer: true },
+  { id: 5, question: "Er solen varm?", correctAnswer: true },
+  { id: 6, question: "Er månen laget av ost?", correctAnswer: false },
+  { id: 7, question: "Er havet salt?", correctAnswer: true },
+  { id: 8, question: "Er gresset grønt?", correctAnswer: true },
+  { id: 9, question: "Er vinden kald?", correctAnswer: false },
 ];
 
 const multipleChoiceQuestions = [
   {
     id: 1,
-    question: "What is the capital of France?",
+    question: "Hva er hovedstaden i Frankrike?",
     options: ["Paris", "London", "Berlin", "Madrid"],
     correctAnswer: "Paris",
   },
   {
     id: 2,
-    question: "What is the capital of Germany?",
+    question: "Hva er hovedstaden i Tyskland?",
     options: ["Paris", "London", "Berlin", "Madrid"],
     correctAnswer: "Berlin",
   },
   {
     id: 3,
-    question: "What is the capital of Spain?",
+    question: "Hva er hovedstaden i Spania?",
     options: ["Paris", "London", "Berlin", "Madrid"],
     correctAnswer: "Madrid",
   },
 ];
 
 const inputQuestions = [
-  { id: 1, question: "What is 2 + 2?", correctAnswer: "4" },
-  { id: 2, question: "What is 10 - 5?", correctAnswer: "5" },
-  { id: 3, question: "What is 3 * 3?", correctAnswer: "9" },
+  { id: 1, question: "Hva er 2 + 2?", correctAnswer: "4" },
+  { id: 2, question: "Hva er 10 - 5?", correctAnswer: "5" },
+  { id: 3, question: "Hva er 3 * 3?", correctAnswer: "9" },
+  { id: 4, question: "Hva er 12 / 4?", correctAnswer: "3" },
+  { id: 5, question: "Hva er kvadratroten av 16?", correctAnswer: "4" },
+  { id: 6, question: "Hva er 5 + 7?", correctAnswer: "12" },
 ];
 
 const textContent = {

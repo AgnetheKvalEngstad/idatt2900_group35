@@ -33,35 +33,37 @@ export default function TrueFalseVariant({
         {questions.map((q) => (
           <Grid2 key={q.id} size={4}>
             <Typography className="pt-2">{q.question}</Typography>
-            <ButtonGroup>
-              <Button
-                variant={
-                  selectedValues[q.id] === "true" ? "contained" : "outlined"
-                }
-                onClick={() => handleButtonClick(q.id, "true")}
-                role="true"
-              >
-                Sant
-              </Button>
-              <Button
-                variant={
-                  selectedValues[q.id] === "false" ? "contained" : "outlined"
-                }
-                onClick={() => handleButtonClick(q.id, "false")}
-                role="false"
-              >
-                Usant
-              </Button>
-            </ButtonGroup>
-            {isCorrect[q.id] !== undefined && (
-              <Typography
-                variant="body2"
-                className="pt-2"
-                color={isCorrect[q.id] ? "green" : "red"}
-              >
-                {isCorrect[q.id] ? "Riktig!" : "Feil"}
-              </Typography>
-            )}
+            <Grid2 className="flex flex-row gap-1">
+              <ButtonGroup>
+                <Button
+                  variant={
+                    selectedValues[q.id] === "true" ? "contained" : "outlined"
+                  }
+                  onClick={() => handleButtonClick(q.id, "true")}
+                  role="true"
+                >
+                  Sant
+                </Button>
+                <Button
+                  variant={
+                    selectedValues[q.id] === "false" ? "contained" : "outlined"
+                  }
+                  onClick={() => handleButtonClick(q.id, "false")}
+                  role="false"
+                >
+                  Usant
+                </Button>
+              </ButtonGroup>
+              {isCorrect[q.id] !== undefined && (
+                <Typography
+                  variant="body2"
+                  className="pt-2"
+                  color={isCorrect[q.id] ? "green" : "red"}
+                >
+                  {isCorrect[q.id] ? "Riktig!" : "Feil"}
+                </Typography>
+              )}
+            </Grid2>
           </Grid2>
         ))}
       </Grid2>
