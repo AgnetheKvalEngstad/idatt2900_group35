@@ -150,9 +150,9 @@ export default function TopicPageCard({
   return (
     <Card
       data-testid="topic-page-card"
-      className="relative w-full max-w-3xl overflow-auto border-1 border-black"
+      className="w-full max-w-3xl border-1 border-black overflow-visible"
     >
-      <CardContent className="p-6 h-108 overflow-y-auto">
+      <CardContent className="p-6 h-108 ">
         {variant === "text" && <TextVariant content={textContent} />}
         {variant === "text2" && <TextVariant content={textContent2} />}
 

@@ -92,7 +92,8 @@ export default function TopicPage() {
       className="flex md:flex-grow flex-wrap items-center justify-center"
     >
       <Grid2 className="md:flex-1"></Grid2>
-      <Grid2 className="flex flex-col justify-center items-center flex-grow w-100">
+      <Grid2 className="flex flex-col justify-center items-center flex-grow flex-wrap w-100">
+        <Grid2 className=""></Grid2>
         <Grid2
           container
           className="flex flex-row w-full max-w-3xl justify-between p-2"

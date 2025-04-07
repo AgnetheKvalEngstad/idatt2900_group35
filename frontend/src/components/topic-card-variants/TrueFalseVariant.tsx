@@ -56,9 +56,9 @@ export default function TrueFalseVariant({
               </ButtonGroup>
               {isCorrect[q.id] !== undefined && (
                 <Typography
-                  variant="body2"
-                  className="pt-2"
-                  color={isCorrect[q.id] ? "green" : "red"}
+                  className={`pt-2 ${
+                    isCorrect[q.id] ? "text-[#006B2B]" : "text-[#C3040E]"
+                  }`}
                 >
                   {isCorrect[q.id] ? "Riktig!" : "Feil"}
                 </Typography>

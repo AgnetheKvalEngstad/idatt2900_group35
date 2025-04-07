@@ -46,10 +46,10 @@ export default function InputVariant({
             {isCorrect[q.id] !== undefined && (
               <Typography
                 className={`pt-2 ${
-                  isCorrect[q.id] ? "text-green-500" : "text-red-500"
+                  isCorrect[q.id] ? "text-[#006B2B]" : "text-[#C3040E]"
                 }`}
               >
-                {isCorrect[q.id] ? "Riktig!" : "Feil!"}
+                {isCorrect[q.id] ? "Riktig!" : "Feil"}
               </Typography>
             )}
           </Grid2>
