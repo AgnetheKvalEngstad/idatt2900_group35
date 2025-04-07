@@ -41,7 +41,7 @@ export default function MultipleChoiceVariant({
   return (
     <>
       <Typography variant="h5" className="pt-2">
-        Velg riktig svar
+        Flervalg: Velg riktig svar
       </Typography>
       <Grid2 container spacing={1}>
         {questions.map((q) => (

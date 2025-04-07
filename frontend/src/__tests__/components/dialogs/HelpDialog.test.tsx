@@ -1,4 +1,4 @@
-import { render, screen, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import HelpDialog from "../../../components/dialogs/HelpDialog";
 import "@testing-library/jest-dom";
 
@@ -6,8 +6,8 @@ import "@testing-library/jest-dom";
  * Tests for the HelpDialog component.
  */
 describe("HelpDialog Component", () => {
-  beforeEach(() => {
-    render(<HelpDialog open={true} onClose={() => {}} />);
+  beforeEach(async () => {
+    await waitFor(() => render(<HelpDialog open={true} onClose={() => {}} />));
   });
 
   it("should render the dialog content correctly when open is true", () => {

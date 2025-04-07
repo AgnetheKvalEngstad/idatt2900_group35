@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, cleanup } from "@testing-library/react";
+import { render, screen, cleanup, waitFor } from "@testing-library/react";
 import TextSizeDialog from "../../../components/dialogs/TextSizeDialog";
 import "@testing-library/jest-dom";
 
@@ -6,8 +6,10 @@ import "@testing-library/jest-dom";
  * Tests for the TextSizeDialog component.
  */
 describe("TextSizeDialog", () => {
-  beforeEach(() => {
-    render(<TextSizeDialog open={true} onClose={() => {}} />);
+  beforeEach(async () => {
+    await waitFor(() =>
+      render(<TextSizeDialog open={true} onClose={() => {}} />)
+    );
   });
 
   it("should render the dialog content correctly when open is true", () => {
@@ -27,13 +29,13 @@ describe("TextSizeDialog", () => {
 
   it("should trigger onClose when the close icon button is clicked", () => {
     const closeIconButton = screen.getByRole("button", { name: /close/i });
-    fireEvent.click(closeIconButton);
+    closeIconButton.click();
     expect(closeIconButton).toBeInTheDocument();
   });
 
-  it("should trigger onClose when the 'Lukk' button is clicked", () => {
+  it("should trigger onClose when the 'Lukk' button is clicked", async () => {
     const closeButton = screen.getByRole("button", { name: /lukk/i });
-    fireEvent.click(closeButton);
+    closeButton.click();
     expect(closeButton).toBeInTheDocument();
   });
 });

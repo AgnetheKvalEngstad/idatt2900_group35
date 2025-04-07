@@ -33,4 +33,22 @@ describe("TopicPage component testing", () => {
     fireEvent.click(nextButton);
     expect(screen.getByText("Tilbake")).not.toBeDisabled();
   });
+
+  it("clicking three times should lead to completed page", () => {
+    const nextButton = screen.getByText("Neste");
+    fireEvent.click(nextButton);
+    fireEvent.click(nextButton);
+    fireEvent.click(nextButton);
+    expect(screen.getByText("Hurra!")).toBeInTheDocument();
+  });
+
+  it("clicking back button should go back to previous card", () => {
+    const nextButton = screen.getByText("Neste");
+    fireEvent.click(nextButton);
+    fireEvent.click(nextButton);
+    fireEvent.click(nextButton);
+    const backButton = screen.getByText("Tilbake");
+    fireEvent.click(backButton);
+    expect(screen.getByText("Lever oppgave")).toBeInTheDocument();
+  });
 });

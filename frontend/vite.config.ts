@@ -10,5 +10,19 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      include: [
+        'src/**',
+      ],
+      exclude: [
+        'src/__tests__/**',
+        'src/utils/**',
+        'src/theme/**',
+        '**/index.tsx',
+        '**/index.ts',
+        '**/vite-env.d.ts',
+      ],
+    },
   },
 })
