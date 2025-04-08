@@ -1,10 +1,10 @@
-import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { describe, expect, it, beforeEach } from "vitest";
+import { render, screen, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import ProfilePage from "../../pages/ProfilePage";
 
-describe("ProfilePage compontent test", () => {
+describe("ProfilePage component test", () => {
   beforeEach(() => {
     render(<ProfilePage />);
   });
@@ -23,10 +23,17 @@ describe("ProfilePage compontent test", () => {
 
   it("should open the delete dialog when the delete button is clicked", async () => {
     const deleteButton = screen.getByText("Slett min data");
-    userEvent.click(deleteButton);
+    await act(async () => {
+      userEvent.click(deleteButton);
+    });
 
     expect(
       screen.getByText("Er du sikker på at du vil slette dataene dine?")
     ).toBeInTheDocument();
+  });
+
+  it("should render all topic cards", () => {
+    const topicCards = screen.getAllByText("Insert title here");
+    expect(topicCards).toHaveLength(6);
   });
 });

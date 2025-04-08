@@ -7,6 +7,7 @@ import {
 } from "@mui/material";
 
 interface QuestionMultipleChoice {
+  id: number;
   question: string;
   options: string[];
   correctAnswer: string;
@@ -14,6 +15,9 @@ interface QuestionMultipleChoice {
 
 interface MultipleChoiceVariantProps {
   questions: QuestionMultipleChoice[];
+  handleButtonClick: (questionId: number, value: string) => void;
+  selectedValues: { [key: number]: string | null };
+  isCorrect: { [key: number]: boolean | null };
 }
 
 /**
@@ -21,25 +25,32 @@ interface MultipleChoiceVariantProps {
  * Displays a list of questions with a set of options.
  *
  * @param {MultipleChoiceVariantProps} props The props for the component.
- * @param {Array<{ question: string, options: string[] }>} props.questions
- * An array of question objects, where each object contains a `question` string
- * and an `options` array of possible answers.
+ * @param {Array<{ question: string, options: string[] }>} props.questions An array of question objects.
+ * @param {function} props.handleButtonClick A function to handle button clicks.
+ * @param {Object} props.selectedValues An object containing the selected values for each question.
+ * @param {Object} props.isCorrect An object containing the correctness of each question's answer.
  *
  * @returns The rendered multiple-choice question variant component.
  */
 export default function MultipleChoiceVariant({
   questions,
+  handleButtonClick,
+  selectedValues,
+  isCorrect,
 }: MultipleChoiceVariantProps) {
   return (
     <>
       <Typography variant="h5" className="pt-2">
-        Velg riktig svar
+        Flervalg: Velg riktig svar
       </Typography>
       <Grid2 container spacing={1}>
-        {questions.map((q, index) => (
-          <Grid2 key={index} size={4}>
+        {questions.map((q) => (
+          <Grid2 key={q.id} size={4}>
             <Typography className="pt-2">{q.question}</Typography>
-            <RadioGroup>
+            <RadioGroup
+              value={selectedValues[q.id] || ""}
+              onChange={(e) => handleButtonClick(q.id, e.target.value)}
+            >
               {q.options.map((option: string, i: number) => (
                 <FormControlLabel
                   key={i}
@@ -49,6 +60,15 @@ export default function MultipleChoiceVariant({
                 />
               ))}
             </RadioGroup>
+            {isCorrect[q.id] !== undefined && (
+              <Typography
+                className={`pt-2 ${
+                  isCorrect[q.id] ? "text-[#006B2B]" : "text-[#C3040E]"
+                }`}
+              >
+                {isCorrect[q.id] ? "Riktig!" : "Feil"}
+              </Typography>
+            )}
           </Grid2>
         ))}
       </Grid2>

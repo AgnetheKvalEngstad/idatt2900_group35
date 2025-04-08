@@ -1,11 +1,11 @@
 import { Grid2, Button } from "@mui/material";
-import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
-import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
+import { JSX } from "react";
 
 interface TopicMenuProps {
   difficulty: string;
   index: number;
   onButtonClick: (newIndex: number) => void;
+  menuItems: { title: string; icon: JSX.Element }[];
 }
 
 /**
@@ -23,6 +23,7 @@ export default function TopicMenu({
   difficulty,
   index,
   onButtonClick,
+  menuItems,
 }: TopicMenuProps) {
   const getBackgroundColor = (difficulty: string) => {
     switch (difficulty) {
@@ -37,12 +38,6 @@ export default function TopicMenu({
     }
   };
 
-  const buttons = [
-    { label: "Første oppgave", icon: <MenuBookRoundedIcon /> },
-    { label: "Andre oppgave", icon: <MenuBookRoundedIcon /> },
-    { label: "Tredje oppgave", icon: <CreateOutlinedIcon /> },
-  ];
-
   return (
     <Grid2
       container={true}
@@ -52,10 +47,10 @@ export default function TopicMenu({
       direction="column"
       className="p-8 pr-10"
     >
-      {buttons.map((button, i) => (
+      {menuItems.map((menuItem, i) => (
         <Button
           key={i}
-          startIcon={button.icon}
+          startIcon={menuItem.icon}
           variant="contained"
           fullWidth
           size="large"
@@ -73,8 +68,9 @@ export default function TopicMenu({
                 }
           }
           onClick={() => onButtonClick(i)}
+          className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
         >
-          {button.label}
+          {menuItem.title}
         </Button>
       ))}
     </Grid2>

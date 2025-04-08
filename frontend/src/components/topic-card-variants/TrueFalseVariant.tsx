@@ -1,30 +1,28 @@
 import { Typography, Button, ButtonGroup, Grid2 } from "@mui/material";
 
-interface QuestionTrueFalse {
-  question: string;
-  correctAnswer: boolean;
-}
-
 interface TrueFalseVariantProps {
-  questions: QuestionTrueFalse[];
-  handleButtonClick: (value: string) => void;
-  selectedValue: string | null;
+  questions: { id: number; question: string; correctAnswer: boolean }[];
+  handleButtonClick: (questionId: number, value: string) => void;
+  selectedValues: { [key: number]: string | null };
+  isCorrect: { [key: number]: boolean | null };
 }
 
 /**
  * A React component that renders a "True or False" question variant.
  *
  * @param {TrueFalseVariantProps} props The props for the component.
- * @param {Array<{ question: string }>} props.questions An array of question objects, each containing a `question` string.
- * @param {(value: string) => void} props.handleButtonClick A callback function triggered when a button is clicked, receiving the selected value ("true" or "false").
- * @param {string} props.selectedValue The currently selected value, either "true" or "false".
+ * @param {Array<{ question: string }>} props.questions An array of questions.
+ * @param {function} props.handleButtonClick A function to handle button clicks.
+ * @param {Object} props.selectedValues An object containing the current selected values for each question.
+ * @param {Object} props.isCorrect An object indicating whether the answers are correct for each question.
  *
  * @returns The rendered "True or False" question variant component.
  */
 export default function TrueFalseVariant({
   questions,
   handleButtonClick,
-  selectedValue,
+  selectedValues,
+  isCorrect,
 }: TrueFalseVariantProps) {
   return (
     <>
@@ -32,25 +30,40 @@ export default function TrueFalseVariant({
         Sant eller usant?
       </Typography>
       <Grid2 container spacing={1}>
-        {questions.map((q, index) => (
-          <Grid2 key={index} size={4}>
+        {questions.map((q) => (
+          <Grid2 key={q.id} size={4}>
             <Typography className="pt-2">{q.question}</Typography>
-            <ButtonGroup>
-              <Button
-                variant={selectedValue === "true" ? "contained" : "outlined"}
-                onClick={() => handleButtonClick("true")}
-                role="true"
-              >
-                Sant
-              </Button>
-              <Button
-                variant={selectedValue === "false" ? "contained" : "outlined"}
-                onClick={() => handleButtonClick("false")}
-                role="false"
-              >
-                Usant
-              </Button>
-            </ButtonGroup>
+            <Grid2 className="flex flex-row gap-1">
+              <ButtonGroup>
+                <Button
+                  variant={
+                    selectedValues[q.id] === "true" ? "contained" : "outlined"
+                  }
+                  onClick={() => handleButtonClick(q.id, "true")}
+                  role="true"
+                >
+                  Sant
+                </Button>
+                <Button
+                  variant={
+                    selectedValues[q.id] === "false" ? "contained" : "outlined"
+                  }
+                  onClick={() => handleButtonClick(q.id, "false")}
+                  role="false"
+                >
+                  Usant
+                </Button>
+              </ButtonGroup>
+              {isCorrect[q.id] !== undefined && (
+                <Typography
+                  className={`pt-2 ${
+                    isCorrect[q.id] ? "text-[#006B2B]" : "text-[#C3040E]"
+                  }`}
+                >
+                  {isCorrect[q.id] ? "Riktig!" : "Feil"}
+                </Typography>
+              )}
+            </Grid2>
           </Grid2>
         ))}
       </Grid2>

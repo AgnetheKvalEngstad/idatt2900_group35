@@ -11,9 +11,21 @@ describe("MultipleChoiceVariant component testing", () => {
       correctAnswer: "Oslo",
     },
   ];
+  const handleButtonClick = () => {};
+  const selectedValues = {};
+  const isCorrect = {};
+
   beforeEach(() => {
-    render(<MultipleChoiceVariant questions={questions} />);
+    render(
+      <MultipleChoiceVariant
+        questions={questions}
+        handleButtonClick={handleButtonClick}
+        selectedValues={selectedValues}
+        isCorrect={isCorrect}
+      />
+    );
   });
+
   it("should render the questions and options correctly", () => {
     questions.forEach((q) => {
       expect(screen.getByText(q.question)).toBeInTheDocument();

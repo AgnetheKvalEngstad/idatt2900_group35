@@ -18,15 +18,16 @@ describe("TrueFalseVariant component testing", () => {
   ];
 
   const handleButtonClick = () => {};
-
-  const selectedValue = "true";
+  const selectedValues = {};
+  const isCorrect = {};
 
   beforeEach(() => {
     render(
       <TrueFalseVariant
         questions={questions}
         handleButtonClick={handleButtonClick}
-        selectedValue={selectedValue}
+        selectedValues={selectedValues}
+        isCorrect={isCorrect}
       />
     );
   });

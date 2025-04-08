@@ -28,6 +28,7 @@ export default function Header() {
               padding: "4px",
               width: "250px",
             }}
+            className="hover:shadow-lg hover:scale-105 transition-transform duration-200 "
           >
             <CardContent
               style={{
@@ -61,6 +62,7 @@ export default function Header() {
             variant="contained"
             color="success"
             data-testid="points-my-page-button"
+            className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
           >
             <OfflineBoltOutlinedIcon style={{ marginRight: "2px" }} />
             {points}
