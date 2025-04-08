@@ -33,7 +33,7 @@ describe("ProfilePage component test", () => {
   });
 
   it("should render all topic cards", () => {
-    const topicCards = screen.getAllByText("Insert title here");
+    const topicCards = screen.getAllByText("Eksempel tema");
     expect(topicCards).toHaveLength(6);
   });
 });
