@@ -1,9 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace backend.models;
 
 public class Topic
 {
     public int Id { get; set; }
+    
+    [MaxLength(100)]
     public string Title { get; set; } = null!;
+   
+    [MaxLength(100)]
     public string SkillLevel { get; set; } = null!;
     
     //Relations

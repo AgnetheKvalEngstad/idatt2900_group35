@@ -11,8 +11,8 @@ using backend.data;
 namespace backend.Migrations
 {
     [DbContext(typeof(BackendDbContext))]
-    [Migration("20250325104344_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250409092835_AddTaskContent")]
+    partial class AddTaskContent
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,8 +32,8 @@ namespace backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ReasonId")
-                        .HasColumnType("integer");
+                    b.Property<double>("ProgressPercentage")
+                        .HasColumnType("double precision");
 
                     b.Property<int>("TopicId")
                         .HasColumnType("integer");
@@ -42,8 +42,6 @@ namespace backend.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ReasonId");
 
                     b.HasIndex("TopicId")
                         .IsUnique();
@@ -56,7 +54,7 @@ namespace backend.Migrations
                         new
                         {
                             Id = 1,
-                            ReasonId = 1,
+                            ProgressPercentage = 0.5,
                             TopicId = 1,
                             UserId = 1
                         });
@@ -75,11 +73,13 @@ namespace backend.Migrations
 
                     b.Property<string>("ReasonContent")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<string>("ReasonTitle")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("TopicId")
                         .HasColumnType("integer");
@@ -113,13 +113,15 @@ namespace backend.Migrations
                     b.Property<bool>("IsRead")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("SubTopicContent")
+                    b.Property<string>("SubtopicContent")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
 
                     b.Property<int>("TopicId")
                         .HasColumnType("integer");
@@ -136,7 +138,7 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             IsRead = false,
-                            SubTopicContent = "Content",
+                            SubtopicContent = "Content",
                             Title = "Sample Subtopic",
                             TopicId = 1
                         });
@@ -153,9 +155,20 @@ namespace backend.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("TaskContent")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("TaskType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("TopicId")
                         .HasColumnType("integer");
@@ -172,6 +185,8 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             IsDone = false,
+                            TaskContent = "Content",
+                            TaskType = "Input",
                             Title = "Sample Task",
                             TopicId = 1
                         });
@@ -187,11 +202,13 @@ namespace backend.Migrations
 
                     b.Property<string>("SkillLevel")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -233,12 +250,6 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.models.Progress", b =>
                 {
-                    b.HasOne("backend.models.Reason", "Reason")
-                        .WithMany()
-                        .HasForeignKey("ReasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("backend.models.Topic", "Topic")
                         .WithOne("Progress")
                         .HasForeignKey("backend.models.Progress", "TopicId")
@@ -250,8 +261,6 @@ namespace backend.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Reason");
 
                     b.Navigation("Topic");
 

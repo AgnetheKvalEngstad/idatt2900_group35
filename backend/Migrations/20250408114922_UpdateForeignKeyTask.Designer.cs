@@ -11,8 +11,8 @@ using backend.data;
 namespace backend.Migrations
 {
     [DbContext(typeof(BackendDbContext))]
-    [Migration("20250402153000_ChangedNameFromSubTopicContentToSubtopicContent")]
-    partial class ChangedNameFromSubTopicContentToSubtopicContent
+    [Migration("20250408114922_UpdateForeignKeyTask")]
+    partial class UpdateForeignKeyTask
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,6 +155,11 @@ namespace backend.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("TaskType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
@@ -174,6 +179,7 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             IsDone = false,
+                            TaskType = "Input",
                             Title = "Sample Task",
                             TopicId = 1
                         });
@@ -189,11 +195,13 @@ namespace backend.Migrations
 
                     b.Property<string>("SkillLevel")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
