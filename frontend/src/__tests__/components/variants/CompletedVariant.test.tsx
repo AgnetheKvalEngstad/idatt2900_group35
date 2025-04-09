@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import CompletedVariant from "../../../components/topic-card-variants/CompletedVariant";
+import CompletedVariant from "../../../components/variants/CompletedVariant";
 import "@testing-library/jest-dom";
 
 describe("CompletedVariant component testing", () => {

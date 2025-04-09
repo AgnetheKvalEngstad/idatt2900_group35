@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import TrueFalseVariant from "../../../components/topic-card-variants/TrueFalseVariant";
+import TrueFalseVariant from "../../../components/variants/TrueFalseVariant";
 import "@testing-library/jest-dom";
 
 describe("TrueFalseVariant component testing", () => {
