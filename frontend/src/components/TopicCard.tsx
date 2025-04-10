@@ -1,7 +1,7 @@
-import Card from "@mui/material/Card";
-import CardContent from "@mui/material/CardContent";
+import { Card, Grid2 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import React from "react";
+import { getBackgroundColor } from "../utils/utils";
 
 interface TopicCardProps {
   cardTitle: string;
@@ -31,18 +31,6 @@ export default function TopicCard({
   difficulty,
   size,
 }: TopicCardProps) {
-  const getBackgroundColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "ingen":
-        return "#66DB68";
-      case "litt":
-        return "#FF9000";
-      case "mye":
-        return "#E77979";
-      default:
-        return "#9E9E9E";
-    }
-  };
   const getWidth = (size: string) => {
     switch (size) {
       case "small":
@@ -80,35 +68,35 @@ export default function TopicCard({
         width: getWidth(size),
         height: getHeight(size),
         backgroundColor: getBackgroundColor(difficulty),
-        borderRadius: size == "small" ? 4 : 6,
+        borderRadius: size == "small" ? 4 : 5,
         border: size == "small" ? 2 : 3,
-        display: "flex",
-        flexDirection: size === "small" ? "row-reverse" : "column",
-        alignItems: "center",
-        padding: size === "small" ? 1 : 0,
+        padding: size === "small" ? 1 : 2,
       }}
       variant="outlined"
       className={`${
         size !== "small"
-          ? "hover:shadow-lg hover:scale-105 transition-transform duration-200"
+          ? "hover:shadow-lg hover:scale-105 transition-transform duration-200 flex justify-between"
           : ""
       }`}
     >
-      <CardContent>
-        <Typography variant={getFontSize(size)} component="div">
-          {cardTitle}
-        </Typography>
-      </CardContent>
+      <Grid2
+        className={`${
+          size !== "small"
+            ? "flex flex-col items-center justify-between gap-2 text-center w-full"
+            : "flex flex-row-reverse items-center justify-center gap-2 text-center"
+        }`}
+      >
+        <Typography variant={getFontSize(size)}>{cardTitle}</Typography>
+        {React.createElement(cardIcon, {
+          sx: { fontSize: size === "small" ? 24 : 50 },
+        })}
 
-      {React.createElement(cardIcon, {
-        sx: { fontSize: size === "small" ? 24 : 64 },
-      })}
-
-      {size !== "small" && (
-        <CardContent className="text-center">
-          <Typography variant="body2">Krever {difficulty} erfaring</Typography>
-        </CardContent>
-      )}
+        {size !== "small" && (
+          <Typography className="" variant="body2">
+            Krever {difficulty} erfaring
+          </Typography>
+        )}
+      </Grid2>
     </Card>
   );
 }
