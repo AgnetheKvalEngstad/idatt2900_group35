@@ -11,8 +11,8 @@ using backend.data;
 namespace backend.Migrations
 {
     [DbContext(typeof(BackendDbContext))]
-    [Migration("20250402133241_AddProgressPercentageToProgressNR2")]
-    partial class AddProgressPercentageToProgressNR2
+    [Migration("20250408092044_UpdateTaskRelationships")]
+    partial class UpdateTaskRelationships
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,6 +155,11 @@ namespace backend.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("TaskType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
@@ -174,6 +179,7 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             IsDone = false,
+                            TaskType = "Input",
                             Title = "Sample Task",
                             TopicId = 1
                         });

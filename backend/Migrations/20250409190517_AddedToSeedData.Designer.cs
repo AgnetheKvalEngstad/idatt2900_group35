@@ -11,8 +11,8 @@ using backend.data;
 namespace backend.Migrations
 {
     [DbContext(typeof(BackendDbContext))]
-    [Migration("20250402131233_AddProgressPercentageToProgress")]
-    partial class AddProgressPercentageToProgress
+    [Migration("20250409190517_AddedToSeedData")]
+    partial class AddedToSeedData
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,9 +96,25 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             IsRead = false,
-                            ReasonContent = "Content",
-                            ReasonTitle = "Sample Reason",
+                            ReasonContent = "Et godt passord vil holde din informasjon trygg",
+                            ReasonTitle = "Hvorfor er det viktig med et godt passord?",
                             TopicId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsRead = false,
+                            ReasonContent = "Ved å kunne gjenkjenne farlige lenker, kan du tryggere navigere nettet",
+                            ReasonTitle = "Hvorfor er det viktig å gjenkjenne farlige lenker?",
+                            TopicId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsRead = false,
+                            ReasonContent = "Utrygge nettsider ",
+                            ReasonTitle = "Hvorfor er det viktig å velge trygge nettsider?",
+                            TopicId = 3
                         });
                 });
 
@@ -138,9 +154,25 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             IsRead = false,
-                            SubtopicContent = "Content",
-                            Title = "Sample Subtopic",
+                            SubtopicContent = "Passord er sikre når de er xyz",
+                            Title = "Hvordan lage et sikkert passord",
                             TopicId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsRead = false,
+                            SubtopicContent = "Lenken har firmaets faktiske navn og ingen rare tegn",
+                            Title = "Hvordan gjenkjenne farlige lenker",
+                            TopicId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsRead = false,
+                            SubtopicContent = "Velg nettsider med gode lenker, sjekk browser",
+                            Title = "Hvordan velge trygge nettsider",
+                            TopicId = 3
                         });
                 });
 
@@ -155,9 +187,20 @@ namespace backend.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("TaskContent")
+                        .IsRequired()
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("TaskType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("TopicId")
                         .HasColumnType("integer");
@@ -174,8 +217,28 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             IsDone = false,
-                            Title = "Sample Task",
+                            TaskContent = "Content",
+                            TaskType = "TrueFalse",
+                            Title = "Er dette trygge passord?",
                             TopicId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            IsDone = false,
+                            TaskContent = "Content",
+                            TaskType = "MultipleChoice",
+                            Title = "Hvilke av lenkene er trygge?",
+                            TopicId = 2
+                        },
+                        new
+                        {
+                            Id = 3,
+                            IsDone = false,
+                            TaskContent = "Content",
+                            TaskType = "Input",
+                            Title = "Hva med denne nettsiden er utrygt",
+                            TopicId = 3
                         });
                 });
 
@@ -189,11 +252,13 @@ namespace backend.Migrations
 
                     b.Property<string>("SkillLevel")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -209,7 +274,21 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             SkillLevel = "Beginner",
-                            Title = "Sample Topic",
+                            Title = "Lag et sikkert passord",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 2,
+                            SkillLevel = "Intermediate",
+                            Title = "Farlige lenker",
+                            UserId = 1
+                        },
+                        new
+                        {
+                            Id = 3,
+                            SkillLevel = "Expert",
+                            Title = "Velg trygge nettsider",
                             UserId = 1
                         });
                 });

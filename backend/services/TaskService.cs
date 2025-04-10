@@ -14,8 +14,10 @@ namespace backend.services
             {
                 Id = t.Id,
                 Title = t.Title,
+                TaskContent = t.TaskContent,
                 IsDone = t.IsDone,
-                TopicId = t.TopicId
+                TopicId = t.TopicId,
+                TaskType = t.TaskType
             });
         }
         
@@ -31,8 +33,10 @@ namespace backend.services
             {
                 Id = task.Id,
                 Title = task.Title,
+                TaskContent = task.TaskContent,
                 IsDone = task.IsDone,
-                TopicId = task.TopicId
+                TopicId = task.TopicId,
+                TaskType = task.TaskType
             };
         }
         
@@ -42,8 +46,10 @@ namespace backend.services
             var task = new backend.models.Task
             {
                 Title = taskDto.Title,
+                TaskContent = taskDto.TaskContent,
                 IsDone = taskDto.IsDone,
-                TopicId = taskDto.TopicId
+                TopicId = taskDto.TopicId,
+                TaskType = taskDto.TaskType
             };
             await taskRepository.AddAsync(task);
             taskDto.Id = task.Id;
@@ -61,7 +67,9 @@ namespace backend.services
             task.Id = taskDto.Id;
             task.TopicId = taskDto.TopicId;
             task.Title = taskDto.Title;
+            task.TaskContent = taskDto.TaskContent;
             task.IsDone = taskDto.IsDone;
+            task.TaskType = taskDto.TaskType;
             await taskRepository.UpdateAsync(task);
         }
         

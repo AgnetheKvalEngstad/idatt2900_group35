@@ -11,8 +11,8 @@ using backend.data;
 namespace backend.Migrations
 {
     [DbContext(typeof(BackendDbContext))]
-    [Migration("20250402130653_RemoveReasonIdFromProgress")]
-    partial class RemoveReasonIdFromProgress
+    [Migration("20250408120435_UpdateForeignKeyTaskInTopic")]
+    partial class UpdateForeignKeyTaskInTopic
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -155,6 +155,11 @@ namespace backend.Migrations
                     b.Property<bool>("IsDone")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("TaskType")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
@@ -174,6 +179,7 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             IsDone = false,
+                            TaskType = "Input",
                             Title = "Sample Task",
                             TopicId = 1
                         });
@@ -189,11 +195,16 @@ namespace backend.Migrations
 
                     b.Property<string>("SkillLevel")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<int>("TaskId")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<int>("UserId")
                         .HasColumnType("integer");
@@ -209,6 +220,7 @@ namespace backend.Migrations
                         {
                             Id = 1,
                             SkillLevel = "Beginner",
+                            TaskId = 0,
                             Title = "Sample Topic",
                             UserId = 1
                         });

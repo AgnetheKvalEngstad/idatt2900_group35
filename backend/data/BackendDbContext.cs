@@ -55,27 +55,46 @@ public class BackendDbContext : DbContext
         );
 
         modelBuilder.Entity<Topic>().HasData(
-            new Topic { Id = 1, Title = "Sample Topic", SkillLevel = "Beginner", UserId = 1 }
+            new Topic { Id = 1, Title = "Lag et sikkert passord", SkillLevel = "Beginner", UserId = 1},
+            new Topic { Id = 2, Title = "Farlige lenker", SkillLevel = "Intermediate", UserId = 1},
+            new Topic { Id = 3, Title = "Velg trygge nettsider", SkillLevel = "Expert", UserId = 1}
         );
 
         modelBuilder.Entity<Subtopic>().HasData(
-            new Subtopic { Id = 1, Title = "Sample Subtopic", SubtopicContent = "Content", IsRead = false, TopicId = 1 }
+            new Subtopic { Id = 1, Title = "Hvordan lage et sikkert passord", 
+                SubtopicContent = "Passord er sikre når de er xyz", IsRead = false, TopicId = 1 },
+            new Subtopic { Id = 2, Title = "Hvordan gjenkjenne farlige lenker", 
+                SubtopicContent = "Lenken har firmaets faktiske navn og ingen rare tegn", IsRead = false, TopicId = 2 },
+            new Subtopic { Id = 3, Title = "Hvordan velge trygge nettsider", 
+                SubtopicContent = "Velg nettsider med gode lenker, sjekk browser", IsRead = false, TopicId = 3 }
         );
 
         modelBuilder.Entity<Task>().HasData(
-            new Task { Id = 1, Title = "Sample Task", IsDone = false, TopicId = 1 }
+            new Task { Id = 1, Title = "Er dette trygge passord?", TaskContent = "Content",IsDone = false, 
+                TopicId = 1, TaskType = TaskType.TrueFalse.ToString()},
+            new Task { Id = 2, Title = "Hvilke av lenkene er trygge?", TaskContent = "Content",IsDone = false, 
+                TopicId = 2, TaskType = TaskType.MultipleChoice.ToString()},
+            new Task { Id = 3, Title = "Hva med denne nettsiden er utrygt", TaskContent = "Content",IsDone = false, 
+                TopicId = 3, TaskType = TaskType.Input.ToString()}
         );
 
         modelBuilder.Entity<Reason>().HasData(
-            new Reason { Id = 1, ReasonTitle = "Sample Reason", ReasonContent = "Content", IsRead = false, TopicId = 1 }
+            new Reason { Id = 1, ReasonTitle = "Hvorfor er det viktig med et godt passord?", 
+                ReasonContent = "Et godt passord vil holde din informasjon trygg", IsRead = false, TopicId = 1 },
+            new Reason { Id = 2, ReasonTitle = "Hvorfor er det viktig å gjenkjenne farlige lenker?", 
+                ReasonContent = "Ved å kunne gjenkjenne farlige lenker, kan du tryggere navigere nettet",
+                IsRead = false, TopicId = 2 },
+            new Reason { Id = 3, ReasonTitle = "Hvorfor er det viktig å velge trygge nettsider?", 
+                ReasonContent = "Utrygge nettsider ", IsRead = false, TopicId = 3 }
+            
         );
 
         modelBuilder.Entity<Progress>().HasData(
-            new Progress { Id = 1, UserId = 1, TopicId = 1, ProgressPercentage = 0.5}
+            new Progress { Id = 1, ProgressPercentage = 0.5, TopicId = 1, UserId = 1 }
         );
     }
 
-    //Configure the connection string to the database
+    //Connection string to the database
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));
