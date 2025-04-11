@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import MultipleChoiceVariant from "../../../components/topic-card-variants/MultipleChoiceVariant";
+import MultipleChoiceVariant from "../../../components/variants/MultipleChoiceVariant";
 import "@testing-library/jest-dom";
 
 describe("MultipleChoiceVariant component testing", () => {

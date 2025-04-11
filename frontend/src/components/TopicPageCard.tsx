@@ -1,10 +1,10 @@
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import TextVariant from "./topic-card-variants/TextVariant";
-import TrueFalseVariant from "./topic-card-variants/TrueFalseVariant";
-import MultipleChoiceVariant from "./topic-card-variants/MultipleChoiceVariant";
-import InputVariant from "./topic-card-variants/InputVariant";
-import CompletedVariant from "./topic-card-variants/CompletedVariant";
+import TextVariant from "./variants/TextVariant";
+import TrueFalseVariant from "./variants/TrueFalseVariant";
+import MultipleChoiceVariant from "./variants/MultipleChoiceVariant";
+import InputVariant from "./variants/InputVariant";
+import CompletedVariant from "./variants/CompletedVariant";
 
 interface TopicPageCardProps {
   variant:

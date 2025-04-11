@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import InputVariant from "../../../components/topic-card-variants/InputVariant";
+import InputVariant from "../../../components/variants/InputVariant";
 import "@testing-library/jest-dom";
 
 describe("InputVariant", () => {

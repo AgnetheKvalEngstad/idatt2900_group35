@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import TextVariant from "../../../components/topic-card-variants/TextVariant";
+import TextVariant from "../../../components/variants/TextVariant";
 import "@testing-library/jest-dom";
 
 describe("TextVariant component testing", () => {

@@ -1,5 +1,6 @@
 import { Grid2, Button } from "@mui/material";
 import { JSX } from "react";
+import { getBackgroundColor } from "../utils/utils";
 
 interface TopicMenuProps {
   difficulty: string;
@@ -25,19 +26,6 @@ export default function TopicMenu({
   onButtonClick,
   menuItems,
 }: TopicMenuProps) {
-  const getBackgroundColor = (difficulty: string) => {
-    switch (difficulty) {
-      case "ingen":
-        return "#66DB68";
-      case "litt":
-        return "#FF9000";
-      case "mye":
-        return "#E77979";
-      default:
-        return "#9E9E9E";
-    }
-  };
-
   return (
     <Grid2
       container={true}
