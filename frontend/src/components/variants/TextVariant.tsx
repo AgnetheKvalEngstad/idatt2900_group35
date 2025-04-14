@@ -23,8 +23,6 @@ export default function TextVariant({ content }: TextVariantProps) {
           {content.title}
         </Typography>
         <Typography variant="body1">{content.text}</Typography>
-        <br />
-        <Typography variant="body1">{content.text}</Typography>
       </>
     );
   }

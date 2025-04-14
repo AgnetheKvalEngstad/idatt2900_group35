@@ -1,20 +1,35 @@
-import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { describe, it, beforeEach, vi, expect, type Mock } from "vitest";
+import { render, screen } from "@testing-library/react";
 import Homepage from "../../pages/Homepage";
-import axiosInstance from "../../api/axios";
+import { useTopics } from "../../hooks/useTopics";
 import { BrowserRouter } from "react-router-dom";
-import { vi } from "vitest";
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom/vitest";
 
-import type { AxiosInstance } from "axios";
-
-vi.mock("../../api/axios");
-
-const mockedAxios = axiosInstance as jest.Mocked<AxiosInstance>;
+vi.mock("../../hooks/useTopics", () => ({
+  useTopics: vi.fn(),
+}));
 
 const mockTopics = [
-  { id: 1, title: "Intro to Cookies", skillLevel: "0", userId: 1 },
-  { id: 2, title: "Advanced Cookies", skillLevel: "2", userId: 2 },
+  {
+    id: 1,
+    title: "Intro to Cookies",
+    skillLevel: "0",
+    userId: 1,
+    reasonId: 1,
+    subtopicId: 1,
+    taskId: 1,
+    taskType: "truefalse",
+  },
+  {
+    id: 2,
+    title: "Advanced Cookies",
+    skillLevel: "2",
+    userId: 2,
+    reasonId: 2,
+    subtopicId: 2,
+    taskId: 2,
+    taskType: "multiplechoice",
+  },
 ];
 
 const renderWithRouter = (ui: React.ReactElement) => {
@@ -26,35 +41,37 @@ describe("Tests for Homepage component", () => {
     vi.clearAllMocks();
   });
 
-  it("renders loading initially", async () => {
-    mockedAxios.get.mockResolvedValueOnce({ data: mockTopics });
+  it("renders loading initially", () => {
+    (useTopics as Mock).mockReturnValue({
+      topics: [],
+      loading: true,
+      error: false,
+    });
 
     renderWithRouter(<Homepage />);
     expect(screen.getByText("Loading...")).toBeInTheDocument();
-
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
   });
 
-  it("renders topic cards on success", async () => {
-    mockedAxios.get.mockResolvedValueOnce({ data: mockTopics });
+  it("renders topic cards on success", () => {
+    (useTopics as Mock).mockReturnValue({
+      topics: mockTopics,
+      loading: false,
+      error: false,
+    });
 
     renderWithRouter(<Homepage />);
-
-    await waitFor(() => {
-      expect(screen.getByText("Intro to Cookies")).toBeInTheDocument();
-      expect(screen.getByText("Advanced Cookies")).toBeInTheDocument();
-    });
+    expect(screen.getByText("Intro to Cookies")).toBeInTheDocument();
+    expect(screen.getByText("Advanced Cookies")).toBeInTheDocument();
   });
 
-  it("shows error on failure", async () => {
-    mockedAxios.get.mockRejectedValueOnce(new Error("Network error"));
+  it("shows error on failure", () => {
+    (useTopics as Mock).mockReturnValue({
+      topics: [],
+      loading: false,
+      error: true,
+    });
 
     renderWithRouter(<Homepage />);
-
-    await waitFor(() => {
-      expect(screen.getByText("Error loading topics")).toBeInTheDocument();
-    });
+    expect(screen.getByText("Error loading topics")).toBeInTheDocument();
   });
 });

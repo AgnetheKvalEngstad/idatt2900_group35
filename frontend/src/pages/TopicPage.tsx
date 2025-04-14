@@ -7,6 +7,9 @@ import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { useReason } from "../hooks/useReason";
+import { useTask } from "../hooks/useTask";
+import { useSubtopic } from "../hooks/useSubtopic";
 
 /**
  * Creates a React component that represents a page where users can learn
@@ -16,8 +19,19 @@ import { useState } from "react";
  */
 export default function TopicPage() {
   const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const difficulty = queryParams.get("difficulty") ?? "ingen";
+  const { difficulty, reasonId, subtopicId, taskId } = location.state || {};
+
+  const {
+    reason,
+    loading: reasonLoading,
+    error: reasonError,
+  } = useReason(reasonId);
+  const { task, loading: taskLoading, error: taskError } = useTask(taskId);
+  const {
+    subtopic,
+    loading: subtopicLoading,
+    error: subtopicError,
+  } = useSubtopic(subtopicId);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -30,18 +44,33 @@ export default function TopicPage() {
 
   const navigate = useNavigate();
 
+  if (reasonLoading || taskLoading || subtopicLoading)
+    return <div>Loading...</div>;
+  if (reasonError || taskError || subtopicError)
+    return <div>Error loading data</div>;
+
   const topicPageCards: Array<
-    "text" | "text2" | "completed" | "trueFalse" | "multipleChoice" | "input"
+    | "reason"
+    | "subtopic"
+    | "completed"
+    | "trueFalse"
+    | "multipleChoice"
+    | "input"
   > = (() => {
     const initialCards: Array<
-      "text" | "text2" | "completed" | "trueFalse" | "multipleChoice" | "input"
-    > = ["text", "text2"];
-    switch (difficulty) {
-      case "ingen":
+      | "reason"
+      | "subtopic"
+      | "completed"
+      | "trueFalse"
+      | "multipleChoice"
+      | "input"
+    > = ["reason", "subtopic"];
+    switch (task?.taskType?.trim().toLowerCase()) {
+      case "truefalse":
         return [...initialCards, "trueFalse", "completed"];
-      case "litt":
+      case "multiplechoice":
         return [...initialCards, "multipleChoice", "completed"];
-      case "mye":
+      case "input":
         return [...initialCards, "input", "completed"];
       default:
         return initialCards;
@@ -121,15 +150,19 @@ export default function TopicPage() {
                 : "Neste"}
           </Button>
         </Grid2>
-        <TopicPageCard
-          variant={topicPageCards[currentIndex]}
-          selectedValues={answers[currentIndex]?.selectedValues || {}}
-          isCorrect={answers[currentIndex]?.isCorrect || {}}
-          updateAnswers={(newAnswers: {
-            selectedValues: { [key: number]: string | null };
-            isCorrect: { [key: number]: boolean | null };
-          }) => updateAnswers(currentIndex, newAnswers)}
-        />
+        {reason && subtopic && (
+          <TopicPageCard
+            variant={topicPageCards[currentIndex]}
+            reason={reason}
+            subtopic={subtopic}
+            selectedValues={answers[currentIndex]?.selectedValues || {}}
+            isCorrect={answers[currentIndex]?.isCorrect || {}}
+            updateAnswers={(newAnswers: {
+              selectedValues: { [key: number]: string | null };
+              isCorrect: { [key: number]: boolean | null };
+            }) => updateAnswers(currentIndex, newAnswers)}
+          />
+        )}
       </Grid2>
       <Grid2 container className="flex flex-1 ml-auto items-center pr-8 ">
         <TopicMenu

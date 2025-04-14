@@ -2,29 +2,28 @@ import axiosInstance from "./axios";
 import axios from "axios";
 
 /**
- * Interface representing a topic, contains the topic's ID, title, skill level, and user ID.
+ * Interface representing a task, contains the task's ID, title, content, completion status, topic ID, and task type.
  *
- * @interface TopicAPI
+ * @interface TaskAPI
  */
-export interface TopicAPI {
+export interface TaskAPI {
   id: number;
   title: string;
-  skillLevel: string;
-  userId: number;
+  taskContent: string;
+  isDone: boolean;
+  topicId: number;
   taskType: string;
-  taskId: number;
-  subtopicId: number;
-  reasonId: number;
 }
 
 /**
- * Fetches topics and returns them as an array of TopicAPI objects.
+ * Fetches a task by its id and returns it as a TaskAPI object.
  *
- * @returns A promise that contains an array of TopicAPI objects.
+ * @param {number} id - The ID of the task to fetch.
+ * @returns {Promise<TaskAPI>} A promise that contains the TaskAPI object.
  */
-export const fetchTopics = async (): Promise<TopicAPI[]> => {
+export const fetchTask = async (id: number): Promise<TaskAPI> => {
   try {
-    const response = await axiosInstance.get("/Topics");
+    const response = await axiosInstance.get(`/Tasks/${id}`);
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

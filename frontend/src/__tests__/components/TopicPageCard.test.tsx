@@ -7,35 +7,56 @@ const selectedValues = {};
 const isCorrect = {};
 const updateAnswers = () => {};
 
+const mockReason = {
+  id: 1,
+  reasonTitle: "Reason Title",
+  reasonContent: "Reason Description",
+  isRead: false,
+  topicId: 1,
+};
+const mockSubtopic = {
+  id: 1,
+  title: "Subtopic Title",
+  subtopicContent: "Subtopic Description",
+  isRead: false,
+  topicId: 1,
+};
+
 describe("TopicPageCard component testing", () => {
   it("should render the topic page card", () => {
     render(
       <TopicPageCard
-        variant="text"
+        variant="reason"
+        reason={mockReason}
+        subtopic={mockSubtopic}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
       />
     );
-    expect(screen.getByTestId("topic-page-card")).toBeInTheDocument();
+    expect(screen.getByText("Reason Title")).toBeInTheDocument();
   });
 
   it("should render the text variant", () => {
     render(
       <TopicPageCard
-        variant="text"
+        variant="subtopic"
+        reason={mockReason}
+        subtopic={mockSubtopic}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
       />
     );
-    expect(screen.getByText("Velkommen til et kurs!")).toBeInTheDocument();
+    expect(screen.getByText("Subtopic Title")).toBeInTheDocument();
   });
 
   it("should render the true/false variant", () => {
     render(
       <TopicPageCard
         variant="trueFalse"
+        reason={mockReason}
+        subtopic={mockSubtopic}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
@@ -48,6 +69,8 @@ describe("TopicPageCard component testing", () => {
     render(
       <TopicPageCard
         variant="multipleChoice"
+        reason={mockReason}
+        subtopic={mockSubtopic}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
@@ -60,6 +83,8 @@ describe("TopicPageCard component testing", () => {
     render(
       <TopicPageCard
         variant="input"
+        reason={mockReason}
+        subtopic={mockSubtopic}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
@@ -74,6 +99,8 @@ describe("TopicPageCard component testing", () => {
     render(
       <TopicPageCard
         variant="completed"
+        reason={mockReason}
+        subtopic={mockSubtopic}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
@@ -87,6 +114,8 @@ describe("TopicPageCard component testing", () => {
     render(
       <TopicPageCard
         variant="trueFalse"
+        reason={mockReason}
+        subtopic={mockSubtopic}
         updateAnswers={mockUpdateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}

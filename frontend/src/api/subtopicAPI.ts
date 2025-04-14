@@ -2,29 +2,27 @@ import axiosInstance from "./axios";
 import axios from "axios";
 
 /**
- * Interface representing a topic, contains the topic's ID, title, skill level, and user ID.
+ * Interface representing a subtopic, contains the subtopic's ID, title, content, read status, and topic ID.
  *
- * @interface TopicAPI
+ * @interface SubtopicAPI
  */
-export interface TopicAPI {
+export interface SubtopicAPI {
   id: number;
   title: string;
-  skillLevel: string;
-  userId: number;
-  taskType: string;
-  taskId: number;
-  subtopicId: number;
-  reasonId: number;
+  subtopicContent: string;
+  isRead: boolean;
+  topicId: number;
 }
 
 /**
- * Fetches topics and returns them as an array of TopicAPI objects.
+ * Fetches a subtopic by its ID and returns it as a SubtopicAPI object.
  *
- * @returns A promise that contains an array of TopicAPI objects.
+ * @param {number} id - The ID of the subtopic to fetch.
+ * @returns {Promise<SubtopicAPI>} A promise that contains the SubtopicAPI object.
  */
-export const fetchTopics = async (): Promise<TopicAPI[]> => {
+export const fetchSubtopic = async (id: number): Promise<SubtopicAPI> => {
   try {
-    const response = await axiosInstance.get("/Topics");
+    const response = await axiosInstance.get(`/Subtopics/${id}`);
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

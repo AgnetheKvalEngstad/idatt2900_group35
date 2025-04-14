@@ -5,11 +5,13 @@ import TrueFalseVariant from "./variants/TrueFalseVariant";
 import MultipleChoiceVariant from "./variants/MultipleChoiceVariant";
 import InputVariant from "./variants/InputVariant";
 import CompletedVariant from "./variants/CompletedVariant";
+import { ReasonAPI } from "../api/reasonAPI";
+import { SubtopicAPI } from "../api/subtopicAPI";
 
 interface TopicPageCardProps {
   variant:
-    | "text"
-    | "text2"
+    | "reason"
+    | "subtopic"
     | "completed"
     | "trueFalse"
     | "multipleChoice"
@@ -58,23 +60,6 @@ const inputQuestions = [
   { id: 6, question: "Hva er 5 + 7?", correctAnswer: "12" },
 ];
 
-const textContent = {
-  title: "Velkommen til et kurs!",
-  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore\
-   et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip\
-    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
-     fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
-    mollit anim id est laborum.",
-};
-const textContent2 = {
-  title: "Velkommen til et kurs! 2",
-  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore\
-  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip\
-   ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
-    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
-   mollit anim id est laborum.",
-};
-
 const completedContent = {
   title: "Hurra!",
   text: [
@@ -97,10 +82,14 @@ const completedContent = {
  */
 export default function TopicPageCard({
   variant,
+  reason,
+  subtopic,
   selectedValues,
   isCorrect,
   updateAnswers,
 }: TopicPageCardProps & {
+  reason: ReasonAPI;
+  subtopic: SubtopicAPI;
   selectedValues: { [key: number]: string | null };
   isCorrect: { [key: number]: boolean | null };
   updateAnswers: (newAnswers: {
@@ -152,9 +141,23 @@ export default function TopicPageCard({
       data-testid="topic-page-card"
       className="w-full max-w-3xl border-1 border-black overflow-visible"
     >
-      <CardContent className="p-6 h-108 ">
-        {variant === "text" && <TextVariant content={textContent} />}
-        {variant === "text2" && <TextVariant content={textContent2} />}
+      <CardContent className="p-6 h-108">
+        {variant === "reason" && (
+          <TextVariant
+            content={{
+              title: reason?.reasonTitle || "Ingen tittel",
+              text: reason?.reasonContent || "Ingen innhold",
+            }}
+          />
+        )}
+        {variant === "subtopic" && (
+          <TextVariant
+            content={{
+              title: subtopic.title,
+              text: subtopic.subtopicContent,
+            }}
+          />
+        )}
 
         {variant === "trueFalse" && (
           <TrueFalseVariant
@@ -188,3 +191,22 @@ export default function TopicPageCard({
     </Card>
   );
 }
+
+/*
+const textContent = {
+  title: "Velkommen til et kurs!",
+  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore\
+   et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip\
+    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
+     fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
+    mollit anim id est laborum.",
+};
+const textContent2 = {
+  title: "Velkommen til et kurs! 2",
+  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore\
+  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip\
+   ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
+    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
+   mollit anim id est laborum.",
+};
+*/

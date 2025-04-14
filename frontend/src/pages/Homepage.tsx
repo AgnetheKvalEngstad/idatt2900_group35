@@ -52,7 +52,13 @@ export default function Homepage() {
             {group.map((topic) => (
               <Link
                 key={topic.id}
-                to={`/topic/?difficulty=${checkDifficulty(topic.skillLevel)}`}
+                to={`/topic/?id=${topic.id}`}
+                state={{
+                  difficulty: checkDifficulty(topic.skillLevel),
+                  reasonId: topic.reasonId,
+                  subtopicId: topic.subtopicId,
+                  taskId: topic.taskId,
+                }}
               >
                 <TopicCard
                   cardTitle={topic.title}

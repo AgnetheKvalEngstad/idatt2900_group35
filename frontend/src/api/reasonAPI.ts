@@ -2,29 +2,27 @@ import axiosInstance from "./axios";
 import axios from "axios";
 
 /**
- * Interface representing a topic, contains the topic's ID, title, skill level, and user ID.
+ * Interface representing a reason, contains the reason's ID, title, content, read status, and topic ID.
  *
- * @interface TopicAPI
+ * @interface ReasonAPI
  */
-export interface TopicAPI {
+export interface ReasonAPI {
   id: number;
-  title: string;
-  skillLevel: string;
-  userId: number;
-  taskType: string;
-  taskId: number;
-  subtopicId: number;
-  reasonId: number;
+  reasonTitle: string;
+  reasonContent: string;
+  isRead: boolean;
+  topicId: number;
 }
 
 /**
- * Fetches topics and returns them as an array of TopicAPI objects.
+ * Fetches a reason by its id and returns it as a ReasonAPI object.
  *
- * @returns A promise that contains an array of TopicAPI objects.
+ * @param {number} id - The ID of the reason to fetch.
+ * @returns {Promise<ReasonAPI>} A promise that contains a ReasonAPI object.
  */
-export const fetchTopics = async (): Promise<TopicAPI[]> => {
+export const fetchReason = async (id: number): Promise<ReasonAPI> => {
   try {
-    const response = await axiosInstance.get("/Topics");
+    const response = await axiosInstance.get(`/Reasons/${id}`);
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
