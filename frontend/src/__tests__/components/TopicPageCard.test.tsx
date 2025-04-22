@@ -6,6 +6,7 @@ import { vi } from "vitest";
 const selectedValues = {};
 const isCorrect = {};
 const updateAnswers = () => {};
+const handleBack = vi.fn();
 
 const mockReason = {
   id: 1,
@@ -32,6 +33,7 @@ describe("TopicPageCard component testing", () => {
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(screen.getByText("Reason Title")).toBeInTheDocument();
@@ -46,6 +48,7 @@ describe("TopicPageCard component testing", () => {
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(screen.getByText("Subtopic Title")).toBeInTheDocument();
@@ -60,6 +63,7 @@ describe("TopicPageCard component testing", () => {
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(screen.getByText("Sant eller usant?")).toBeInTheDocument();
@@ -74,6 +78,7 @@ describe("TopicPageCard component testing", () => {
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(screen.getByText("Flervalg: Velg riktig svar")).toBeInTheDocument();
@@ -88,6 +93,7 @@ describe("TopicPageCard component testing", () => {
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(
@@ -104,6 +110,7 @@ describe("TopicPageCard component testing", () => {
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(screen.getByText("Hurra!")).toBeInTheDocument();
@@ -119,6 +126,7 @@ describe("TopicPageCard component testing", () => {
         updateAnswers={mockUpdateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
 

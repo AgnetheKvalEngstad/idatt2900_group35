@@ -4,6 +4,7 @@ import {
   FormControlLabel,
   Radio,
   Grid2,
+  Button,
 } from "@mui/material";
 
 interface QuestionMultipleChoice {
@@ -16,6 +17,7 @@ interface QuestionMultipleChoice {
 interface MultipleChoiceVariantProps {
   questions: QuestionMultipleChoice[];
   handleButtonClick: (questionId: number, value: string) => void;
+  handleSelectedValueChange: (questionId: number, value: string | null) => void;
   selectedValues: { [key: number]: string | null };
   isCorrect: { [key: number]: boolean | null };
 }
@@ -35,6 +37,7 @@ interface MultipleChoiceVariantProps {
 export default function MultipleChoiceVariant({
   questions,
   handleButtonClick,
+  handleSelectedValueChange,
   selectedValues,
   isCorrect,
 }: MultipleChoiceVariantProps) {
@@ -45,11 +48,13 @@ export default function MultipleChoiceVariant({
       </Typography>
       <Grid2 container spacing={1}>
         {questions.map((q) => (
-          <Grid2 key={q.id} size={4}>
+          <Grid2 key={q.id} size={{ xs: 6, sm: 6, md: 6, lg: 4 }}>
             <Typography className="pt-2">{q.question}</Typography>
             <RadioGroup
               value={selectedValues[q.id] || ""}
-              onChange={(e) => handleButtonClick(q.id, e.target.value)}
+              onChange={(e) => {
+                handleSelectedValueChange(q.id, e.target.value);
+              }}
             >
               {q.options.map((option: string, i: number) => (
                 <FormControlLabel
@@ -69,6 +74,15 @@ export default function MultipleChoiceVariant({
                 {isCorrect[q.id] ? "Riktig!" : "Feil"}
               </Typography>
             )}
+            <Button
+              variant="contained"
+              className="mt-2"
+              onClick={() =>
+                handleButtonClick(q.id, selectedValues[q.id] || "")
+              }
+            >
+              Sjekk svar
+            </Button>
           </Grid2>
         ))}
       </Grid2>

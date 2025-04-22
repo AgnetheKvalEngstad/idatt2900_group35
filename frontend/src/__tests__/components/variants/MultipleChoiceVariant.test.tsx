@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import MultipleChoiceVariant from "../../../components/variants/MultipleChoiceVariant";
 import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 describe("MultipleChoiceVariant component testing", () => {
   const questions = [
@@ -14,6 +15,7 @@ describe("MultipleChoiceVariant component testing", () => {
   const handleButtonClick = () => {};
   const selectedValues = {};
   const isCorrect = {};
+  const handleSelectedValueChange = vi.fn();
 
   beforeEach(() => {
     render(
@@ -22,6 +24,7 @@ describe("MultipleChoiceVariant component testing", () => {
         handleButtonClick={handleButtonClick}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleSelectedValueChange={handleSelectedValueChange}
       />
     );
   });

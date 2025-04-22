@@ -1,4 +1,4 @@
-import { Grid2, Button } from "@mui/material";
+import { Grid2, Button, Typography } from "@mui/material";
 import TopicMenu from "../components/TopicMenu";
 import TopicPageCard from "../components/TopicPageCard";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
@@ -19,7 +19,8 @@ import { useSubtopic } from "../hooks/useSubtopic";
  */
 export default function TopicPage() {
   const location = useLocation();
-  const { difficulty, reasonId, subtopicId, taskId } = location.state || {};
+  const { topicTitle, difficulty, reasonId, subtopicId, taskId } =
+    location.state || {};
 
   const {
     reason,
@@ -77,6 +78,15 @@ export default function TopicPage() {
     }
   })();
 
+  const fetchLastTwoWords = (text: string) => {
+    const words = text.split(" ");
+    if (words.length < 2) return text;
+    words[words.length - 2] =
+      words[words.length - 2].charAt(0).toUpperCase() +
+      words[words.length - 2].slice(1);
+    return words.slice(-2).join(" ");
+  };
+
   const handleNext = () => {
     if (currentIndex === topicPageCards.length - 1) {
       navigate("/home");
@@ -109,20 +119,35 @@ export default function TopicPage() {
   };
 
   const menuItems = [
-    { title: "Første kurs", icon: <MenuBookRoundedIcon /> },
-    { title: "Andre kurs", icon: <MenuBookRoundedIcon /> },
-    { title: "Oppgave!", icon: <CreateOutlinedIcon /> },
+    {
+      title: "Hvorfor: " + fetchLastTwoWords(topicTitle),
+      icon: <MenuBookRoundedIcon />,
+    },
+    {
+      title: "Hvordan: " + fetchLastTwoWords(topicTitle),
+      icon: <MenuBookRoundedIcon />,
+    },
+    {
+      title: "Oppgave: " + fetchLastTwoWords(topicTitle),
+      icon: <CreateOutlinedIcon />,
+    },
   ];
 
   return (
     <Grid2
       container
       spacing={2}
-      className="flex md:flex-grow flex-wrap items-center justify-center"
+      className="flex items-center justify-center w-full h-full"
     >
-      <Grid2 className="md:flex-1"></Grid2>
-      <Grid2 className="flex flex-col justify-center items-center flex-grow flex-wrap w-100">
-        <Grid2 className=""></Grid2>
+      <Grid2 className="max-lg:hidden md:flex-1"></Grid2>
+      <Grid2
+        className="flex flex-col justify-center items-center md:p-0 p-6"
+        size={{ xs: 12, sm: 12, md: 8, lg: 8 }}
+      >
+        <Typography variant="h4" className="text-center mb-4">
+          {topicTitle}
+        </Typography>
+
         <Grid2
           container
           className="flex flex-row w-full max-w-3xl justify-between p-2"
@@ -136,6 +161,7 @@ export default function TopicPage() {
           >
             Tilbake
           </Button>
+
           <Button
             variant="contained"
             color="secondary"
@@ -155,6 +181,7 @@ export default function TopicPage() {
             variant={topicPageCards[currentIndex]}
             reason={reason}
             subtopic={subtopic}
+            handleBack={handleBack}
             selectedValues={answers[currentIndex]?.selectedValues || {}}
             isCorrect={answers[currentIndex]?.isCorrect || {}}
             updateAnswers={(newAnswers: {
@@ -164,14 +191,14 @@ export default function TopicPage() {
           />
         )}
       </Grid2>
-      <Grid2 container className="flex flex-1 ml-auto items-center pr-8 ">
+      <div className="flex justify-start">
         <TopicMenu
           difficulty={difficulty}
           index={currentIndex}
           onButtonClick={handleMenuClick}
           menuItems={menuItems}
         />
-      </Grid2>
+      </div>
     </Grid2>
   );
 }

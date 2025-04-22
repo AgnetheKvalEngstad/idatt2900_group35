@@ -84,12 +84,14 @@ export default function TopicPageCard({
   variant,
   reason,
   subtopic,
+  handleBack,
   selectedValues,
   isCorrect,
   updateAnswers,
 }: TopicPageCardProps & {
   reason: ReasonAPI;
   subtopic: SubtopicAPI;
+  handleBack: () => void;
   selectedValues: { [key: number]: string | null };
   isCorrect: { [key: number]: boolean | null };
   updateAnswers: (newAnswers: {
@@ -98,6 +100,17 @@ export default function TopicPageCard({
   }) => void;
 }) {
   const handleInputChange = (questionId: number, value: string) => {
+    const newSelectedValues = { ...selectedValues, [questionId]: value };
+    updateAnswers({
+      selectedValues: newSelectedValues,
+      isCorrect,
+    });
+  };
+
+  const handleSelectedValueChange = (
+    questionId: number,
+    value: string | null
+  ) => {
     const newSelectedValues = { ...selectedValues, [questionId]: value };
     updateAnswers({
       selectedValues: newSelectedValues,
@@ -139,9 +152,9 @@ export default function TopicPageCard({
   return (
     <Card
       data-testid="topic-page-card"
-      className="w-full max-w-3xl border-1 border-black overflow-visible"
+      className="w-full max-w-3xl border-1 border-black"
     >
-      <CardContent className="p-6 h-108">
+      <CardContent className="p-6 min-h-108">
         {variant === "reason" && (
           <TextVariant
             content={{
@@ -171,6 +184,7 @@ export default function TopicPageCard({
           <MultipleChoiceVariant
             questions={multipleChoiceQuestions}
             handleButtonClick={handleButtonClick}
+            handleSelectedValueChange={handleSelectedValueChange}
             selectedValues={selectedValues}
             isCorrect={isCorrect}
           />
@@ -185,7 +199,10 @@ export default function TopicPageCard({
           />
         )}
         {variant === "completed" && (
-          <CompletedVariant content={completedContent} />
+          <CompletedVariant
+            content={completedContent}
+            handleBack={handleBack}
+          />
         )}
       </CardContent>
     </Card>

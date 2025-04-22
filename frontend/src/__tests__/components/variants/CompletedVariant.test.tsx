@@ -1,6 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import CompletedVariant from "../../../components/variants/CompletedVariant";
 import "@testing-library/jest-dom";
+import { vi } from "vitest";
+
+const handleBack = vi.fn();
 
 describe("CompletedVariant component testing", () => {
   const mockContent = {
@@ -9,7 +12,7 @@ describe("CompletedVariant component testing", () => {
   };
 
   beforeEach(() => {
-    render(<CompletedVariant content={mockContent} />);
+    render(<CompletedVariant content={mockContent} handleBack={handleBack} />);
   });
 
   it("renders the current title", () => {

@@ -54,6 +54,7 @@ export default function Homepage() {
                 key={topic.id}
                 to={`/topic/?id=${topic.id}`}
                 state={{
+                  topicTitle: topic.title,
                   difficulty: checkDifficulty(topic.skillLevel),
                   reasonId: topic.reasonId,
                   subtopicId: topic.subtopicId,

@@ -18,6 +18,7 @@ vi.mock("react-router-dom", async () => {
     ...actual,
     useLocation: () => ({
       state: {
+        topicTitle: "Topic Title",
         difficulty: "Beginner",
         reasonId: 1,
         subtopicId: 1,
@@ -64,6 +65,7 @@ describe("TopicPage component testing", () => {
     mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.reason });
     mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.subtopic });
     mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.task });
+
     await act(async () => {
       renderWithRouter(<TopicPage />);
     });

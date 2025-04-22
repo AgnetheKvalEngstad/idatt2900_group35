@@ -33,7 +33,7 @@ export default function TopicMenu({
       justifyContent="center"
       alignItems="center"
       direction="column"
-      className="p-8 pr-10"
+      className="p-8 md:pr-10 w-80"
     >
       {menuItems.map((menuItem, i) => (
         <Button

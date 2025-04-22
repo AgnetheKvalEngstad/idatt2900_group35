@@ -13,7 +13,10 @@ interface CompletedVariantProps {
  *
  * @returns The CompletedVariant component.
  */
-export default function CompletedVariant({ content }: CompletedVariantProps) {
+export default function CompletedVariant({
+  content,
+  handleBack,
+}: CompletedVariantProps & { handleBack: () => void }) {
   const textLines: Array<React.ReactNode> = Array(content.text.length)
     .fill(null)
     .map((_, index) => (
@@ -28,7 +31,7 @@ export default function CompletedVariant({ content }: CompletedVariantProps) {
         {content.title}
       </Typography>
       <Grid2 className="max-w-120 ">{textLines}</Grid2>
-      <Button variant="contained" color="secondary">
+      <Button variant="contained" color="secondary" onClick={handleBack}>
         Prøv oppgaven en gang til!
       </Button>
     </Grid2>

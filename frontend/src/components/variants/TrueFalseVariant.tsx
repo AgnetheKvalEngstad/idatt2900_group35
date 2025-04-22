@@ -31,7 +31,11 @@ export default function TrueFalseVariant({
       </Typography>
       <Grid2 container spacing={1}>
         {questions.map((q) => (
-          <Grid2 key={q.id} size={4}>
+          <Grid2
+            key={q.id}
+            size={{ xs: 6, sm: 4, md: 4, lg: 4 }}
+            className="flex items-center flex-col gap-2"
+          >
             <Typography className="pt-2">{q.question}</Typography>
             <Grid2 className="flex flex-row gap-1">
               <ButtonGroup>
