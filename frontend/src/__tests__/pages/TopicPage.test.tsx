@@ -6,6 +6,7 @@ import { vi } from "vitest";
 import type { AxiosInstance } from "axios";
 import axiosInstance from "../../api/axios";
 import { MemoryRouter } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
 
 vi.mock("../../api/axios");
 
@@ -56,7 +57,11 @@ const mockTopicContent = {
 };
 
 const renderWithRouter = (ui: React.ReactElement) => {
-  return render(<MemoryRouter>{ui}</MemoryRouter>);
+  return render(
+    <CookiesProvider>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </CookiesProvider>
+  );
 };
 
 describe("TopicPage component testing", () => {
@@ -67,7 +72,11 @@ describe("TopicPage component testing", () => {
     mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.task });
 
     await act(async () => {
-      renderWithRouter(<TopicPage />);
+      renderWithRouter(
+        <CookiesProvider>
+          <TopicPage />
+        </CookiesProvider>
+      );
     });
   });
 

@@ -4,6 +4,7 @@ import Homepage from "../../pages/Homepage";
 import { useTopics } from "../../hooks/useTopics";
 import { BrowserRouter } from "react-router-dom";
 import "@testing-library/jest-dom/vitest";
+import { CookiesProvider } from "react-cookie";
 
 vi.mock("../../hooks/useTopics", () => ({
   useTopics: vi.fn(),
@@ -48,7 +49,11 @@ describe("Tests for Homepage component", () => {
       error: false,
     });
 
-    renderWithRouter(<Homepage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <Homepage />
+      </CookiesProvider>
+    );
     expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 
@@ -59,7 +64,11 @@ describe("Tests for Homepage component", () => {
       error: false,
     });
 
-    renderWithRouter(<Homepage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <Homepage />
+      </CookiesProvider>
+    );
     expect(screen.getByText("Intro to Cookies")).toBeInTheDocument();
     expect(screen.getByText("Advanced Cookies")).toBeInTheDocument();
   });
@@ -71,7 +80,11 @@ describe("Tests for Homepage component", () => {
       error: true,
     });
 
-    renderWithRouter(<Homepage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <Homepage />
+      </CookiesProvider>
+    );
     expect(screen.getByText("Error loading topics")).toBeInTheDocument();
   });
 });

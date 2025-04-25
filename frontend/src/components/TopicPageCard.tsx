@@ -8,7 +8,13 @@ import CompletedVariant from "./variants/CompletedVariant";
 import { ReasonAPI } from "../api/reasonAPI";
 import { SubtopicAPI } from "../api/subtopicAPI";
 
-interface TopicPageCardProps {
+/**
+ * Represents the properties for the TopicPageCard component.
+ *
+ * @interface TopicPageCardProps
+ * @property {string} variant - The variant of the card, which determines the type of content to display.
+ */
+export interface TopicPageCardProps {
   variant:
     | "reason"
     | "subtopic"
@@ -60,16 +66,6 @@ const inputQuestions = [
   { id: 6, question: "Hva er 5 + 7?", correctAnswer: "12" },
 ];
 
-const completedContent = {
-  title: "Hurra!",
-  text: [
-    "Du har fullført oppgaveseksjonen om test tema.",
-    "Bra jobba! ",
-    "Du fikk xxx mynter! ",
-    "Har du lyst til å prøve oppgaven en gang til, eller gå videre til neste tema?",
-  ],
-};
-
 /**
  * A React component that renders a card with different content
  * based on the `variant` prop.
@@ -77,6 +73,12 @@ const completedContent = {
  * @param {TopicPageCardProps} props - The props for the component.
  * @param {string} props.variant - Determines the type of content to display
  * inside the card. Possible values are "text", "trueFalse", "multipleChoice", and "input".
+ * @param {ReasonAPI} props.reason - The reason object containing the reason title and content.
+ * @param {SubtopicAPI} props.subtopic - The subtopic object containing the subtopic title and content.
+ * @param {function} props.handleBack - A function to handle the back button click.
+ * @param {object} props.selectedValues - An object containing the selected values for each question.
+ * @param {object} props.isCorrect - An object containing the correctness of each question.
+ * @param {function} props.updateAnswers - A function to update the selected values and correctness of questions.
  *
  * @returns A card component with the specified content variant.
  */
@@ -84,13 +86,22 @@ export default function TopicPageCard({
   variant,
   reason,
   subtopic,
+  topicTitle,
   handleBack,
   selectedValues,
   isCorrect,
   updateAnswers,
 }: TopicPageCardProps & {
+  variant:
+    | "reason"
+    | "subtopic"
+    | "completed"
+    | "trueFalse"
+    | "multipleChoice"
+    | "input";
   reason: ReasonAPI;
   subtopic: SubtopicAPI;
+  topicTitle: string;
   handleBack: () => void;
   selectedValues: { [key: number]: string | null };
   isCorrect: { [key: number]: boolean | null };
@@ -154,7 +165,7 @@ export default function TopicPageCard({
       data-testid="topic-page-card"
       className="w-full max-w-3xl border-1 border-black"
     >
-      <CardContent className="p-6 min-h-108">
+      <CardContent className="p-6 min-h-100">
         {variant === "reason" && (
           <TextVariant
             content={{
@@ -199,31 +210,9 @@ export default function TopicPageCard({
           />
         )}
         {variant === "completed" && (
-          <CompletedVariant
-            content={completedContent}
-            handleBack={handleBack}
-          />
+          <CompletedVariant topicTitle={topicTitle} handleBack={handleBack} />
         )}
       </CardContent>
     </Card>
   );
 }
-
-/*
-const textContent = {
-  title: "Velkommen til et kurs!",
-  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore\
-   et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip\
-    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
-     fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
-    mollit anim id est laborum.",
-};
-const textContent2 = {
-  title: "Velkommen til et kurs! 2",
-  text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore\
-  et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip\
-   ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu\
-    fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt\
-   mollit anim id est laborum.",
-};
-*/
