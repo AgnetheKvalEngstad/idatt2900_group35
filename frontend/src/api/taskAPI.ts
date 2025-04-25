@@ -44,3 +44,29 @@ export const fetchTask = async (id: number): Promise<TaskAPI> => {
     throw error;
   }
 };
+
+/**
+ * Updates the isDone property of a task.
+ *
+ * @param id The ID of the task to update.
+ * @param isDone The new value for the isDone property.
+ * @returns A promise that resolves when the update is complete.
+ */
+export const updateTaskIsDone = async (
+  task: TaskAPI,
+  done: boolean
+): Promise<void> => {
+  try {
+    await axiosInstance.put(`/Tasks/${task.id}`, {
+      id: task.id,
+      title: task.title,
+      taskContent: task.taskContent,
+      isDone: done,
+      topicId: task.topicId,
+      taskType: task.taskType,
+    });
+  } catch (error) {
+    console.error("Error updating task:", error);
+    throw error;
+  }
+};

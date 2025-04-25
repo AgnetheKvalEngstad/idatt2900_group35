@@ -43,3 +43,28 @@ export const fetchSubtopic = async (id: number): Promise<SubtopicAPI> => {
     throw error;
   }
 };
+
+/**
+ * Updates the isRead property of a subtopic.
+ *
+ * @param id The ID of the subtopic to update.
+ * @param isRead The new value for the isRead property.
+ * @returns A promise that resolves when the update is complete.
+ */
+export const updateSubtopicIsRead = async (
+  subtopic: SubtopicAPI,
+  read: boolean
+): Promise<void> => {
+  try {
+    await axiosInstance.put(`/Subtopics/${subtopic.id}`, {
+      id: subtopic.id,
+      title: subtopic.title,
+      subtopicContent: subtopic.subtopicContent,
+      isRead: read,
+      topicId: subtopic.topicId,
+    });
+  } catch (error) {
+    console.error("Error updating subtopic:", error);
+    throw error;
+  }
+};

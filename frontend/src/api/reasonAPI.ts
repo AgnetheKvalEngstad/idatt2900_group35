@@ -43,3 +43,42 @@ export const fetchReason = async (id: number): Promise<ReasonAPI> => {
     throw error;
   }
 };
+
+/**
+ * Updates the isRead property of a reason.
+ *
+ * @param id The ID of the reason to update.
+ * @param isRead The new value for the isRead property.
+ * @returns A promise that resolves when the update is complete.
+ */
+export const updateReasonIsRead = async (
+  reason: ReasonAPI,
+  read: boolean
+): Promise<void> => {
+  try {
+    await axiosInstance.put(`/Reasons/${reason.id}`, {
+      id: reason.id,
+      reasonTitle: reason.reasonTitle,
+      reasonContent: reason.reasonContent,
+      isRead: read,
+      topicId: reason.topicId,
+    });
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        console.error(
+          "Server responded with an error:",
+          error.response.status,
+          error.response.data
+        );
+      } else if (error.request) {
+        console.error("No response received from server:", error.request);
+      } else {
+        console.error("Error setting up the request:", error.message);
+      }
+    } else {
+      console.error("An unexpected error occurred:", error);
+    }
+    throw error;
+  }
+};
