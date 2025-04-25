@@ -1,4 +1,4 @@
-import { Card, CardContent, Grid2, Typography, Button } from "@mui/material";
+import { Card, CardContent, Grid2, Typography } from "@mui/material";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Link } from "react-router-dom";
@@ -26,25 +26,18 @@ export default function Header() {
               borderRadius: 100,
               backgroundColor: "#0F3D75",
               padding: "4px",
-              width: "250px",
             }}
-            className="hover:shadow-lg hover:scale-105 transition-transform duration-200 "
+            className="hover:shadow-lg hover:scale-105 transition-transform duration-200 w-54 md:w-66"
           >
-            <CardContent
-              style={{
-                paddingBottom: "2px",
-                paddingTop: "4px",
-                textAlign: "center",
-              }}
+            <Typography
+              variant="h5"
+              gutterBottom={false}
+              style={{ fontWeight: "bold", color: "white" }}
+              className="text-center md:p-2 p-1"
             >
-              <Typography
-                variant="h5"
-                gutterBottom={false}
-                style={{ fontWeight: "bold", color: "white" }}
-              >
-                Trygg på nett.no
-              </Typography>
-            </CardContent>
+              Trygg på nett.no
+            </Typography>
+
             <CardContent
               className="text-center"
               style={{ paddingTop: "0", paddingBottom: "4px" }}
@@ -58,17 +51,41 @@ export default function Header() {
       </Grid2>
       <Grid2>
         <Link to="/profile" style={{ textDecoration: "none" }}>
-          <Button
-            variant="contained"
-            color="success"
+          <Card
             data-testid="points-my-page-button"
-            className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
+            sx={{
+              borderRadius: 6,
+              backgroundColor: "#0F3D75",
+            }}
+            className="flex flex-col-reverse sm:w-50 md:h-12 w-26 h-24 md:gap-4 gap-0 md:justify-center p-2
+            md:flex-row hover:shadow-lg hover:scale-105 transition-transform duration-200"
           >
-            <OfflineBoltOutlinedIcon style={{ marginRight: "2px" }} />
-            {points}
-            <PersonOutlineOutlinedIcon style={{ marginLeft: "14px" }} />
-            Min side
-          </Button>
+            <Typography
+              style={{
+                color: "white",
+                textAlign: "center",
+                marginTop: "auto",
+                marginBottom: "auto",
+              }}
+              variant="body1"
+            >
+              <OfflineBoltOutlinedIcon />
+              {points}
+            </Typography>
+
+            <Typography
+              style={{
+                color: "white",
+                textAlign: "center",
+                marginTop: "auto",
+                marginBottom: "auto",
+              }}
+              variant="body1"
+            >
+              <PersonOutlineOutlinedIcon />
+              Min side
+            </Typography>
+          </Card>
         </Link>
       </Grid2>
     </Grid2>

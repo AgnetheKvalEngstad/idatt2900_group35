@@ -26,7 +26,7 @@ export default function Footer() {
 
   return (
     <Grid2 className="sticky bottom-0 mt-auto flex flex-row items-center justify-between pl-4 py-2 bg-white">
-      <Grid2 className="flex flex-col gap-2">
+      <Grid2 className="flex flex-row-reverse md:flex-col gap-2">
         <Button
           variant="contained"
           color="primary"

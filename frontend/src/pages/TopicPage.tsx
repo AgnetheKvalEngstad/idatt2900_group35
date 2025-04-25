@@ -315,7 +315,7 @@ export default function TopicPage() {
             }) => updateAnswers(currentIndex, newAnswers)}
           />
         )}
-        <Grid2 className="flex flex-col w-120 p-2">
+        <Grid2 className="flex flex-col w-64 md:w-120 p-2">
           <BorderLinearProgress
             variant="determinate"
             value={progress[topicId] || 0}
