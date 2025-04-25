@@ -1,4 +1,4 @@
-import { Card, Grid2 } from "@mui/material";
+import { Card, Grid2, SxProps } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { getBackgroundColor } from "../utils/utils";
@@ -8,6 +8,7 @@ interface TopicCardProps {
   cardIcon: React.ElementType;
   difficulty: string;
   size: string;
+  sx?: SxProps;
 }
 
 /**
@@ -30,11 +31,12 @@ export default function TopicCard({
   cardIcon,
   difficulty,
   size,
+  sx,
 }: TopicCardProps) {
   const getWidth = (size: string) => {
     switch (size) {
       case "small":
-        return 200;
+        return 180;
       case "medium":
         return 184;
       default:
@@ -71,13 +73,10 @@ export default function TopicCard({
         borderRadius: size == "small" ? 4 : 5,
         border: size == "small" ? 2 : 3,
         padding: size === "small" ? 1 : 2,
+        ...sx,
       }}
       variant="outlined"
-      className={`${
-        size !== "small"
-          ? "hover:shadow-lg hover:scale-105 transition-transform duration-200 flex justify-between"
-          : ""
-      }`}
+      className="hover:shadow-lg hover:scale-105 transition-transform duration-200 flex justify-between"
     >
       <Grid2
         className={`${

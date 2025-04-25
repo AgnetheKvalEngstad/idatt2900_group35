@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import { useCookies } from "react-cookie";
 
 interface DeleteDialogProps {
   open: boolean;
@@ -15,6 +16,16 @@ interface DeleteDialogProps {
 }
 
 export default function DeleteDialog({ open, onClose }: DeleteDialogProps) {
+  const [, removeCookies] = useCookies(["progress", "lastIndex"]);
+
+  const handleDelete = () => {
+    removeCookies("progress", { path: "/" });
+    removeCookies("lastIndex", { path: "/" });
+    //TODO: Delete all progress data from the database
+    onClose();
+    window.location.reload();
+  };
+
   return (
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>
@@ -42,7 +53,7 @@ export default function DeleteDialog({ open, onClose }: DeleteDialogProps) {
         <Button variant="contained" onClick={onClose}>
           Avbryt
         </Button>
-        <Button variant="contained" color="error" onClick={onClose}>
+        <Button variant="contained" color="error" onClick={handleDelete}>
           Bekreft
         </Button>
       </DialogActions>

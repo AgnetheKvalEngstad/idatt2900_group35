@@ -1,27 +1,103 @@
-import { describe, expect, it, beforeEach } from "vitest";
+import { describe, expect, it, beforeEach, Mock } from "vitest";
 import { render, screen, act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import userEvent from "@testing-library/user-event";
 import ProfilePage from "../../pages/ProfilePage";
+import { vi } from "vitest";
+import { BrowserRouter } from "react-router-dom";
+import { useTopics } from "../../hooks/useTopics";
+import { CookiesProvider } from "react-cookie";
+
+vi.mock("../../hooks/useTopics", () => ({
+  useTopics: vi.fn(),
+}));
+
+const mockTopics = [
+  {
+    id: 1,
+    title: "Intro to Cookies",
+    skillLevel: "0",
+    userId: 1,
+    reasonId: 1,
+    subtopicId: 1,
+    taskId: 1,
+    taskType: "truefalse",
+  },
+  {
+    id: 2,
+    title: "Advanced Cookies",
+    skillLevel: "2",
+    userId: 2,
+    reasonId: 2,
+    subtopicId: 2,
+    taskId: 2,
+    taskType: "multiplechoice",
+  },
+];
+
+const renderWithRouter = (ui: React.ReactElement) => {
+  return render(
+    <CookiesProvider>
+      <BrowserRouter>{ui}</BrowserRouter>
+    </CookiesProvider>
+  );
+};
 
 describe("ProfilePage component test", () => {
   beforeEach(() => {
-    render(<ProfilePage />);
+    vi.clearAllMocks();
+  });
+
+  it("should render loading state", () => {
+    (useTopics as jest.Mock).mockReturnValue({
+      topics: [],
+      loading: true,
+      error: false,
+    });
+    renderWithRouter(<ProfilePage />);
+    expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 
   it("should render title", () => {
+    (useTopics as Mock).mockReturnValue({
+      topics: mockTopics,
+      loading: false,
+      error: false,
+    });
+    renderWithRouter(<ProfilePage />);
     expect(screen.getByText("Min side")).toBeInTheDocument();
   });
 
   it("should render the delete button", () => {
+    (useTopics as Mock).mockReturnValue({
+      topics: mockTopics,
+      loading: false,
+      error: false,
+    });
+    renderWithRouter(<ProfilePage />);
+
     expect(screen.getByText("Slett min data")).toBeInTheDocument();
   });
 
   it("should render completed topics card", () => {
+    (useTopics as Mock).mockReturnValue({
+      topics: mockTopics,
+      loading: false,
+      error: false,
+    });
+    renderWithRouter(<ProfilePage />);
+
     expect(screen.getByText("Fullførte temaer")).toBeInTheDocument();
   });
 
   it("should open the delete dialog when the delete button is clicked", async () => {
+    (useTopics as Mock).mockReturnValue({
+      topics: mockTopics,
+      loading: false,
+      error: false,
+    });
+    renderWithRouter(<ProfilePage />);
+
     const deleteButton = screen.getByText("Slett min data");
     await act(async () => {
       userEvent.click(deleteButton);
@@ -33,7 +109,14 @@ describe("ProfilePage component test", () => {
   });
 
   it("should render all topic cards", () => {
-    const topicCards = screen.getAllByText("Eksempel tema");
-    expect(topicCards).toHaveLength(6);
+    (useTopics as Mock).mockReturnValue({
+      topics: mockTopics,
+      loading: false,
+      error: false,
+    });
+    renderWithRouter(<ProfilePage />);
+
+    expect(screen.getByText("Intro to Cookies")).toBeInTheDocument();
+    expect(screen.getByText("Advanced Cookies")).toBeInTheDocument();
   });
 });
