@@ -48,7 +48,7 @@ export default function Footer() {
       </Grid2>
 
       {location.pathname === "/" && (
-        <Grid2 className="pr-8">
+        <Grid2 className="md:pr-8 pr-1">
           <Button
             variant="contained"
             color="primary"
