@@ -3,7 +3,7 @@
 exports[`Tests for component TopicMenu > should render TopicMenu 1`] = `
 <ForwardRef(Grid)
   alignItems="center"
-  className="p-8 pr-10"
+  className="p-8 md:pr-10 w-80"
   container={true}
   direction="column"
   justifyContent="center"

@@ -1,54 +1,171 @@
-import { render, screen } from "@testing-library/react";
-import { MemoryRouter } from "react-router-dom";
+import { render, screen, waitFor, act } from "@testing-library/react";
 import TopicPage from "../../pages/TopicPage";
+import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import { fireEvent } from "@testing-library/react";
+import { vi } from "vitest";
+import type { AxiosInstance } from "axios";
+import axiosInstance from "../../api/axios";
+import { MemoryRouter } from "react-router-dom";
+import { CookiesProvider } from "react-cookie";
+
+vi.mock("../../api/axios");
+
+vi.mock("react-router-dom", async () => {
+  const actual =
+    await vi.importActual<typeof import("react-router-dom")>(
+      "react-router-dom"
+    );
+  return {
+    ...actual,
+    useLocation: () => ({
+      state: {
+        topicTitle: "Topic Title",
+        difficulty: "Beginner",
+        reasonId: 1,
+        subtopicId: 1,
+        taskId: 1,
+      },
+    }),
+  };
+});
+
+const mockedAxios = axiosInstance as jest.Mocked<AxiosInstance>;
+
+const mockTopicContent = {
+  reason: {
+    id: 1,
+    reasonTitle: "Reason Title",
+    reasonContent: "Reason Description",
+    isRead: false,
+    topicId: 1,
+  },
+  subtopic: {
+    id: 1,
+    title: "Subtopic Title",
+    subtopicContent: "Subtopic Description",
+    isRead: false,
+    topicId: 1,
+  },
+  task: {
+    id: 1,
+    taskTitle: "Task Title",
+    taskContent: "Task Description",
+    isDone: false,
+    topicId: 1,
+    taskType: "truefalse",
+  },
+};
+
+const renderWithRouter = (ui: React.ReactElement) => {
+  return render(
+    <CookiesProvider>
+      <MemoryRouter>{ui}</MemoryRouter>
+    </CookiesProvider>
+  );
+};
 
 describe("TopicPage component testing", () => {
-  beforeEach(() => {
-    render(
-      <MemoryRouter>
-        <TopicPage />
-      </MemoryRouter>
-    );
-  });
-  it("should render next button", () => {
-    expect(screen.getByText("Neste")).toBeInTheDocument();
+  beforeEach(async () => {
+    vi.clearAllMocks();
+    mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.reason });
+    mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.subtopic });
+    mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.task });
+
+    await act(async () => {
+      renderWithRouter(
+        <CookiesProvider>
+          <TopicPage />
+        </CookiesProvider>
+      );
+    });
   });
 
-  it("should render back button", () => {
-    expect(screen.getByText("Tilbake")).toBeInTheDocument();
+  it("should render the page", async () => {
+    await waitFor(() => {
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    });
   });
 
-  it("back button should be disabled on first card", () => {
-    expect(screen.getByText("Tilbake")).toBeDisabled();
+  it("should render next button", async () => {
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", {
+          name: /Neste|Lever oppgave|Fullfør kurs/i,
+        })
+      ).toBeInTheDocument();
+    });
   });
 
-  it("should render next button", () => {
-    expect(screen.getByText("Neste")).toBeInTheDocument();
+  it("should render title", async () => {
+    await waitFor(() => {
+      expect(screen.getByText("Reason Title")).toBeInTheDocument();
+    });
   });
 
-  it("clicking next button should enable back button", () => {
-    const nextButton = screen.getByText("Neste");
-    fireEvent.click(nextButton);
-    expect(screen.getByText("Tilbake")).not.toBeDisabled();
+  it("should render back button", async () => {
+    await waitFor(() => {
+      expect(screen.getByText("Tilbake")).toBeInTheDocument();
+    });
   });
 
-  it("clicking three times should lead to completed page", () => {
-    const nextButton = screen.getByText("Neste");
-    fireEvent.click(nextButton);
-    fireEvent.click(nextButton);
-    fireEvent.click(nextButton);
-    expect(screen.getByText("Hurra!")).toBeInTheDocument();
+  it("back button should be disabled on first card", async () => {
+    await waitFor(() => {
+      expect(screen.getByText("Tilbake")).toBeDisabled();
+    });
   });
 
-  it("clicking back button should go back to previous card", () => {
-    const nextButton = screen.getByText("Neste");
-    fireEvent.click(nextButton);
-    fireEvent.click(nextButton);
-    fireEvent.click(nextButton);
+  it("clicking next button should enable back button", async () => {
+    await waitFor(() => {
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    });
+
+    const nextButton = screen.getByRole("button", {
+      name: /Neste|Lever oppgave|Fullfør kurs/i,
+    });
+    userEvent.click(nextButton);
+    await waitFor(() => {
+      expect(screen.getByText("Tilbake")).not.toBeDisabled();
+    });
+  });
+
+  it("clicking three times should lead to completed page", async () => {
+    await waitFor(() => {
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    });
+
+    const nextButton = screen.getByRole("button", {
+      name: /Neste|Lever oppgave|Fullfør kurs/i,
+    });
+
+    userEvent.click(nextButton);
+    userEvent.click(nextButton);
+    userEvent.click(nextButton);
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("button", {
+          name: /Fullfør kurs/i,
+        })
+      ).toBeInTheDocument();
+    });
+  });
+
+  it("clicking back button should go back to previous card", async () => {
+    await waitFor(() => {
+      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
+    });
+
+    const nextButton = screen.getByRole("button", {
+      name: /Neste|Lever oppgave|Fullfør kurs/i,
+    });
+    userEvent.click(nextButton);
+    userEvent.click(nextButton);
+    userEvent.click(nextButton);
     const backButton = screen.getByText("Tilbake");
-    fireEvent.click(backButton);
-    expect(screen.getByText("Lever oppgave")).toBeInTheDocument();
+    userEvent.click(backButton);
+
+    await waitFor(() => {
+      expect(screen.getByText("Lever oppgave")).toBeInTheDocument();
+    });
   });
 });

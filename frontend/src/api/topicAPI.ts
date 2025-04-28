@@ -11,10 +11,14 @@ export interface TopicAPI {
   title: string;
   skillLevel: string;
   userId: number;
+  taskType: string;
+  taskId: number;
+  subtopicId: number;
+  reasonId: number;
 }
 
 /**
- * Fetches topics from the API and returns them as an array of TopicAPI objects.
+ * Fetches topics and returns them as an array of TopicAPI objects.
  *
  * @returns A promise that contains an array of TopicAPI objects.
  */

@@ -11,10 +11,10 @@ import theme from "./theme/theme";
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <div className="flex flex-col min-h-screen">
-        <Router>
+      <Router>
+        <div className="flex flex-col min-h-screen">
           <Header />
-          <div className="flex-grow flex">
+          <div className="flex-grow flex justify-center items-center">
             <Routes>
               <Route path="/" element={<OnboardingPage />} />
               <Route path="/home" element={<Homepage />} />
@@ -23,8 +23,8 @@ function App() {
             </Routes>
           </div>
           <Footer />
-        </Router>
-      </div>
+        </div>
+      </Router>
     </ThemeProvider>
   );
 }

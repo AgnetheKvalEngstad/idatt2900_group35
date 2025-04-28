@@ -35,12 +35,16 @@ export default function InputVariant({
   isCorrect,
 }: InputVariantProps) {
   return (
-    <Grid2 container spacing={1}>
+    <Grid2 container spacing={1} className="flex justify-center items-center">
       <Typography variant="h5" className="pt-2 w-full">
         Skriv inn svaret i feltene under
       </Typography>
       {questions.map((q) => (
-        <Grid2 key={q.id} size={6} className="flex flex-col gap-1">
+        <Grid2
+          key={q.id}
+          size={{ xs: 8, sm: 6, md: 6, lg: 6 }}
+          className="flex flex-col gap-1"
+        >
           <Grid2 className="flex flex-row">
             <Typography className="p-2">{q.question}</Typography>
             {isCorrect[q.id] !== undefined && (

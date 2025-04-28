@@ -6,39 +6,68 @@ import { vi } from "vitest";
 const selectedValues = {};
 const isCorrect = {};
 const updateAnswers = () => {};
+const handleBack = vi.fn();
+
+const mockReason = {
+  id: 1,
+  reasonTitle: "Reason Title",
+  reasonContent: "Reason Description",
+  isRead: false,
+  topicId: 1,
+};
+const mockSubtopic = {
+  id: 1,
+  title: "Subtopic Title",
+  subtopicContent: "Subtopic Description",
+  isRead: false,
+  topicId: 1,
+};
+const mockTopicTitle = "Topic Title";
 
 describe("TopicPageCard component testing", () => {
   it("should render the topic page card", () => {
     render(
       <TopicPageCard
-        variant="text"
+        variant="reason"
+        reason={mockReason}
+        subtopic={mockSubtopic}
+        topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
-    expect(screen.getByTestId("topic-page-card")).toBeInTheDocument();
+    expect(screen.getByText("Reason Title")).toBeInTheDocument();
   });
 
   it("should render the text variant", () => {
     render(
       <TopicPageCard
-        variant="text"
+        variant="subtopic"
+        reason={mockReason}
+        subtopic={mockSubtopic}
+        topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
-    expect(screen.getByText("Velkommen til et kurs!")).toBeInTheDocument();
+    expect(screen.getByText("Subtopic Title")).toBeInTheDocument();
   });
 
   it("should render the true/false variant", () => {
     render(
       <TopicPageCard
         variant="trueFalse"
+        reason={mockReason}
+        subtopic={mockSubtopic}
+        topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(screen.getByText("Sant eller usant?")).toBeInTheDocument();
@@ -48,9 +77,13 @@ describe("TopicPageCard component testing", () => {
     render(
       <TopicPageCard
         variant="multipleChoice"
+        reason={mockReason}
+        subtopic={mockSubtopic}
+        topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(screen.getByText("Flervalg: Velg riktig svar")).toBeInTheDocument();
@@ -60,9 +93,13 @@ describe("TopicPageCard component testing", () => {
     render(
       <TopicPageCard
         variant="input"
+        reason={mockReason}
+        subtopic={mockSubtopic}
+        topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(
@@ -74,9 +111,13 @@ describe("TopicPageCard component testing", () => {
     render(
       <TopicPageCard
         variant="completed"
+        reason={mockReason}
+        subtopic={mockSubtopic}
+        topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
     expect(screen.getByText("Hurra!")).toBeInTheDocument();
@@ -87,9 +128,13 @@ describe("TopicPageCard component testing", () => {
     render(
       <TopicPageCard
         variant="trueFalse"
+        reason={mockReason}
+        subtopic={mockSubtopic}
+        topicTitle={mockTopicTitle}
         updateAnswers={mockUpdateAnswers}
         selectedValues={selectedValues}
         isCorrect={isCorrect}
+        handleBack={handleBack}
       />
     );
 
