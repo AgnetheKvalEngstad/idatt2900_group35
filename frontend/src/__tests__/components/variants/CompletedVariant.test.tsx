@@ -3,6 +3,12 @@ import CompletedVariant from "../../../components/variants/CompletedVariant";
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 
+vi.mock("react-confetti", () => {
+  return {
+    default: () => <div data-testid="mock-confetti" />,
+  };
+});
+
 const handleBack = vi.fn();
 
 describe("CompletedVariant component testing", () => {

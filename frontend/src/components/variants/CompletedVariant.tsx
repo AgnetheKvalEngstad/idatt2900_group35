@@ -1,4 +1,6 @@
 import { Typography, Button, Grid2 } from "@mui/material";
+import { useWindowSize, useTimeout } from "react-use";
+import Confetti from "react-confetti";
 
 interface CompletedVariantProps {
   topicTitle: string;
@@ -16,8 +18,16 @@ export default function CompletedVariant({
   topicTitle,
   handleBack,
 }: CompletedVariantProps & { handleBack: () => void }) {
+  const { width, height } = useWindowSize();
+  const [isComplete] = useTimeout(6500);
   return (
     <Grid2 className="flex flex-col items-center justify-center text-center gap-6">
+      <Confetti
+        width={width}
+        height={height}
+        numberOfPieces={300}
+        recycle={!isComplete}
+      />
       <Typography variant="h2" className="pt-4">
         Hurra!
       </Typography>
