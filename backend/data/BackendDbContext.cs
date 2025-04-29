@@ -19,6 +19,7 @@ public class BackendDbContext : DbContext
     public DbSet<Task> Tasks { get; set; }
     public DbSet<Reason> Reasons { get; set; }
     public DbSet<Progress> Progresses { get; set; }
+    public DbSet<Question> Questions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -49,6 +50,11 @@ public class BackendDbContext : DbContext
             .WithOne(p => p.Topic)
             .HasForeignKey<Progress>(p => p.TopicId);
         
+        modelBuilder.Entity<Question>()
+            .HasOne(q => q.Task)
+            .WithMany(t => t.Questions)
+            .HasForeignKey(q => q.TaskId);
+        
         // Seed data
         modelBuilder.Entity<User>().HasData(
             new User { Id = 1 }
@@ -71,11 +77,30 @@ public class BackendDbContext : DbContext
 
         modelBuilder.Entity<Task>().HasData(
             new Task { Id = 1, Title = "Er dette trygge passord?", TaskContent = "Content",IsDone = false, 
-                TopicId = 1, TaskType = TaskType.TrueFalse.ToString()},
+                TopicId = 1, TaskType = TaskType.TrueFalse.ToString() },
             new Task { Id = 2, Title = "Hvilke av lenkene er trygge?", TaskContent = "Content",IsDone = false, 
                 TopicId = 2, TaskType = TaskType.MultipleChoice.ToString()},
             new Task { Id = 3, Title = "Hva med denne nettsiden er utrygt", TaskContent = "Content",IsDone = false, 
                 TopicId = 3, TaskType = TaskType.Input.ToString()}
+        );
+
+        modelBuilder.Entity<Question>().HasData(
+            new Question { Id = 1, QuestionText = "Er passord123 et bra passord?", 
+                CorrectAnswer = "false", TaskId = 1 },
+    
+            new Question { Id = 2, QuestionText = "Er (JGAgh3)4^ecAvVC et bra passord?", 
+                CorrectAnswer = "true", TaskId = 1 },
+    
+            new Question { Id = 3, QuestionText = "Hvilke av lenkene er trygge?", 
+                Options = "[\"Regjeringen.no\", \"farliglenke.com\", \"farlig.no\", \"farlig.org\"]", 
+                CorrectOption = "Regjeringen.no", TaskId = 2 },
+    
+            new Question { Id = 4, QuestionText = "Hvilke av lenkene er trygge?", 
+                Options = "[\"Regjeringen.no\", \"farliglenke.com\", \"farlig.no\", \"farlig.org\"]", 
+                CorrectOption = "Regjeringen.no", TaskId = 2 },
+    
+            new Question { Id = 5, QuestionText = "Hva er 4+4", CorrectAnswer = "8", TaskId = 3 },
+            new Question { Id = 6, QuestionText = "Hva er 5+5", CorrectAnswer = "10", TaskId = 3 }
         );
 
         modelBuilder.Entity<Reason>().HasData(
