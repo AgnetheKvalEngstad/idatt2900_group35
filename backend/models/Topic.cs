@@ -13,6 +13,9 @@ public class Topic
     [MaxLength(100)]
     public string SkillLevel { get; set; } = null!;
     
+    [MaxLength(100)]
+    public string Icon { get; set; } = null!;
+    
     //Relations
     public int UserId { get; set; }
     public User User { get; set; } = null!;
