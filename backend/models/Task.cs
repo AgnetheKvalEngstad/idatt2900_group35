@@ -19,6 +19,8 @@ public class Task
     [Required]
     public string TaskType { get; set; } = null!;
     
+    public ICollection<Question> Questions { get; set; } = new List<Question>();
+    
     //Foreign Key to Topic
     public int TopicId { get; set; }
     public Topic Topic { get; set; } = null!;
