@@ -9,4 +9,6 @@ public class TaskDto
     public int TopicId { get; set; }
     public string TaskType { get; set; } = null!;
     public List<QuestionDto>? Questions { get; set; } = new List<QuestionDto>();
+    public int MaximumPoints { get; set; }
+    public int AchievedPoints { get; set; }
 }
