@@ -1,15 +1,32 @@
+using System.Text.Json;
+using backend.data;
 using backend.dto;
+using backend.models;
 using backend.repositories;
+using Microsoft.EntityFrameworkCore;
+using Task = System.Threading.Tasks.Task;
+
 namespace backend.services
 {
 
-    public class TaskService(IRepository<models.Task> taskRepository) : ITaskService
+    public class TaskService : ITaskService
     {
+        private readonly IRepository<backend.models.Task> _taskRepository;
+        private readonly BackendDbContext _context;
+        
+        public TaskService(IRepository<backend.models.Task> taskRepository, BackendDbContext context)
+        {
+            _taskRepository = taskRepository;
+            _context = context;
+        }
         
         //Get all tasks
         public async Task<IEnumerable<TaskDto>> GetAllTasksAsync()
         {
-            var tasks = await taskRepository.GetAllAsync();
+            var tasks = await _context.Tasks
+                .Include(t => t.Questions)
+                .ToListAsync();
+            
             return tasks.Select(t => new TaskDto
             {
                 Id = t.Id,
@@ -17,14 +34,25 @@ namespace backend.services
                 TaskContent = t.TaskContent,
                 IsDone = t.IsDone,
                 TopicId = t.TopicId,
-                TaskType = t.TaskType
+                TaskType = t.TaskType,
+                Questions = t.Questions.Select(q => new QuestionDto
+                {
+                    Id = q.Id,
+                    QuestionText = q.QuestionText,
+                    CorrectAnswer = q.CorrectAnswer,
+                    Options = q.Options != null ? JsonSerializer.Deserialize<List<string>>(q.Options) : null,
+                    CorrectOption = q.CorrectOption
+                }).ToList()
             });
         }
         
         //Get task by id
         public async Task<TaskDto?> GetTaskByIdAsync(int id)
         {
-            var task = await taskRepository.GetByIdAsync(id);
+            var task = await _context.Tasks
+                .Include(t => t.Questions)
+                .FirstOrDefaultAsync(t => t.Id == id);
+            
             if (task == null)
             {
                 throw new KeyNotFoundException($"Task with id {id} not found");
@@ -36,7 +64,15 @@ namespace backend.services
                 TaskContent = task.TaskContent,
                 IsDone = task.IsDone,
                 TopicId = task.TopicId,
-                TaskType = task.TaskType
+                TaskType = task.TaskType,
+                Questions = task.Questions.Select(q => new QuestionDto
+                {
+                    Id = q.Id,
+                    QuestionText = q.QuestionText,
+                    CorrectAnswer = q.CorrectAnswer,
+                    Options = q.Options != null ? JsonSerializer.Deserialize<List<string>>(q.Options) : null,
+                    CorrectOption = q.CorrectOption
+                }).ToList()
             };
         }
         
@@ -49,17 +85,24 @@ namespace backend.services
                 TaskContent = taskDto.TaskContent,
                 IsDone = taskDto.IsDone,
                 TopicId = taskDto.TopicId,
-                TaskType = taskDto.TaskType
+                TaskType = taskDto.TaskType,
+                Questions = taskDto.Questions.Select(q => new Question
+                {
+                    QuestionText = q.QuestionText,
+                    CorrectAnswer = q.CorrectAnswer,
+                    Options = q.Options != null ? JsonSerializer.Serialize(q.Options) : null,
+                    CorrectOption = q.CorrectOption
+                }).ToList()
             };
-            await taskRepository.AddAsync(task);
+            await _taskRepository.AddAsync(task);
             taskDto.Id = task.Id;
             return taskDto;
         }
         
         //Update task
-        public async Task UpdateTaskAsync(TaskDto taskDto)
+        public async System.Threading.Tasks.Task UpdateTaskAsync(TaskDto taskDto)
         {
-            var task = await taskRepository.GetByIdAsync(taskDto.Id);
+            var task = await _taskRepository.GetByIdAsync(taskDto.Id);
             if (task == null)
             {
                 throw new KeyNotFoundException($"Task with id {taskDto.Id} not found");
@@ -70,18 +113,26 @@ namespace backend.services
             task.TaskContent = taskDto.TaskContent;
             task.IsDone = taskDto.IsDone;
             task.TaskType = taskDto.TaskType;
-            await taskRepository.UpdateAsync(task);
+            task.Questions = taskDto.Questions.Select(q => new Question
+            {
+                QuestionText = q.QuestionText,
+                CorrectAnswer = q.CorrectAnswer,
+                Options = q.Options != null ? JsonSerializer.Serialize(q.Options) : null,
+                CorrectOption = q.CorrectOption,
+                TaskId = task.Id
+            }).ToList();
+            await _taskRepository.UpdateAsync(task);
         }
         
         //Delete reason
         public async Task DeleteTaskAsync(int id)
         {
-            var task = await taskRepository.GetByIdAsync(id);
+            var task = await _taskRepository.GetByIdAsync(id);
             if (task == null)
             {
                 throw new KeyNotFoundException($"Task with id {id} not found");
             }
-            taskRepository.Remove(task);
+            _taskRepository.Remove(task);
         }
 
     }

@@ -8,4 +8,5 @@ public class TaskDto
     public bool IsDone { get; set; } = false;
     public int TopicId { get; set; }
     public string TaskType { get; set; } = null!;
+    public List<QuestionDto>? Questions { get; set; } = new List<QuestionDto>();
 }
