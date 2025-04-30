@@ -10,6 +10,7 @@ export interface TopicAPI {
   id: number;
   title: string;
   skillLevel: string;
+  icon: string;
   userId: number;
   taskType: string;
   taskId: number;

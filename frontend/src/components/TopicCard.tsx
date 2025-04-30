@@ -2,14 +2,33 @@ import { Card, Grid2, SxProps } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { getBackgroundColor } from "../utils/utils";
+import LockIcon from "@mui/icons-material/Lock";
+import LinkIcon from "@mui/icons-material/Link";
+import WebAssetIcon from "@mui/icons-material/WebAsset";
+import CookieIcon from "@mui/icons-material/Cookie";
+import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import CloudQueueRoundedIcon from "@mui/icons-material/CloudQueueRounded";
 
 interface TopicCardProps {
   cardTitle: string;
-  cardIcon: React.ElementType;
+  cardIcon: string;
   difficulty: string;
   size: string;
   sx?: SxProps;
 }
+
+interface IconDictionary<T> {
+  [key: string]: T;
+}
+
+const iconDictionary: IconDictionary<React.ElementType> = {
+  lock: LockIcon,
+  link: LinkIcon,
+  webasset: WebAssetIcon,
+  cookie: CookieIcon,
+  warning: WarningAmberRoundedIcon,
+  default: CloudQueueRoundedIcon,
+};
 
 /**
  * A React component that renders a card representing a topic.
@@ -19,7 +38,7 @@ interface TopicCardProps {
  * @component
  * @param {TopicCardProps} props The props for the TopicCard component.
  * @param {string} props.cardTitle The title displayed on the card.
- * @param {React.ElementType} props.cardIcon The icon component to render on the card.
+ * @param {string} props.cardIcon The icon displayed on the card.
  * @param {string} props.difficulty The difficulty level of the topic, which determines
  * the background color of the card.
  * @param {string} props.size The size of the card, which determines its width and height.
@@ -64,6 +83,11 @@ export default function TopicCard({
     }
   };
 
+  const iconComponent =
+    cardIcon && typeof cardIcon === "string"
+      ? iconDictionary[cardIcon.trim().toLowerCase()] || iconDictionary.default
+      : iconDictionary.default;
+
   return (
     <Card
       sx={{
@@ -86,7 +110,7 @@ export default function TopicCard({
         }`}
       >
         <Typography variant={getFontSize(size)}>{cardTitle}</Typography>
-        {React.createElement(cardIcon, {
+        {React.createElement(iconComponent, {
           sx: { fontSize: size === "small" ? 24 : 50 },
         })}
 

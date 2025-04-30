@@ -15,6 +15,7 @@ const mockTopics = [
     id: 1,
     title: "Intro to Cookies",
     skillLevel: "0",
+    topicIcon: "cookie",
     userId: 1,
     reasonId: 1,
     subtopicId: 1,
@@ -24,6 +25,7 @@ const mockTopics = [
   {
     id: 2,
     title: "Advanced Cookies",
+    topicIcon: "cookie",
     skillLevel: "2",
     userId: 2,
     reasonId: 2,
