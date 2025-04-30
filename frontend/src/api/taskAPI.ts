@@ -13,6 +13,13 @@ export interface TaskAPI {
   isDone: boolean;
   topicId: number;
   taskType: string;
+  questions: {
+    id: number;
+    questionText: string;
+    correctAnswer: string;
+    options: string[];
+    correctOption: string;
+  }[];
 }
 
 /**

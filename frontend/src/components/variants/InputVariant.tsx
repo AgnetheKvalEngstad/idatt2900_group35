@@ -2,8 +2,10 @@ import { Typography, TextField, Button, Grid2 } from "@mui/material";
 
 interface QuestionInput {
   id: number;
-  question: string;
+  questionText: string;
   correctAnswer: string;
+  options: string[];
+  correctOption: string;
 }
 
 interface InputVariantProps {
@@ -46,7 +48,7 @@ export default function InputVariant({
           className="flex flex-col gap-1"
         >
           <Grid2 className="flex flex-row">
-            <Typography className="p-2">{q.question}</Typography>
+            <Typography className="p-2">{q.questionText}</Typography>
             {isCorrect[q.id] !== undefined && (
               <Typography
                 className={`pt-2 ${

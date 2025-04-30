@@ -1,17 +1,12 @@
 import TopicCard from "../components/TopicCard";
 import CookieIcon from "@mui/icons-material/Cookie";
-import {
-  Grid2,
-  Typography,
-  LinearProgress,
-  linearProgressClasses,
-  styled,
-} from "@mui/material";
+import { Grid2 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useTopics } from "../hooks/useTopics";
 import { checkDifficulty } from "../utils/utils";
 import { useCookies } from "react-cookie";
+import ProgressBar from "../components/ProgressBar";
 
 /**
  * A React component that renders a homepage that displays a grid of topic cards.
@@ -28,20 +23,6 @@ export default function Homepage() {
   const [progress] = useState<{ [key: string]: number }>(
     cookies.progress || {}
   );
-
-  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 20,
-    borderRadius: 10,
-    border: `2px solid black`,
-    width: "80%",
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[200],
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 10,
-      backgroundColor: "#3B2E8F",
-    },
-  }));
 
   const { topics: data, loading, error } = useTopics();
 
@@ -99,14 +80,9 @@ export default function Homepage() {
                     size={cardSize}
                   />
                 </Link>
-
-                <BorderLinearProgress
-                  variant="determinate"
-                  value={progress[topic.id] || 0}
-                />
-                <Typography variant="body2" className="text-center mt-1">
-                  Progresjon: {progress[topic.id] || 0}%
-                </Typography>
+                <Grid2 className="w-36">
+                  <ProgressBar value={progress[topic.id] || 0} />
+                </Grid2>
               </Grid2>
             ))}
           </Grid2>
