@@ -1,8 +1,7 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, act } from "@testing-library/react";
 import Footer from "../../components/Footer";
 import "@testing-library/jest-dom";
 import { MemoryRouter } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
 
 /**
  * Tests for Footer component
@@ -31,18 +30,22 @@ describe("Tests for component Footer", () => {
     expect(button).toBeInTheDocument();
   });
 
-  it("clicking help button should open help dialog", () => {
+  it("clicking help button should open help dialog", async () => {
     const button = screen.getByText("Hjelp");
-    userEvent.click(button);
+    await act(async () => {
+      fireEvent.click(button);
+    });
     const dialog = screen.getByText(
       "Her kan du lære om nettsikkerhet på en morsom måte. Du kan velge hvilke temaer du ønsker å lære mer om ved å trykke på en av temaboksene."
     );
     expect(dialog).toBeInTheDocument();
   });
 
-  it("clicking text size button should open text size dialog", () => {
+  it("clicking text size button should open text size dialog", async () => {
     const button = screen.getByText("Stor skrift");
-    userEvent.click(button);
+    await act(async () => {
+      fireEvent.click(button);
+    });
     const dialog = screen.getByText("Hvordan få større skrift");
     expect(dialog).toBeInTheDocument();
   });

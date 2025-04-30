@@ -1,16 +1,7 @@
-import {
-  Grid2,
-  Button,
-  Typography,
-  LinearProgress,
-  linearProgressClasses,
-  styled,
-} from "@mui/material";
+import { Grid2, Typography } from "@mui/material";
 import TopicMenu from "../components/TopicMenu";
 import TopicPageCard from "../components/TopicPageCard";
 import type { TopicPageCardProps } from "../components/TopicPageCard";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -22,6 +13,8 @@ import { updateTaskIsDone } from "../api/taskAPI";
 import { useSubtopic } from "../hooks/useSubtopic";
 import { updateSubtopicIsRead } from "../api/subtopicAPI";
 import { useCookies } from "react-cookie";
+import ButtonGroup from "../components/ButtonGroup";
+import ProgressBar from "../components/ProgressBar";
 
 /**
  * Creates a React component that represents a page where users can learn
@@ -137,19 +130,6 @@ export default function TopicPage() {
     task,
     calculateProgress,
   ]);
-
-  const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
-    height: 20,
-    borderRadius: 10,
-    border: `1px solid black`,
-    [`&.${linearProgressClasses.colorPrimary}`]: {
-      backgroundColor: theme.palette.grey[200],
-    },
-    [`& .${linearProgressClasses.bar}`]: {
-      borderRadius: 10,
-      backgroundColor: "#3B2E8F",
-    },
-  }));
 
   if (reasonLoading || taskLoading || subtopicLoading)
     return <div>Loading...</div>;
@@ -271,40 +251,20 @@ export default function TopicPage() {
           {topicTitle}
         </Typography>
 
-        <Grid2
-          container
-          className="flex flex-row w-full max-w-3xl justify-between p-2"
-        >
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleBack}
-            startIcon={<ArrowBackIcon />}
-            disabled={currentIndex === 0}
-          >
-            Tilbake
-          </Button>
-
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={handleNext}
-            endIcon={<ArrowForwardIcon />}
-          >
-            {currentIndex === topicPageCards.length - 1
-              ? "Fullfør kurs"
-              : currentIndex === topicPageCards.length - 2
-                ? "Lever oppgave"
-                : "Neste"}
-          </Button>
-        </Grid2>
-        {reason && subtopic && (
+        <ButtonGroup
+          currentIndex={currentIndex}
+          topicPageCards={topicPageCards}
+          handleBack={handleBack}
+          handleNext={handleNext}
+        ></ButtonGroup>
+        {reason && subtopic && task && (
           <TopicPageCard
             variant={
               topicPageCards[currentIndex] as TopicPageCardProps["variant"]
             }
             reason={reason}
             subtopic={subtopic}
+            task={task}
             topicTitle={topicTitle}
             handleBack={handleBack}
             selectedValues={answers[currentIndex]?.selectedValues || {}}
@@ -316,13 +276,7 @@ export default function TopicPage() {
           />
         )}
         <Grid2 className="flex flex-col w-64 md:w-120 p-2">
-          <BorderLinearProgress
-            variant="determinate"
-            value={progress[topicId] || 0}
-          />
-          <Typography variant="body2" className="text-center mt-1">
-            Progresjon: {progress[topicId] || 0}%
-          </Typography>
+          <ProgressBar value={progress[topicId] || 0} />
         </Grid2>
       </Grid2>
       <div className="flex justify-start">

@@ -7,9 +7,10 @@ describe("MultipleChoiceVariant component testing", () => {
   const questions = [
     {
       id: 1,
-      question: "Hva er hovedstaden i Norge?",
+      questionText: "Hva er hovedstaden i Norge?",
       options: ["Oslo", "København", "Stockholm", "Helsinki"],
-      correctAnswer: "Oslo",
+      correctOption: "Oslo",
+      correctAnswer: "null",
     },
   ];
   const handleButtonClick = () => {};
@@ -31,7 +32,7 @@ describe("MultipleChoiceVariant component testing", () => {
 
   it("should render the questions and options correctly", () => {
     questions.forEach((q) => {
-      expect(screen.getByText(q.question)).toBeInTheDocument();
+      expect(screen.getByText(q.questionText)).toBeInTheDocument();
       q.options.forEach((option) => {
         expect(screen.getByText(option)).toBeInTheDocument();
       });

@@ -28,6 +28,24 @@ const mockSubtopic = {
   isRead: false,
   topicId: 1,
 };
+const mockTask = {
+  id: 1,
+  title: "Task Title",
+  taskContent: "Task Description",
+  isDone: false,
+  topicId: 1,
+  taskType: "truefalse",
+  questions: [
+    {
+      id: 1,
+      questionText: "Question 1",
+      correctAnswer: "true",
+      options: [],
+      correctOption: "null",
+    },
+  ],
+};
+
 const mockTopicTitle = "Topic Title";
 
 describe("TopicPageCard component testing", () => {
@@ -37,6 +55,7 @@ describe("TopicPageCard component testing", () => {
         variant="reason"
         reason={mockReason}
         subtopic={mockSubtopic}
+        task={mockTask}
         topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
@@ -53,6 +72,7 @@ describe("TopicPageCard component testing", () => {
         variant="subtopic"
         reason={mockReason}
         subtopic={mockSubtopic}
+        task={mockTask}
         topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
@@ -69,6 +89,7 @@ describe("TopicPageCard component testing", () => {
         variant="trueFalse"
         reason={mockReason}
         subtopic={mockSubtopic}
+        task={mockTask}
         topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
@@ -85,6 +106,7 @@ describe("TopicPageCard component testing", () => {
         variant="multipleChoice"
         reason={mockReason}
         subtopic={mockSubtopic}
+        task={mockTask}
         topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
@@ -101,6 +123,7 @@ describe("TopicPageCard component testing", () => {
         variant="input"
         reason={mockReason}
         subtopic={mockSubtopic}
+        task={mockTask}
         topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
@@ -119,6 +142,7 @@ describe("TopicPageCard component testing", () => {
         variant="completed"
         reason={mockReason}
         subtopic={mockSubtopic}
+        task={mockTask}
         topicTitle={mockTopicTitle}
         updateAnswers={updateAnswers}
         selectedValues={selectedValues}
@@ -136,6 +160,7 @@ describe("TopicPageCard component testing", () => {
         variant="trueFalse"
         reason={mockReason}
         subtopic={mockSubtopic}
+        task={mockTask}
         topicTitle={mockTopicTitle}
         updateAnswers={mockUpdateAnswers}
         selectedValues={selectedValues}

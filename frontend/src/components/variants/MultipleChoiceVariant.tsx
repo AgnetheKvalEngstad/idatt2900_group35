@@ -9,9 +9,10 @@ import {
 
 interface QuestionMultipleChoice {
   id: number;
-  question: string;
-  options: string[];
+  questionText: string;
   correctAnswer: string;
+  options: string[];
+  correctOption: string;
 }
 
 interface MultipleChoiceVariantProps {
@@ -48,8 +49,19 @@ export default function MultipleChoiceVariant({
       </Typography>
       <Grid2 container spacing={1}>
         {questions.map((q) => (
-          <Grid2 key={q.id} size={{ xs: 6, sm: 6, md: 6, lg: 4 }}>
-            <Typography className="pt-2">{q.question}</Typography>
+          <Grid2 key={q.id} size={{ xs: 10, sm: 8, md: 6, lg: 6 }}>
+            <Grid2 className="flex flex-row gap-2">
+              <Typography className="pt-2">{q.questionText}</Typography>
+              {isCorrect[q.id] !== undefined && (
+                <Typography
+                  className={`pt-2 ${
+                    isCorrect[q.id] ? "text-[#006B2B]" : "text-[#C3040E]"
+                  }`}
+                >
+                  {isCorrect[q.id] ? "Riktig!" : "Feil"}
+                </Typography>
+              )}
+            </Grid2>
             <RadioGroup
               value={selectedValues[q.id] || ""}
               onChange={(e) => {
@@ -65,15 +77,7 @@ export default function MultipleChoiceVariant({
                 />
               ))}
             </RadioGroup>
-            {isCorrect[q.id] !== undefined && (
-              <Typography
-                className={`pt-2 ${
-                  isCorrect[q.id] ? "text-[#006B2B]" : "text-[#C3040E]"
-                }`}
-              >
-                {isCorrect[q.id] ? "Riktig!" : "Feil"}
-              </Typography>
-            )}
+
             <Button
               variant="contained"
               className="mt-2"

@@ -1,7 +1,15 @@
 import { Typography, Button, ButtonGroup, Grid2 } from "@mui/material";
 
+interface QuestionTrueFalse {
+  id: number;
+  questionText: string;
+  correctAnswer: string;
+  options: string[];
+  correctOption: string;
+}
+
 interface TrueFalseVariantProps {
-  questions: { id: number; question: string; correctAnswer: boolean }[];
+  questions: QuestionTrueFalse[];
   handleButtonClick: (questionId: number, value: string) => void;
   selectedValues: { [key: number]: string | null };
   isCorrect: { [key: number]: boolean | null };
@@ -29,14 +37,26 @@ export default function TrueFalseVariant({
       <Typography variant="h5" className="pt-2">
         Sant eller usant?
       </Typography>
-      <Grid2 container spacing={1}>
+      <Grid2 container spacing={1} className="flex w-full h-full">
         {questions.map((q) => (
           <Grid2
             key={q.id}
-            size={{ xs: 6, sm: 4, md: 4, lg: 4 }}
-            className="flex items-center flex-col gap-2"
+            size={{ xs: 10, sm: 8, md: 6, lg: 6 }}
+            className="flex flex-col gap-2"
           >
-            <Typography className="pt-2">{q.question}</Typography>
+            <Grid2 className="flex flex-row gap-2">
+              <Typography className="pt-2">{q.questionText}</Typography>
+              {isCorrect[q.id] !== undefined && (
+                <Typography
+                  className={`pt-2 ${
+                    isCorrect[q.id] ? "text-[#006B2B]" : "text-[#C3040E]"
+                  }`}
+                >
+                  {isCorrect[q.id] ? "Riktig!" : "Feil"}
+                </Typography>
+              )}
+            </Grid2>
+
             <Grid2 className="flex flex-row gap-1">
               <ButtonGroup>
                 <Button
@@ -58,15 +78,6 @@ export default function TrueFalseVariant({
                   Usant
                 </Button>
               </ButtonGroup>
-              {isCorrect[q.id] !== undefined && (
-                <Typography
-                  className={`pt-2 ${
-                    isCorrect[q.id] ? "text-[#006B2B]" : "text-[#C3040E]"
-                  }`}
-                >
-                  {isCorrect[q.id] ? "Riktig!" : "Feil"}
-                </Typography>
-              )}
             </Grid2>
           </Grid2>
         ))}

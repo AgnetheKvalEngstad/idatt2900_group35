@@ -7,6 +7,7 @@ import InputVariant from "./variants/InputVariant";
 import CompletedVariant from "./variants/CompletedVariant";
 import { ReasonAPI } from "../api/reasonAPI";
 import { SubtopicAPI } from "../api/subtopicAPI";
+import { TaskAPI } from "../api/taskAPI";
 
 /**
  * Represents the properties for the TopicPageCard component.
@@ -24,48 +25,6 @@ export interface TopicPageCardProps {
     | "input";
 }
 
-const trueFalseQuestions = [
-  { id: 1, question: "Er himmelen blå?", correctAnswer: true },
-  { id: 2, question: "Er ilden kald?", correctAnswer: false },
-  { id: 3, question: "Er jorden flat?", correctAnswer: false },
-  { id: 4, question: "Er vann vått?", correctAnswer: true },
-  { id: 5, question: "Er solen varm?", correctAnswer: true },
-  { id: 6, question: "Er månen laget av ost?", correctAnswer: false },
-  { id: 7, question: "Er havet salt?", correctAnswer: true },
-  { id: 8, question: "Er gresset grønt?", correctAnswer: true },
-  { id: 9, question: "Er vinden kald?", correctAnswer: false },
-];
-
-const multipleChoiceQuestions = [
-  {
-    id: 1,
-    question: "Hva er hovedstaden i Frankrike?",
-    options: ["Paris", "London", "Berlin", "Madrid"],
-    correctAnswer: "Paris",
-  },
-  {
-    id: 2,
-    question: "Hva er hovedstaden i Tyskland?",
-    options: ["Paris", "London", "Berlin", "Madrid"],
-    correctAnswer: "Berlin",
-  },
-  {
-    id: 3,
-    question: "Hva er hovedstaden i Spania?",
-    options: ["Paris", "London", "Berlin", "Madrid"],
-    correctAnswer: "Madrid",
-  },
-];
-
-const inputQuestions = [
-  { id: 1, question: "Hva er 2 + 2?", correctAnswer: "4" },
-  { id: 2, question: "Hva er 10 - 5?", correctAnswer: "5" },
-  { id: 3, question: "Hva er 3 * 3?", correctAnswer: "9" },
-  { id: 4, question: "Hva er 12 / 4?", correctAnswer: "3" },
-  { id: 5, question: "Hva er kvadratroten av 16?", correctAnswer: "4" },
-  { id: 6, question: "Hva er 5 + 7?", correctAnswer: "12" },
-];
-
 /**
  * A React component that renders a card with different content
  * based on the `variant` prop.
@@ -75,6 +34,7 @@ const inputQuestions = [
  * inside the card. Possible values are "text", "trueFalse", "multipleChoice", and "input".
  * @param {ReasonAPI} props.reason - The reason object containing the reason title and content.
  * @param {SubtopicAPI} props.subtopic - The subtopic object containing the subtopic title and content.
+ * @param {TaskAPI} props.task - The task object containing the questions and answers.
  * @param {function} props.handleBack - A function to handle the back button click.
  * @param {object} props.selectedValues - An object containing the selected values for each question.
  * @param {object} props.isCorrect - An object containing the correctness of each question.
@@ -86,6 +46,7 @@ export default function TopicPageCard({
   variant,
   reason,
   subtopic,
+  task,
   topicTitle,
   handleBack,
   selectedValues,
@@ -101,6 +62,7 @@ export default function TopicPageCard({
     | "input";
   reason: ReasonAPI;
   subtopic: SubtopicAPI;
+  task: TaskAPI;
   topicTitle: string;
   handleBack: () => void;
   selectedValues: { [key: number]: string | null };
@@ -132,23 +94,15 @@ export default function TopicPageCard({
   const handleButtonClick = (questionId: number, value: string) => {
     const newSelectedValues = { ...selectedValues, [questionId]: value };
 
-    let correctAnswer: string | boolean | undefined;
-    if (variant === "trueFalse") {
-      correctAnswer = trueFalseQuestions.find(
-        (q) => q.id === questionId
-      )?.correctAnswer;
-    } else if (variant === "multipleChoice") {
-      correctAnswer = multipleChoiceQuestions.find(
-        (q) => q.id === questionId
-      )?.correctAnswer;
-    } else if (variant === "input") {
-      correctAnswer = inputQuestions.find(
-        (q) => q.id === questionId
-      )?.correctAnswer;
-    }
+    const question = task.questions.find((q) => q.id === questionId);
 
-    const parsedValue =
-      variant === "trueFalse" ? value === "true" : value.trim();
+    const correctAnswer =
+      variant === "multipleChoice"
+        ? question?.correctOption.trim().toLowerCase()
+        : question?.correctAnswer.trim().toLowerCase();
+
+    const parsedValue = value.trim().toLowerCase();
+
     const newIsCorrect = {
       ...isCorrect,
       [questionId]: correctAnswer === parsedValue,
@@ -185,7 +139,7 @@ export default function TopicPageCard({
 
         {variant === "trueFalse" && (
           <TrueFalseVariant
-            questions={trueFalseQuestions}
+            questions={task.questions}
             handleButtonClick={handleButtonClick}
             selectedValues={selectedValues}
             isCorrect={isCorrect}
@@ -193,7 +147,7 @@ export default function TopicPageCard({
         )}
         {variant === "multipleChoice" && (
           <MultipleChoiceVariant
-            questions={multipleChoiceQuestions}
+            questions={task.questions}
             handleButtonClick={handleButtonClick}
             handleSelectedValueChange={handleSelectedValueChange}
             selectedValues={selectedValues}
@@ -202,7 +156,7 @@ export default function TopicPageCard({
         )}
         {variant === "input" && (
           <InputVariant
-            questions={inputQuestions}
+            questions={task.questions}
             handleButtonClick={handleButtonClick}
             handleInputChange={handleInputChange}
             selectedValues={selectedValues}

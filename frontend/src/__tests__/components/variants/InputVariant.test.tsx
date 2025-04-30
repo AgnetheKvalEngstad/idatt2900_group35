@@ -4,10 +4,34 @@ import "@testing-library/jest-dom";
 
 describe("InputVariant", () => {
   const questions = [
-    { id: 1, question: "What is 2 + 2?", correctAnswer: "4" },
-    { id: 2, question: "What is 3 + 3?", correctAnswer: "6" },
-    { id: 3, question: "What is 4 + 4?", correctAnswer: "8" },
-    { id: 4, question: "What is 5 + 5?", correctAnswer: "10" },
+    {
+      id: 1,
+      questionText: "What is 2 + 2?",
+      correctAnswer: "4",
+      options: [],
+      correctOption: "null",
+    },
+    {
+      id: 2,
+      questionText: "What is 3 + 3?",
+      correctAnswer: "6",
+      options: [],
+      correctOption: "null",
+    },
+    {
+      id: 3,
+      questionText: "What is 4 + 4?",
+      correctAnswer: "8",
+      options: [],
+      correctOption: "null",
+    },
+    {
+      id: 4,
+      questionText: "What is 5 + 5?",
+      correctAnswer: "10",
+      options: [],
+      correctOption: "null",
+    },
   ];
 
   const handleButtonClick = () => {};
@@ -32,7 +56,7 @@ describe("InputVariant", () => {
       screen.getByText("Skriv inn svaret i feltene under")
     ).toBeInTheDocument();
     questions.forEach((q) => {
-      expect(screen.getByText(q.question)).toBeInTheDocument();
+      expect(screen.getByText(q.questionText)).toBeInTheDocument();
       const inputs = screen.getAllByLabelText("Svar her");
       expect(inputs.length).toBe(questions.length);
       const submitButtons = screen.getAllByRole("button", {
