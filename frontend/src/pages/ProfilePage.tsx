@@ -2,7 +2,6 @@ import { Grid2, Card, Typography, Button } from "@mui/material";
 import React from "react";
 import DeleteDialog from "../components/dialogs/DeleteDialog";
 import TopicCard from "../components/TopicCard";
-import CookieIcon from "@mui/icons-material/Cookie";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 import GppGoodIcon from "@mui/icons-material/GppGood";
 import SpaIcon from "@mui/icons-material/Spa";
@@ -17,7 +16,6 @@ import { useCookies } from "react-cookie";
  */
 export default function ProfilePage() {
   const [open, setOpen] = React.useState(false);
-  const [cardIcon] = [CookieIcon];
   const [cookies] = useCookies(["progress"]);
   const [progress] = React.useState<{ [key: string]: number }>(
     cookies.progress || {}
@@ -123,7 +121,7 @@ export default function ProfilePage() {
                       <Grid2 size={6} key={topic.id}>
                         <TopicCard
                           cardTitle={topic.title}
-                          cardIcon={cardIcon}
+                          cardIcon={topic.icon}
                           difficulty={checkDifficulty(topic.skillLevel)}
                           size="small"
                           sx={{ opacity }}

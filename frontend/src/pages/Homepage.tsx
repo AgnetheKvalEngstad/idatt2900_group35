@@ -1,5 +1,4 @@
 import TopicCard from "../components/TopicCard";
-import CookieIcon from "@mui/icons-material/Cookie";
 import { Grid2 } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -17,7 +16,6 @@ import ProgressBar from "../components/ProgressBar";
  * or a grid of topic cards grouped by difficulty.
  */
 export default function Homepage() {
-  const cardIcon = CookieIcon;
   const cardSize: string = "medium";
   const [cookies] = useCookies(["progress"]);
   const [progress] = useState<{ [key: string]: number }>(
@@ -75,7 +73,7 @@ export default function Homepage() {
                 >
                   <TopicCard
                     cardTitle={topic.title}
-                    cardIcon={cardIcon}
+                    cardIcon={topic.icon}
                     difficulty={checkDifficulty(topic.skillLevel)}
                     size={cardSize}
                   />
