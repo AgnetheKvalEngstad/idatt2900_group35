@@ -21,6 +21,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ITaskService, TaskService>();
 builder.Services.AddScoped<ITopicService, TopicService>();
 builder.Services.AddScoped<IProgressService, ProgressService>();
+builder.Services.AddScoped<IBonusService, BonusService>();
 
 builder.Services.AddScoped<ISubtopicService, SubtopicService>();
 
@@ -29,6 +30,8 @@ builder.Services.AddScoped<IRepository<User>, Repository<User>>();
 builder.Services.AddScoped<IRepository<backend.models.Task>, Repository<backend.models.Task>>();
 builder.Services.AddScoped<IRepository<Topic>, Repository<Topic>>();
 builder.Services.AddScoped<IRepository<Progress>, Repository<Progress>>();
+builder.Services.AddScoped<IRepository<Bonus>, Repository<Bonus>>();
+
 
 builder.Services.AddScoped<IRepository<Subtopic>, Repository<Subtopic>>();
 
