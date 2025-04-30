@@ -33,6 +33,7 @@ namespace backend.services
                 Id = t.Id,
                 Title = t.Title,
                 SkillLevel = t.SkillLevel,
+                Icon = t.Icon,
                 UserId = t.UserId,
                 TaskType = t.Task?.TaskType ?? "Unknown task type",
                 TaskId = t.Task?.Id ?? 0,
@@ -60,6 +61,7 @@ namespace backend.services
                 Id = topic.Id,
                 Title = topic.Title,
                 SkillLevel = topic.SkillLevel,
+                Icon = topic.Icon,
                 UserId = topic.UserId,
                 TaskType = topic.Task?.TaskType ?? "Unknown task type",
                 TaskId = topic.Task?.Id ?? 0,
@@ -81,6 +83,7 @@ namespace backend.services
                 Id = topicDto.Id,
                 Title = topicDto.Title,
                 SkillLevel = topicDto.SkillLevel,
+                Icon = topicDto.Icon,
                 UserId = topicDto.UserId,
                 Task = task,
                 Subtopic = subtopic,
@@ -102,6 +105,7 @@ namespace backend.services
          
          topic.Title = topicDto.Title;
          topic.SkillLevel = topicDto.SkillLevel;
+         topic.Icon = topicDto.Icon;
          topic.UserId = topicDto.UserId;
          await _topicRepository.UpdateAsync(topic);
         }

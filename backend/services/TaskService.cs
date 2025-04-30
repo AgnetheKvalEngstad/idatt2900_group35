@@ -42,7 +42,9 @@ namespace backend.services
                     CorrectAnswer = q.CorrectAnswer,
                     Options = q.Options != null ? JsonSerializer.Deserialize<List<string>>(q.Options) : null,
                     CorrectOption = q.CorrectOption
-                }).ToList()
+                }).ToList(),
+                MaximumPoints = t.MaximumPoints,
+                AchievedPoints = t.AchievedPoints
             });
         }
         
@@ -72,7 +74,9 @@ namespace backend.services
                     CorrectAnswer = q.CorrectAnswer,
                     Options = q.Options != null ? JsonSerializer.Deserialize<List<string>>(q.Options) : null,
                     CorrectOption = q.CorrectOption
-                }).ToList()
+                }).ToList(),
+                MaximumPoints = task.MaximumPoints,
+                AchievedPoints = task.AchievedPoints
             };
         }
         
@@ -92,7 +96,8 @@ namespace backend.services
                     CorrectAnswer = q.CorrectAnswer,
                     Options = q.Options != null ? JsonSerializer.Serialize(q.Options) : null,
                     CorrectOption = q.CorrectOption
-                }).ToList()
+                }).ToList(),
+                AchievedPoints = taskDto.AchievedPoints,
             };
             await _taskRepository.AddAsync(task);
             taskDto.Id = task.Id;
@@ -121,6 +126,7 @@ namespace backend.services
                 CorrectOption = q.CorrectOption,
                 TaskId = task.Id
             }).ToList();
+            task.AchievedPoints = taskDto.AchievedPoints;
             await _taskRepository.UpdateAsync(task);
         }
         

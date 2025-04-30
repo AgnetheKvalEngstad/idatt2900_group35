@@ -21,6 +21,11 @@ public class Task
     
     public ICollection<Question> Questions { get; set; } = new List<Question>();
     
+    [NotMapped]
+    public int MaximumPoints => Questions.Sum(q => q.Points);
+
+    public int AchievedPoints { get; set; } = 0;
+    
     //Foreign Key to Topic
     public int TopicId { get; set; }
     public Topic Topic { get; set; } = null!;

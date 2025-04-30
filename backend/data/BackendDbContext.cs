@@ -61,9 +61,9 @@ public class BackendDbContext : DbContext
         );
 
         modelBuilder.Entity<Topic>().HasData(
-            new Topic { Id = 1, Title = "Lag et sikkert passord", SkillLevel = "Beginner", UserId = 1},
-            new Topic { Id = 2, Title = "Farlige lenker", SkillLevel = "Intermediate", UserId = 1},
-            new Topic { Id = 3, Title = "Velg trygge nettsider", SkillLevel = "Expert", UserId = 1}
+            new Topic { Id = 1, Title = "Lag et sikkert passord", SkillLevel = "Beginner", Icon = "Lock",UserId = 1},
+            new Topic { Id = 2, Title = "Farlige lenker", SkillLevel = "Intermediate", Icon = "Link", UserId = 1},
+            new Topic { Id = 3, Title = "Velg trygge nettsider", SkillLevel = "Expert", Icon = "WebAsset", UserId = 1}
         );
 
         modelBuilder.Entity<Subtopic>().HasData(
