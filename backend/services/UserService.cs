@@ -13,7 +13,8 @@ namespace backend.services
             var users = await userRepository.GetAllAsync();
             return users.Select(u => new UserDto
             {
-                Id = u.Id
+                Id = u.Id,
+                AllUserPoints = u.AllUserPoints
             });
         }
         
@@ -27,7 +28,8 @@ namespace backend.services
             }
             return new UserDto()
             {
-                Id = user.Id
+                Id = user.Id,
+                AllUserPoints = user.AllUserPoints,
             };
         }
         

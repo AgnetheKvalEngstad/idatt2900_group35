@@ -117,6 +117,25 @@ public class BackendDbContext : DbContext
         modelBuilder.Entity<Progress>().HasData(
             new Progress { Id = 1, ProgressPercentage = 0.5, TopicId = 1, UserId = 1 }
         );
+
+        modelBuilder.Entity<Bonus>().HasData(
+            new Bonus
+            {
+                Id = 1, Title = "Et år med gratis antivirusprogram",
+                Description = "Løs inn denne koden xyz på denne nettsiden for å få et år med gratis antivirusprogram",
+                Icon ="Shield", PointsNeeded = 30 },
+            new Bonus
+            {
+                Id = 2, Title = "Et år med gratis VPN",
+                Description = "Løs inn denne koden xyz på denne nettsiden for å få et år med gratis VPN",
+                Icon = "VpnLock", PointsNeeded = 60 
+            },
+            new Bonus
+            {
+                Id = 3, Title = "En profesjonell sikkerhetsruter",
+                Description = "Løs inn denne koden xyz på denne nettsiden for å få en profesjonell sikkerhetsruter",
+                Icon = "Router", PointsNeeded = 90 
+            });
     }
 
     //Connection string to the database
