@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { fetchSubtopic, SubtopicAPI } from "../api/subtopicAPI";
 
 /**
@@ -7,25 +7,29 @@ import { fetchSubtopic, SubtopicAPI } from "../api/subtopicAPI";
  * @param id - The ID of the subtopic to fetch.
  * @returns An object containing the subtopic, loading state, and error state.
  */
-export const useSubtopic = (id: number) => {
+export const useSubtopic = (subtopicId: number) => {
   const [subtopic, setSubtopic] = useState<SubtopicAPI | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
 
+  const fetchData = useCallback(async () => {
+    if (subtopicId == null) return;
+
+    setLoading(true);
+    try {
+      const data = await fetchSubtopic(subtopicId);
+      setSubtopic(data);
+      setError(null);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [subtopicId]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchSubtopic(id);
-        setSubtopic(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
-  }, [id]);
+  }, [fetchData]);
 
-  return { subtopic, loading, error };
+  return { subtopic, loading, error, refetch: fetchData };
 };

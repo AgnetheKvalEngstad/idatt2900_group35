@@ -32,12 +32,19 @@ export default function TopicPage() {
     reason,
     loading: reasonLoading,
     error: reasonError,
+    refetch: refetchReason,
   } = useReason(reasonId);
-  const { task, loading: taskLoading, error: taskError } = useTask(taskId);
+  const {
+    task,
+    loading: taskLoading,
+    error: taskError,
+    refetch: refetchTask,
+  } = useTask(taskId);
   const {
     subtopic,
     loading: subtopicLoading,
     error: subtopicError,
+    refetch: refetchSubtopic,
   } = useSubtopic(subtopicId);
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -45,11 +52,12 @@ export default function TopicPage() {
   const [progress, setProgress] = useState<{ [key: string]: number }>(
     cookies.progress || {}
   );
-
   const [answers, setAnswers] = useState<{
     [key: number]: {
       selectedValues: { [key: number]: string | null };
-      isCorrect: { [key: number]: boolean | null };
+      isCorrect: {
+        [key: number]: { isCorrect: boolean; isAwarded: boolean } | null;
+      };
     };
   }>({});
 
@@ -145,30 +153,48 @@ export default function TopicPage() {
     return words.slice(-2).join(" ");
   };
 
-  const handleNext = async () => {
+  const handleBack = () => {
+    if (currentIndex === 0) {
+      return;
+    }
+    setCurrentIndex(currentIndex - 1);
+  };
+
+  const handleCardChange = async (newIndex: number) => {
+    if (newIndex < 0 || newIndex >= topicPageCards.length) return;
+
     const taskRelatedTypes = new Set(["input", "trueFalse", "multipleChoice"]);
 
     const updates = {
       reason: {
-        condition: reason?.id && reason?.isRead === false,
-        updateFn: () => updateReasonIsRead(reason!, true),
-        markRead: () => (reason!.isRead = true),
+        condition: reason && reason.id && reason.isRead === false,
+        updateFn: async () => {
+          await updateReasonIsRead(reason!, true);
+          await refetchReason();
+        },
+        markRead: () => {},
       },
       subtopic: {
-        condition: subtopic?.id && subtopic?.isRead === false,
-        updateFn: () => updateSubtopicIsRead(subtopic!, true),
-        markRead: () => (subtopic!.isRead = true),
+        condition: subtopic && subtopic.id && subtopic.isRead === false,
+        updateFn: async () => {
+          await updateSubtopicIsRead(subtopic!, true);
+          await refetchSubtopic();
+        },
+        markRead: () => {},
       },
       task: {
-        condition: task?.id && task?.isDone === false,
-        updateFn: () => updateTaskIsDone(task!, true),
-        markRead: () => (task!.isDone = true),
+        condition: task && task.id && task.isDone === false,
+        updateFn: async () => {
+          await updateTaskIsDone(task!, true);
+          await refetchTask();
+        },
+        markRead: () => {},
       },
     };
 
     const cardType = topicPageCards[currentIndex];
-
     let shouldUpdateProgress = false;
+
     if (taskRelatedTypes.has(cardType)) {
       const update = updates["task"];
       if (update.condition) {
@@ -185,34 +211,33 @@ export default function TopicPage() {
       }
     }
 
-    if (currentIndex === topicPageCards.length - 1) {
-      if (shouldUpdateProgress) calculateProgress();
+    setCurrentIndex(newIndex);
+
+    if (shouldUpdateProgress) calculateProgress();
+  };
+
+  const handleNext = async () => {
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex >= topicPageCards.length) {
+      await handleCardChange(nextIndex);
       navigate("/home");
     } else {
-      setCurrentIndex(currentIndex + 1);
-      if (shouldUpdateProgress) calculateProgress();
+      await handleCardChange(nextIndex);
     }
   };
 
-  const handleBack = () => {
-    if (currentIndex === 0) {
-      return;
-    }
-    setCurrentIndex(currentIndex - 1);
-  };
-
-  const handleMenuClick = (newIndex: number) => {
-    if (newIndex >= 0 && newIndex < topicPageCards.length) {
-      setCurrentIndex(newIndex);
-      calculateProgress();
-    }
+  const handleMenuClick = async (newIndex: number) => {
+    await handleCardChange(newIndex);
   };
 
   const updateAnswers = (
     cardIndex: number,
     newAnswers: {
       selectedValues: { [key: number]: string | null };
-      isCorrect: { [key: number]: boolean | null };
+      isCorrect: {
+        [key: number]: { isCorrect: boolean; isAwarded: boolean } | null;
+      };
     }
   ) => {
     setAnswers((prevAnswers) => ({
@@ -256,6 +281,15 @@ export default function TopicPage() {
           topicPageCards={topicPageCards}
           handleBack={handleBack}
           handleNext={handleNext}
+          handleTaskCompletion={async () => {
+            const card = document.querySelector(
+              '[data-testid="topic-page-card"]'
+            );
+            if (card) {
+              const event = new CustomEvent("taskCompletion");
+              card.dispatchEvent(event);
+            }
+          }}
         ></ButtonGroup>
         {reason && subtopic && task && (
           <TopicPageCard
@@ -268,10 +302,24 @@ export default function TopicPage() {
             topicTitle={topicTitle}
             handleBack={handleBack}
             selectedValues={answers[currentIndex]?.selectedValues || {}}
-            isCorrect={answers[currentIndex]?.isCorrect || {}}
+            isCorrect={Object.fromEntries(
+              Object.entries(answers[currentIndex]?.isCorrect || {}).map(
+                ([key, value]) => [
+                  Number(key),
+                  value !== null
+                    ? { isCorrect: value.isCorrect, isAwarded: value.isAwarded }
+                    : null,
+                ]
+              )
+            )}
             updateAnswers={(newAnswers: {
               selectedValues: { [key: number]: string | null };
-              isCorrect: { [key: number]: boolean | null };
+              isCorrect: {
+                [key: number]: {
+                  isCorrect: boolean;
+                  isAwarded: boolean;
+                } | null;
+              };
             }) => updateAnswers(currentIndex, newAnswers)}
           />
         )}

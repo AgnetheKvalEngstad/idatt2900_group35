@@ -7,7 +7,8 @@ import InputVariant from "./variants/InputVariant";
 import CompletedVariant from "./variants/CompletedVariant";
 import { ReasonAPI } from "../api/reasonAPI";
 import { SubtopicAPI } from "../api/subtopicAPI";
-import { TaskAPI } from "../api/taskAPI";
+import { TaskAPI, updateTaskPoints } from "../api/taskAPI";
+import { useCallback, useEffect, useState } from "react";
 
 /**
  * Represents the properties for the TopicPageCard component.
@@ -66,12 +67,18 @@ export default function TopicPageCard({
   topicTitle: string;
   handleBack: () => void;
   selectedValues: { [key: number]: string | null };
-  isCorrect: { [key: number]: boolean | null };
+  isCorrect: {
+    [key: number]: { isCorrect: boolean; isAwarded: boolean } | null;
+  };
   updateAnswers: (newAnswers: {
     selectedValues: { [key: number]: string | null };
-    isCorrect: { [key: number]: boolean | null };
+    isCorrect: {
+      [key: number]: { isCorrect: boolean; isAwarded: boolean } | null;
+    };
   }) => void;
 }) {
+  const [achievedPoints, setAchievedPoints] = useState<number>(0);
+
   const handleInputChange = (questionId: number, value: string) => {
     const newSelectedValues = { ...selectedValues, [questionId]: value };
     updateAnswers({
@@ -95,24 +102,68 @@ export default function TopicPageCard({
     const newSelectedValues = { ...selectedValues, [questionId]: value };
 
     const question = task.questions.find((q) => q.id === questionId);
+    if (!question) return;
 
     const correctAnswer =
       variant === "multipleChoice"
-        ? question?.correctOption.trim().toLowerCase()
-        : question?.correctAnswer.trim().toLowerCase();
+        ? question.correctOption.trim().toLowerCase()
+        : question.correctAnswer.trim().toLowerCase();
 
     const parsedValue = value.trim().toLowerCase();
+    const isAnswerCorrect = correctAnswer === parsedValue;
+    const currentIsCorrect = isCorrect[questionId] || {
+      isCorrect: false,
+      isAwarded: false,
+    };
 
     const newIsCorrect = {
       ...isCorrect,
-      [questionId]: correctAnswer === parsedValue,
+      [questionId]: {
+        isCorrect: isAnswerCorrect,
+        isAwarded: currentIsCorrect.isAwarded,
+      },
     };
+
+    const questionPoints = task.maximumPoints / task.questions.length;
+
+    if (isAnswerCorrect && !currentIsCorrect.isAwarded) {
+      setAchievedPoints((prevPoints) => {
+        const newPoints = prevPoints + questionPoints;
+        return newPoints > task.maximumPoints ? task.maximumPoints : newPoints;
+      });
+    }
 
     updateAnswers({
       selectedValues: newSelectedValues,
       isCorrect: newIsCorrect,
     });
   };
+
+  const handleTaskCompletion = useCallback(async () => {
+    try {
+      if (
+        achievedPoints > task.achievedPoints &&
+        achievedPoints <= task.maximumPoints
+      ) {
+        await updateTaskPoints(task, achievedPoints);
+      }
+    } catch (error) {
+      console.error("Failed to update points:", error);
+    }
+  }, [achievedPoints, task]);
+
+  useEffect(() => {
+    const handleEvent = () => {
+      handleTaskCompletion();
+    };
+
+    const card = document.querySelector('[data-testid="topic-page-card"]');
+    card?.addEventListener("taskCompletion", handleEvent);
+
+    return () => {
+      card?.removeEventListener("taskCompletion", handleEvent);
+    };
+  }, [handleTaskCompletion]);
 
   return (
     <Card
@@ -142,7 +193,12 @@ export default function TopicPageCard({
             questions={task.questions}
             handleButtonClick={handleButtonClick}
             selectedValues={selectedValues}
-            isCorrect={isCorrect}
+            isCorrect={Object.fromEntries(
+              Object.entries(isCorrect).map(([key, value]) => [
+                key,
+                value?.isCorrect ?? null,
+              ])
+            )}
           />
         )}
         {variant === "multipleChoice" && (
@@ -151,7 +207,12 @@ export default function TopicPageCard({
             handleButtonClick={handleButtonClick}
             handleSelectedValueChange={handleSelectedValueChange}
             selectedValues={selectedValues}
-            isCorrect={isCorrect}
+            isCorrect={Object.fromEntries(
+              Object.entries(isCorrect).map(([key, value]) => [
+                key,
+                value?.isCorrect ?? null,
+              ])
+            )}
           />
         )}
         {variant === "input" && (
@@ -160,11 +221,20 @@ export default function TopicPageCard({
             handleButtonClick={handleButtonClick}
             handleInputChange={handleInputChange}
             selectedValues={selectedValues}
-            isCorrect={isCorrect}
+            isCorrect={Object.fromEntries(
+              Object.entries(isCorrect).map(([key, value]) => [
+                key,
+                value?.isCorrect ?? null,
+              ])
+            )}
           />
         )}
         {variant === "completed" && (
-          <CompletedVariant topicTitle={topicTitle} handleBack={handleBack} />
+          <CompletedVariant
+            topicTitle={topicTitle}
+            handleBack={handleBack}
+            points={achievedPoints}
+          />
         )}
       </CardContent>
     </Card>

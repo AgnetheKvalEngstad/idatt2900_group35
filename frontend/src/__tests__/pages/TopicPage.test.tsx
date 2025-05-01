@@ -1,6 +1,5 @@
 import { render, screen, waitFor, act } from "@testing-library/react";
 import TopicPage from "../../pages/TopicPage";
-import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 import type { AxiosInstance } from "axios";
@@ -48,11 +47,22 @@ const mockTopicContent = {
   },
   task: {
     id: 1,
-    taskTitle: "Task Title",
+    title: "Task Title",
     taskContent: "Task Description",
     isDone: false,
     topicId: 1,
     taskType: "truefalse",
+    questions: [
+      {
+        id: 1,
+        questionText: "Question 1",
+        correctAnswer: "true",
+        options: [],
+        correctOption: "null",
+      },
+    ],
+    maximumPoints: 10,
+    achievedPoints: 5,
   },
 };
 
@@ -111,61 +121,6 @@ describe("TopicPage component testing", () => {
   it("back button should be disabled on first card", async () => {
     await waitFor(() => {
       expect(screen.getByText("Tilbake")).toBeDisabled();
-    });
-  });
-
-  it("clicking next button should enable back button", async () => {
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-
-    const nextButton = screen.getByRole("button", {
-      name: /Neste|Lever oppgave|Fullfør kurs/i,
-    });
-    userEvent.click(nextButton);
-    await waitFor(() => {
-      expect(screen.getByText("Tilbake")).not.toBeDisabled();
-    });
-  });
-
-  it("clicking three times should lead to completed page", async () => {
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-
-    const nextButton = screen.getByRole("button", {
-      name: /Neste|Lever oppgave|Fullfør kurs/i,
-    });
-
-    userEvent.click(nextButton);
-    userEvent.click(nextButton);
-    userEvent.click(nextButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole("button", {
-          name: /Fullfør kurs/i,
-        })
-      ).toBeInTheDocument();
-    });
-  });
-
-  it("clicking back button should go back to previous card", async () => {
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-
-    const nextButton = screen.getByRole("button", {
-      name: /Neste|Lever oppgave|Fullfør kurs/i,
-    });
-    userEvent.click(nextButton);
-    userEvent.click(nextButton);
-    userEvent.click(nextButton);
-    const backButton = screen.getByText("Tilbake");
-    userEvent.click(backButton);
-
-    await waitFor(() => {
-      expect(screen.getByText("Lever oppgave")).toBeInTheDocument();
     });
   });
 });

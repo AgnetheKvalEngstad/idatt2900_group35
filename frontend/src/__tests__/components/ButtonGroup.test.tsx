@@ -6,6 +6,7 @@ import { vi } from "vitest";
 describe("ButtonGroup Component", () => {
   const mockHandleBack = vi.fn();
   const mockHandleNext = vi.fn();
+  const mockHandleTaskCompletion = vi.fn();
   const topicPageCards = ["Card1", "Card2", "Card3", "Card4"];
 
   afterEach(() => {
@@ -19,6 +20,7 @@ describe("ButtonGroup Component", () => {
         topicPageCards={topicPageCards}
         handleBack={mockHandleBack}
         handleNext={mockHandleNext}
+        handleTaskCompletion={mockHandleTaskCompletion}
       />
     );
 
@@ -33,6 +35,7 @@ describe("ButtonGroup Component", () => {
         topicPageCards={topicPageCards}
         handleBack={mockHandleBack}
         handleNext={mockHandleNext}
+        handleTaskCompletion={mockHandleTaskCompletion}
       />
     );
 
@@ -47,6 +50,7 @@ describe("ButtonGroup Component", () => {
         topicPageCards={topicPageCards}
         handleBack={mockHandleBack}
         handleNext={mockHandleNext}
+        handleTaskCompletion={mockHandleTaskCompletion}
       />
     );
 
@@ -60,6 +64,7 @@ describe("ButtonGroup Component", () => {
         topicPageCards={topicPageCards}
         handleBack={mockHandleBack}
         handleNext={mockHandleNext}
+        handleTaskCompletion={mockHandleTaskCompletion}
       />
     );
 
@@ -73,6 +78,7 @@ describe("ButtonGroup Component", () => {
         topicPageCards={topicPageCards}
         handleBack={mockHandleBack}
         handleNext={mockHandleNext}
+        handleTaskCompletion={mockHandleTaskCompletion}
       />
     );
 
@@ -88,6 +94,7 @@ describe("ButtonGroup Component", () => {
         topicPageCards={topicPageCards}
         handleBack={mockHandleBack}
         handleNext={mockHandleNext}
+        handleTaskCompletion={mockHandleTaskCompletion}
       />
     );
 

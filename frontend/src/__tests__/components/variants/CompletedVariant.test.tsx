@@ -16,7 +16,11 @@ describe("CompletedVariant component testing", () => {
 
   beforeEach(() => {
     render(
-      <CompletedVariant topicTitle={mockTopicTitle} handleBack={handleBack} />
+      <CompletedVariant
+        topicTitle={mockTopicTitle}
+        handleBack={handleBack}
+        points={1000}
+      />
     );
   });
 

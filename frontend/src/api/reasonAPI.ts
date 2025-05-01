@@ -63,22 +63,8 @@ export const updateReasonIsRead = async (
       isRead: read,
       topicId: reason.topicId,
     });
-  } catch (error: unknown) {
-    if (axios.isAxiosError(error)) {
-      if (error.response) {
-        console.error(
-          "Server responded with an error:",
-          error.response.status,
-          error.response.data
-        );
-      } else if (error.request) {
-        console.error("No response received from server:", error.request);
-      } else {
-        console.error("Error setting up the request:", error.message);
-      }
-    } else {
-      console.error("An unexpected error occurred:", error);
-    }
+  } catch (error) {
+    console.error("Error updating reason:", error);
     throw error;
   }
 };

@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import TopicPageCard from "../../components/TopicPageCard";
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
@@ -44,6 +44,8 @@ const mockTask = {
       correctOption: "null",
     },
   ],
+  maximumPoints: 10,
+  achievedPoints: 5,
 };
 
 const mockTopicTitle = "Topic Title";
@@ -170,11 +172,14 @@ describe("TopicPageCard component testing", () => {
     );
 
     const buttons = screen.getAllByText("Sant");
-    buttons[0].click();
+
+    act(() => {
+      fireEvent.click(buttons[0]);
+    });
 
     expect(mockUpdateAnswers).toHaveBeenCalledWith({
       selectedValues: { 1: "true" },
-      isCorrect: { 1: true },
+      isCorrect: { 1: { isCorrect: true, isAwarded: false } },
     });
   });
 });
