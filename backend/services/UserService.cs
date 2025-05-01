@@ -6,21 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.services
 {
-    public class UserService : IUserService
+    public class UserService(IRepository<User> userRepository) : IUserService
     {
-        private readonly BackendDbContext _context;
-        
-        public UserService(BackendDbContext context)
-        {
-            _context = context;
-        }
-        
         //Get all users
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
-            var users = await _context.Users
-                .Include(u => u.Topics)
-                .ToListAsync();
+            var users = await userRepository
+                .GetAllWithQueryAsync(query => query.Include(u => u.Topics));
             
             return users.Select(u => new UserDto
             {
@@ -33,9 +25,9 @@ namespace backend.services
         //Get user by id
         public async Task<UserDto?> GetUserByIdAsync(int id)
         {
-            var user = _context.Users
-                .Include(u => u.Topics)
-                .FirstOrDefault(u => u.Id == id);
+            var user = 
+                await userRepository.GetByIdWithQueryAsync
+                    (id, query => query.Include(u => u.Topics));
             
             if (user == null)
             {
@@ -56,8 +48,7 @@ namespace backend.services
             {
                 Id = userDto.Id
             };
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            await userRepository.AddAsync(user);
             userDto.Id = user.Id;
             return userDto;
         }
@@ -65,27 +56,25 @@ namespace backend.services
         //Update user
         public async System.Threading.Tasks.Task UpdateUserAsync(UserDto userDto)
         {
-            var user = await _context.Users.FindAsync(userDto.Id);
+            var user = await userRepository.GetByIdAsync(userDto.Id);
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with id {userDto.Id} not found");
             }
 
             user.Id = userDto.Id;
-            _context.Users.Update(user);
-            await _context.SaveChangesAsync();
+            await userRepository.UpdateAsync(user);
         }
         
         //Delete user
         public async System.Threading.Tasks.Task DeleteUserAsync(int id)
         {
-            var user = await _context.Users.FindAsync(id);
+            var user = await userRepository.GetByIdAsync(id);
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with id {id} not found");
             }
-            _context.Users.Remove(user);
-            await _context.SaveChangesAsync();
+            userRepository.Remove(user);
         }
         
         
