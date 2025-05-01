@@ -16,8 +16,8 @@ public class UserControllerTest
         mockService.Setup(u => u.GetAllUsersAsync())
             .ReturnsAsync(new List<UserDto>
             {
-                new UserDto { Id = 1, Topics = new List<string> {"Topic1","Topic2"}},
-                new UserDto { Id = 2, Topics = new EditableList<string>{"Topic3","Topic4"}}
+                new UserDto { Id = 1},
+                new UserDto { Id = 2}
             });
         
         var controller = new UsersController(mockService.Object);
@@ -31,14 +31,11 @@ public class UserControllerTest
             user =>
             {
                 Assert.Equal(1, user.Id);
-                Assert.Contains("Topic1", user.Topics);
-                Assert.Contains("Topic2", user.Topics);
             },
             user =>
             {
                 Assert.Equal(2, user.Id);
-                Assert.Contains("Topic3", user.Topics);
-                Assert.Contains("Topic4", user.Topics);
+                
             });
     }
     
@@ -47,7 +44,7 @@ public class UserControllerTest
     {
         var mockService = new Mock<IUserService>();
         mockService.Setup(u => u.GetUserByIdAsync(1))
-            .ReturnsAsync(new UserDto { Id = 1, Topics = new List<string> {"Topic1","Topic2"}});
+            .ReturnsAsync(new UserDto { Id = 1});
         
         var controller = new UsersController(mockService.Object);
         
@@ -57,8 +54,6 @@ public class UserControllerTest
         var user = Assert.IsType<UserDto>(okResult.Value);
         
         Assert.Equal(1, user.Id);
-        Assert.Contains("Topic1", user.Topics);
-        Assert.Contains("Topic2", user.Topics);
     }
 
     [Fact]
@@ -80,7 +75,7 @@ public class UserControllerTest
     public async Task PostUser_ShouldReturnCreatedResult_WithUser()
     {
         var mockService = new Mock<IUserService>();
-        var userDto = new UserDto { Id = 1, Topics = new List<string> {"Topic1","Topic2"}};
+        var userDto = new UserDto { Id = 1};
         
         mockService.Setup(u => u.CreateUserAsync(userDto))
             .ReturnsAsync(userDto);
@@ -93,15 +88,13 @@ public class UserControllerTest
         var createdUser = Assert.IsType<UserDto>(createdResult.Value);
         
         Assert.Equal(1, createdUser.Id);
-        Assert.Contains("Topic1", createdUser.Topics);
-        Assert.Contains("Topic2", createdUser.Topics);
     }
 
     [Fact]
     public async Task UpdateUser_ShouldReturnNoContent_WhenUpdated()
     {
         var mockService = new Mock<IUserService>();
-        var userDto = new UserDto { Id = 1, Topics = new List<string> {"Topic1","Topic2"}};
+        var userDto = new UserDto { Id = 1};
         
         mockService.Setup(u => u.UpdateUserAsync(userDto))
             .Returns(Task.CompletedTask);
@@ -119,7 +112,7 @@ public class UserControllerTest
     public async Task UpdateUser_ShouldReturnBadRequest_WhenIdMismatch()
     {
         var mockService = new Mock<IUserService>();
-        var userDto = new UserDto { Id = 1, Topics = new List<string> {"Topic1","Topic2"}};
+        var userDto = new UserDto { Id = 1};
         
         var controller = new UsersController(mockService.Object);
         
