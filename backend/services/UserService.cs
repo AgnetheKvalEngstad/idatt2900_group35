@@ -1,27 +1,42 @@
+using backend.data;
 using backend.dto;
 using backend.models;
 using backend.repositories;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.services
 {
-    public class UserService(IRepository<User> userRepository) : IUserService
+    public class UserService : IUserService
     {
+        private readonly BackendDbContext _context;
+        
+        public UserService(BackendDbContext context)
+        {
+            _context = context;
+        }
         
         //Get all users
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
-            var users = await userRepository.GetAllAsync();
+            var users = await _context.Users
+                .Include(u => u.Topics)
+                .ToListAsync();
+            
             return users.Select(u => new UserDto
             {
                 Id = u.Id,
-                AllUserPoints = u.AllUserPoints
+                AllUserPoints = u.AllUserPoints,
+                TopicIds = u.Topics.Select(t => t.Id).ToList()
             });
         }
         
         //Get user by id
         public async Task<UserDto?> GetUserByIdAsync(int id)
         {
-            var user = await userRepository.GetByIdAsync(id);
+            var user = _context.Users
+                .Include(u => u.Topics)
+                .FirstOrDefault(u => u.Id == id);
+            
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with id {id} not found");
@@ -30,6 +45,7 @@ namespace backend.services
             {
                 Id = user.Id,
                 AllUserPoints = user.AllUserPoints,
+                TopicIds = user.Topics.Select(t => t.Id).ToList()
             };
         }
         
@@ -40,7 +56,8 @@ namespace backend.services
             {
                 Id = userDto.Id
             };
-            await userRepository.AddAsync(user);
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
             userDto.Id = user.Id;
             return userDto;
         }
@@ -48,25 +65,27 @@ namespace backend.services
         //Update user
         public async System.Threading.Tasks.Task UpdateUserAsync(UserDto userDto)
         {
-            var user = await userRepository.GetByIdAsync(userDto.Id);
+            var user = await _context.Users.FindAsync(userDto.Id);
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with id {userDto.Id} not found");
             }
 
             user.Id = userDto.Id;
-            await userRepository.UpdateAsync(user);
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
         
         //Delete user
         public async System.Threading.Tasks.Task DeleteUserAsync(int id)
         {
-            var user = await userRepository.GetByIdAsync(id);
+            var user = await _context.Users.FindAsync(id);
             if (user == null)
             {
                 throw new KeyNotFoundException($"User with id {id} not found");
             }
-            userRepository.Remove(user);
+            _context.Users.Remove(user);
+            await _context.SaveChangesAsync();
         }
         
         
