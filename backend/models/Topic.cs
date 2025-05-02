@@ -22,8 +22,4 @@ public class Topic
     public Subtopic Subtopic { get; set; } = null!;
     public Task Task { get; set; } = null!;
     public Reason Reason { get; set; } = null!;
-    public Progress Progress { get; set; } = null!;
-    
-
-
 }
