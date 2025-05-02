@@ -2,6 +2,7 @@ using System.Text.Json;
 using backend.data;
 using backend.dto;
 using backend.models;
+using backend.queries;
 using backend.repositories;
 using Microsoft.EntityFrameworkCore;
 using Task = System.Threading.Tasks.Task;
@@ -9,23 +10,13 @@ using Task = System.Threading.Tasks.Task;
 namespace backend.services
 {
 
-    public class TaskService : ITaskService
-    {
-        private readonly IRepository<backend.models.Task> _taskRepository;
-        private readonly BackendDbContext _context;
-        
-        public TaskService(IRepository<backend.models.Task> taskRepository, BackendDbContext context)
-        {
-            _taskRepository = taskRepository;
-            _context = context;
-        }
+    public class TaskService(IRepository<backend.models.Task> taskRepository) : ITaskService
+    { 
         
         //Get all tasks
         public async Task<IEnumerable<TaskDto>> GetAllTasksAsync()
         {
-            var tasks = await _context.Tasks
-                .Include(t => t.Questions)
-                .ToListAsync();
+            var tasks = await taskRepository.GetAllWithQueryAsync(new TaskWithQuestionQuery().Apply);
             
             return tasks.Select(t => new TaskDto
             {
@@ -51,9 +42,7 @@ namespace backend.services
         //Get task by id
         public async Task<TaskDto?> GetTaskByIdAsync(int id)
         {
-            var task = await _context.Tasks
-                .Include(t => t.Questions)
-                .FirstOrDefaultAsync(t => t.Id == id);
+            var task = await taskRepository.GetByIdWithQueryAsync(id, new TaskWithQuestionQuery().Apply);
             
             if (task == null)
             {
@@ -99,7 +88,7 @@ namespace backend.services
                 }).ToList(),
                 AchievedPoints = taskDto.AchievedPoints,
             };
-            await _taskRepository.AddAsync(task);
+            await taskRepository.AddAsync(task);
             taskDto.Id = task.Id;
             return taskDto;
         }
@@ -107,7 +96,7 @@ namespace backend.services
         //Update task
         public async System.Threading.Tasks.Task UpdateTaskAsync(TaskDto taskDto)
         {
-            var task = await _taskRepository.GetByIdAsync(taskDto.Id);
+            var task = await taskRepository.GetByIdAsync(taskDto.Id);
             if (task == null)
             {
                 throw new KeyNotFoundException($"Task with id {taskDto.Id} not found");
@@ -127,18 +116,18 @@ namespace backend.services
                 TaskId = task.Id
             }).ToList();
             task.AchievedPoints = taskDto.AchievedPoints;
-            await _taskRepository.UpdateAsync(task);
+            await taskRepository.UpdateAsync(task);
         }
         
         //Delete reason
         public async Task DeleteTaskAsync(int id)
         {
-            var task = await _taskRepository.GetByIdAsync(id);
+            var task = await taskRepository.GetByIdAsync(id);
             if (task == null)
             {
                 throw new KeyNotFoundException($"Task with id {id} not found");
             }
-            _taskRepository.Remove(task);
+            taskRepository.Remove(task);
         }
 
     }
