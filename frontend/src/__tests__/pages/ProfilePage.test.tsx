@@ -12,6 +12,21 @@ vi.mock("../../hooks/useTopics", () => ({
   useTopics: vi.fn(),
 }));
 
+vi.mock("react-cookie", () => ({
+  useCookies: vi.fn(() => {
+    return [
+      {
+        userInfo: { allUserPoints: 100 },
+        progress: {},
+      },
+      () => {},
+    ];
+  }),
+  CookiesProvider: ({ children }: { children: React.ReactNode }) => (
+    <div>{children}</div>
+  ),
+}));
+
 const mockTopics = [
   {
     id: 1,
