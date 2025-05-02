@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { useCookies } from "react-cookie";
+import { useUser } from "../../hooks/useUser";
 
 interface DeleteDialogProps {
   open: boolean;
@@ -16,15 +17,22 @@ interface DeleteDialogProps {
 }
 
 export default function DeleteDialog({ open, onClose }: DeleteDialogProps) {
-  const [, removeCookies] = useCookies(["progress", "lastIndex", "userInfo"]);
+  const [cookies, removeCookies] = useCookies([
+    "progress",
+    "lastIndex",
+    "userInfo",
+  ]);
+  const { deleteUserHandler } = useUser();
 
   const handleDelete = () => {
+    deleteUserHandler(cookies.userInfo.id);
     removeCookies("progress", { path: "/" });
     removeCookies("lastIndex", { path: "/" });
     removeCookies("userInfo", { path: "/" });
-    //TODO: Delete all progress data from the database
+
     onClose();
-    window.location.reload();
+    //go to home page
+    window.location.href = "/";
   };
 
   return (

@@ -71,3 +71,31 @@ export const fetchUser = async (id: number): Promise<UserAPI> => {
     throw error;
   }
 };
+
+/**
+ * Deletes a user by their ID.
+ * @param id The ID of the user to delete.
+ * @returns {Promise<void>} A promise that resolves when the user is deleted.
+ */
+export const deleteUser = async (id: number): Promise<void> => {
+  try {
+    await axiosInstance.delete(`/Users/${id}`);
+  } catch (error: unknown) {
+    if (axios.isAxiosError(error)) {
+      if (error.response) {
+        console.error(
+          "Server responded with an error:",
+          error.response.status,
+          error.response.data
+        );
+      } else if (error.request) {
+        console.error("No response received from server:", error.request);
+      } else {
+        console.error("Error setting up the request:", error.message);
+      }
+    } else {
+      console.error("An unexpected error occurred:", error);
+    }
+    throw error;
+  }
+};

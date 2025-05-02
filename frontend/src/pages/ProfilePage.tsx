@@ -106,7 +106,9 @@ export default function ProfilePage() {
               sx={{ borderRadius: 6 }}
             >
               <Typography variant="h6">Du har oppnådd totalt</Typography>
-              <Typography variant="h6">{user?.allUserPoints} poeng!</Typography>
+              <Typography variant="h6">
+                {user?.allUserPoints || 0} poeng!
+              </Typography>
               <Grid2 className="flex flex-row justify-center items-center space-x-2 py-2">
                 <OfflineBoltOutlinedIcon
                   fontSize="large"

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { createUser, fetchUser, UserAPI } from "../api/userAPI";
+import { createUser, deleteUser, fetchUser, UserAPI } from "../api/userAPI";
 
 /**
  * An interface representing the structure of the user data returned by the API.
@@ -10,6 +10,7 @@ interface UseUserResult {
   error: unknown | null;
   createUserHandler: () => Promise<UserAPI>;
   fetchUserHandler: (id: number) => Promise<void>;
+  deleteUserHandler: (id: number) => Promise<void>;
 }
 
 /**
@@ -50,5 +51,25 @@ export const useUser = (): UseUserResult => {
     }
   };
 
-  return { user, loading, error, createUserHandler, fetchUserHandler };
+  const deleteUserHandler = async (id: number): Promise<void> => {
+    setLoading(true);
+    try {
+      await deleteUser(id);
+      setUser(null);
+      setError(null);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return {
+    user,
+    loading,
+    error,
+    createUserHandler,
+    fetchUserHandler,
+    deleteUserHandler,
+  };
 };
