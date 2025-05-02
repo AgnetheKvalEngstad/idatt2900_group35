@@ -1,4 +1,3 @@
-/**
 namespace backend.Tests.ServicesTests;
 using Xunit;
 using Moq;
@@ -11,24 +10,27 @@ using dto;
 public class UserServiceTests
 {
     private readonly Mock<IRepository<User>> _userRepositoryMock;
+    private readonly Mock<IRepository<Topic>> _topicRepositoryMock;
     private readonly IUserService _userService;
 
     public UserServiceTests()
     {
         _userRepositoryMock = new Mock<IRepository<User>>();
-        _userService = new UserService(_userRepositoryMock.Object);
+        _topicRepositoryMock = new Mock<IRepository<Topic>>();
+        _userService = new UserService(_userRepositoryMock.Object, _topicRepositoryMock.Object);
     }
 
     [Fact]
     public async System.Threading.Tasks.Task GetAllUsersAsync_ShouldReturnAllUsers()
     {
-        var Users = new List<User>
-        {
-            new User { Id = 1 },
-            new User { Id = 2 }
-        };
-        _userRepositoryMock.Setup(repo => repo.GetAllAsync()).ReturnsAsync(Users);
-        
+        _userRepositoryMock
+            .Setup(repo => repo.
+                GetAllWithQueryAsync(It.IsAny<Func<IQueryable<User>, IQueryable<User>>>()))
+            .ReturnsAsync(new List<User>
+            {
+                new User { Id = 1 },
+                new User { Id = 2 }
+            });        
         var result = await _userService.GetAllUsersAsync();
         
         Assert.Equal(2, result.Count());
@@ -40,7 +42,11 @@ public class UserServiceTests
     public async System.Threading.Tasks.Task GetUserByIdAsync_ShouldReturnUser()
     {
         var user = new User { Id = 1 };
-        _userRepositoryMock.Setup(repo => repo.GetByIdAsync(1)).ReturnsAsync(user);
+        
+        _userRepositoryMock
+            .Setup(repo => repo.GetByIdWithQueryAsync(1, 
+                It.IsAny<Func<IQueryable<User>, IQueryable<User>>>()))
+            .ReturnsAsync(user);
         
         var result = await _userService.GetUserByIdAsync(1);
         
@@ -115,4 +121,3 @@ public class UserServiceTests
     
     
 }
-**/
