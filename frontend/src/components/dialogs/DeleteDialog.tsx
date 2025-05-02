@@ -16,11 +16,12 @@ interface DeleteDialogProps {
 }
 
 export default function DeleteDialog({ open, onClose }: DeleteDialogProps) {
-  const [, removeCookies] = useCookies(["progress", "lastIndex"]);
+  const [, removeCookies] = useCookies(["progress", "lastIndex", "userInfo"]);
 
   const handleDelete = () => {
     removeCookies("progress", { path: "/" });
     removeCookies("lastIndex", { path: "/" });
+    removeCookies("userInfo", { path: "/" });
     //TODO: Delete all progress data from the database
     onClose();
     window.location.reload();
