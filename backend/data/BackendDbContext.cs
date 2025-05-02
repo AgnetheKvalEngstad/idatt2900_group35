@@ -27,33 +27,47 @@ public class BackendDbContext : DbContext
         modelBuilder.Entity<User>()
             .HasMany(u => u.Topics)
             .WithOne(t => t.User)
-            .HasForeignKey(t => t.UserId);
+            .HasForeignKey(t => t.UserId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         //Topic has one to one with subtopic, task, reason and progress
         modelBuilder.Entity<Topic>()
             .HasOne(t => t.Subtopic)
             .WithOne(s => s.Topic)
-            .HasForeignKey<Subtopic>(s => s.TopicId);
+            .HasForeignKey<Subtopic>(s => s.TopicId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<Topic>()
             .HasOne(t =>t.Task)
             .WithOne(t => t.Topic)
-            .HasForeignKey<Task>(t =>t.TopicId);
+            .HasForeignKey<Task>(t =>t.TopicId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<Topic>()
             .HasOne(t =>t.Reason)
             .WithOne(r => r.Topic)
-            .HasForeignKey<Reason>(r => r.TopicId);
+            .HasForeignKey<Reason>(r => r.TopicId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<Topic>()
             .HasOne(t =>t.Progress)
             .WithOne(p => p.Topic)
-            .HasForeignKey<Progress>(p => p.TopicId);
+            .HasForeignKey<Progress>(p => p.TopicId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
+        //Tasks can have several questions
+        modelBuilder.Entity<Task>()
+            .HasMany(t => t.Questions)
+            .WithOne(q => q.Task)
+            .HasForeignKey(q => q.TaskId)
+            .OnDelete(DeleteBehavior.Cascade);
         
         modelBuilder.Entity<Question>()
             .HasOne(q => q.Task)
             .WithMany(t => t.Questions)
-            .HasForeignKey(q => q.TaskId);
+            .HasForeignKey(q => q.TaskId)
+            .OnDelete(DeleteBehavior.Cascade);
+        
         
         // Seed data
         modelBuilder.Entity<User>().HasData(

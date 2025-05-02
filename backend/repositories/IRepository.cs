@@ -7,8 +7,14 @@ namespace backend.repositories
         //Get an entity by id
         Task<T> GetByIdAsync(int id);
         
+        //Get an entity by id with a query
+        Task<T?> GetByIdWithQueryAsync(int id, Func<IQueryable<T>, IQueryable<T>> queryCustomizer);
+        
         //Get all entities
         Task<IEnumerable<T>> GetAllAsync();
+        
+        //Get all entities with a query
+        Task<IEnumerable<T>> GetAllWithQueryAsync(Func<IQueryable<T>, IQueryable<T>> queryCustomizer);
         
         //Get entities that match a predicate
         Task<IEnumerable<T>> FindAsync(Expression<Func<T, bool>> predicate);

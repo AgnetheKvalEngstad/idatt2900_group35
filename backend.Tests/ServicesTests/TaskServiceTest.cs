@@ -12,21 +12,65 @@ namespace backend.Tests.ServicesTests;
 public class TaskServiceTest
 {
     private readonly Mock<IRepository<models.Task>> _taskRepositoryMock;
-    private readonly Mock<BackendDbContext> _dbContextMock;
     private readonly ITaskService _taskService;
 
     public TaskServiceTest()
     {
         _taskRepositoryMock = new Mock<IRepository<models.Task>>();
+        _taskService = new TaskService(_taskRepositoryMock.Object);
         
-        var options = new DbContextOptionsBuilder<BackendDbContext>()
-            .UseInMemoryDatabase(databaseName: "TestDatabase")
-            .Options;
+    }
+
+    [Fact]
+    public async Task GetAllTasksAsync_ShouldReturnAllTasks()
+    {
+       _taskRepositoryMock.Setup(repo => repo
+           .GetAllWithQueryAsync(It.IsAny<Func<IQueryable<backend.models.Task>, IQueryable<backend.models.Task>>>()))
+           .ReturnsAsync(new List <backend.models.Task>
+           {
+               new models.Task { Id = 1, Title = "Task 1", TaskContent = "Content 1", IsDone = false,
+                   TopicId = 1, TaskType = "Type 1" },
+               new models.Task { Id = 2, Title = "Task 2", TaskContent = "Content 2", IsDone = true,
+                   TopicId = 2, TaskType = "Type 2" }
+           });
+       
+         var result = await _taskService.GetAllTasksAsync();
+         
+        Assert.Equal(2, result.Count());
+        Assert.Contains(result, t => t.Id == 1);
+        Assert.Contains(result, t => t.Id == 2);
+    }
+
+    [Fact]
+    public async Task GetTaskByIdAsync_ShouldReturnTask()
+    {
+        var task = new models.Task
+        {
+            Id = 1, Title = "Task 1", TaskContent = "Content 1", IsDone = false, TopicId = 1, TaskType = "Type 1"
+        };
         
-        _dbContextMock = new Mock <BackendDbContext>(options, null);
+        _taskRepositoryMock.Setup(repo => repo
+            .GetByIdWithQueryAsync(1, It.IsAny<Func<IQueryable<backend.models.Task>, IQueryable<backend.models.Task>>>()))
+            .ReturnsAsync(task);
         
-        _taskService = new TaskService(_taskRepositoryMock.Object, _dbContextMock.Object);
+        var result = await _taskService.GetTaskByIdAsync(1);
         
+        Assert.NotNull(result);
+        Assert.Equal(task.Id, result.Id);
+        Assert.Equal(task.Title, result.Title);
+        Assert.Equal(task.TaskContent, result.TaskContent);
+        Assert.Equal(task.IsDone, result.IsDone);
+        Assert.Equal(task.TopicId, result.TopicId);
+        Assert.Equal(task.TaskType, result.TaskType);
+    }
+    
+    [Fact]
+    public async Task GetTaskByIdAsync_TaskNotFound_ShouldThrowException()
+    {
+        _taskRepositoryMock.Setup(repo => repo.GetByIdWithQueryAsync(1, It.IsAny<Func<IQueryable<backend.models.Task>, IQueryable<backend.models.Task>>>()))
+            .ReturnsAsync((models.Task)null!);
+        
+        await Assert.ThrowsAsync<KeyNotFoundException>(() => _taskService.GetTaskByIdAsync(1));
     }
 
     [Fact]
