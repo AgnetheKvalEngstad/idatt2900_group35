@@ -16,7 +16,7 @@ import { useCookies } from "react-cookie";
  */
 export default function ProfilePage() {
   const [open, setOpen] = React.useState(false);
-  const [cookies] = useCookies(["progress"]);
+  const [cookies] = useCookies(["progress", "userInfo"]);
   const [progress] = React.useState<{ [key: string]: number }>(
     cookies.progress || {}
   );
@@ -85,7 +85,9 @@ export default function ProfilePage() {
               sx={{ borderRadius: 6 }}
             >
               <Typography variant="h6">Du har oppnådd totalt</Typography>
-              <Typography variant="h6">1000 av 2000 poeng!</Typography>
+              <Typography variant="h6">
+                {cookies.userInfo.allUserPoints} poeng!
+              </Typography>
               <Grid2 className="flex flex-row justify-center items-center space-x-2 py-2">
                 <OfflineBoltOutlinedIcon
                   fontSize="large"
