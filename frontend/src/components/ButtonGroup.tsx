@@ -10,6 +10,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
  * @param {string[]} props.topicPageCards - An array of card identifiers.
  * @param {function} props.handleBack - A function to handle the back button click.
  * @param {function} props.handleNext - A function to handle the next button click.
+ * @param {function} props.handleTaskCompletion - A function to handle task completion.
  *
  * @returns The rendered button group component.
  */

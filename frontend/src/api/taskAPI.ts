@@ -54,6 +54,12 @@ export const fetchTask = async (id: number): Promise<TaskAPI> => {
   }
 };
 
+/**
+ * Fetches the achieved points of a task by its id.
+ *
+ * @param {number} id - The ID of the task to fetch.
+ * @returns {Promise<number>} A promise that contains the achieved points of the task.
+ */
 export const fetchAchievedPoints = async (id: number): Promise<number> => {
   try {
     const response = await axiosInstance.get(`/Tasks/${id}`);

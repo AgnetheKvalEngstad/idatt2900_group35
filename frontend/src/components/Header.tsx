@@ -2,6 +2,7 @@ import { Card, CardContent, Grid2, Typography } from "@mui/material";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 /**
  * Component for the header of the page
@@ -9,7 +10,8 @@ import { Link } from "react-router-dom";
  * @returns Header component
  */
 export default function Header() {
-  const points: number = 1000;
+  const [cookies] = useCookies(["userInfo"]);
+
   return (
     <Grid2
       container
@@ -70,7 +72,7 @@ export default function Header() {
               variant="body1"
             >
               <OfflineBoltOutlinedIcon />
-              {points}
+              {cookies.userInfo?.allUserPoints ?? "nein"}
             </Typography>
 
             <Typography
