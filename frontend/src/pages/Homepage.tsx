@@ -26,13 +26,13 @@ export default function Homepage() {
   const hasInitialized = useRef(user?.id ? true : false);
 
   const [topicIds, setTopicIds] = useState<number[]>([]);
-
   const { topics: data, loading, error, refetch } = useTopics();
 
   useEffect(() => {
     const initUser = async () => {
       if (hasInitialized.current) return;
       hasInitialized.current = true;
+
       try {
         if (!cookies.userInfo?.id) {
           console.log("No user, creating new user");
@@ -40,7 +40,9 @@ export default function Homepage() {
           setCookie("userInfo", newUser, { path: "/" });
           setTopicIds(newUser.topicIds);
         } else {
-          console.log("User already exists ", cookies.userInfo);
+          console.log("User already exists", cookies.userInfo);
+          const savedTopicIds = cookies.userInfo.topicIds || [];
+          setTopicIds(savedTopicIds);
         }
       } catch (err) {
         console.error("Failed to initialize user:", err);
@@ -52,6 +54,7 @@ export default function Homepage() {
 
   useEffect(() => {
     if (topicIds.length > 0) {
+      console.log("Refetching topics with IDs:", topicIds);
       refetch(topicIds);
     }
   }, [topicIds, refetch]);

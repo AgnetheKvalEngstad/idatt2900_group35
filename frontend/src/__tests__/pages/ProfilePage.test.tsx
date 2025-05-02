@@ -12,21 +12,6 @@ vi.mock("../../hooks/useTopics", () => ({
   useTopics: vi.fn(),
 }));
 
-vi.mock("react-cookie", () => ({
-  useCookies: vi.fn(() => {
-    return [
-      {
-        userInfo: { allUserPoints: 100 },
-        progress: {},
-      },
-      () => {},
-    ];
-  }),
-  CookiesProvider: ({ children }: { children: React.ReactNode }) => (
-    <div>{children}</div>
-  ),
-}));
-
 const mockTopics = [
   {
     id: 1,
@@ -52,12 +37,10 @@ const mockTopics = [
   },
 ];
 
+const stableRefetch = vi.fn().mockResolvedValue(undefined);
+
 const renderWithRouter = (ui: React.ReactElement) => {
-  return render(
-    <CookiesProvider>
-      <BrowserRouter>{ui}</BrowserRouter>
-    </CookiesProvider>
-  );
+  return render(<BrowserRouter>{ui}</BrowserRouter>);
 };
 
 describe("ProfilePage component test", () => {
@@ -66,12 +49,18 @@ describe("ProfilePage component test", () => {
   });
 
   it("should render loading state", () => {
-    (useTopics as jest.Mock).mockReturnValue({
+    (useTopics as Mock).mockReturnValue({
       topics: [],
       loading: true,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
+
     expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 
@@ -80,8 +69,13 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
     expect(screen.getByText("Min side")).toBeInTheDocument();
   });
 
@@ -90,8 +84,13 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
 
     expect(screen.getByText("Slett min data")).toBeInTheDocument();
   });
@@ -101,8 +100,13 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
 
     expect(screen.getByText("Fullførte temaer")).toBeInTheDocument();
   });
@@ -112,8 +116,13 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
 
     const deleteButton = screen.getByText("Slett min data");
     await act(async () => {
@@ -130,8 +139,13 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
 
     expect(screen.getByText("Intro to Cookies")).toBeInTheDocument();
     expect(screen.getByText("Advanced Cookies")).toBeInTheDocument();

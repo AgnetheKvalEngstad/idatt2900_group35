@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import { fetchTopics, TopicAPI } from "../api/topicAPI";
 
 /**
@@ -8,10 +8,15 @@ import { fetchTopics, TopicAPI } from "../api/topicAPI";
  */
 export const useTopics = () => {
   const [topics, setTopics] = useState<TopicAPI[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
 
-  const fetchData = useCallback(async (ids: number[] = []) => {
+  const refetch = useCallback(async (ids: number[]) => {
+    if (ids.length === 0) {
+      setTopics([]);
+      return;
+    }
+
     setLoading(true);
     try {
       const data = await fetchTopics(ids);
@@ -24,9 +29,5 @@ export const useTopics = () => {
     }
   }, []);
 
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-
-  return { topics, loading, error, refetch: fetchData };
+  return { topics, loading, error, refetch };
 };

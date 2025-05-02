@@ -1,5 +1,5 @@
 import { Grid2, Card, Typography, Button } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import DeleteDialog from "../components/dialogs/DeleteDialog";
 import TopicCard from "../components/TopicCard";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
@@ -8,6 +8,7 @@ import SpaIcon from "@mui/icons-material/Spa";
 import { useTopics } from "../hooks/useTopics";
 import { checkDifficulty } from "../utils/utils";
 import { useCookies } from "react-cookie";
+import { useUser } from "../hooks/useUser";
 
 /**
  * A React component that renders the profile page.
@@ -21,9 +22,29 @@ export default function ProfilePage() {
     cookies.progress || {}
   );
 
+  const { user } = useUser();
+
   const deleteButtonRef = React.useRef<HTMLButtonElement>(null);
 
-  const { topics: data, loading, error } = useTopics();
+  const [topicIds, setTopicIds] = useState<number[]>([]);
+  const { topics: data, loading, error, refetch } = useTopics();
+  useEffect(() => {
+    const savedTopicIds = cookies.userInfo?.topicIds || [];
+    setTopicIds(savedTopicIds);
+  }, [cookies.userInfo]);
+
+  useEffect(() => {
+    if (topicIds.length === 0) return;
+
+    let isMounted = true;
+    refetch(topicIds).finally(() => {
+      if (!isMounted) return;
+    });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [topicIds, refetch]);
 
   const sortedTopics = {
     ingen: data.filter(
@@ -85,9 +106,7 @@ export default function ProfilePage() {
               sx={{ borderRadius: 6 }}
             >
               <Typography variant="h6">Du har oppnådd totalt</Typography>
-              <Typography variant="h6">
-                {cookies.userInfo.allUserPoints} poeng!
-              </Typography>
+              <Typography variant="h6">{user?.allUserPoints} poeng!</Typography>
               <Grid2 className="flex flex-row justify-center items-center space-x-2 py-2">
                 <OfflineBoltOutlinedIcon
                   fontSize="large"

@@ -10,6 +10,13 @@ vi.mock("../../hooks/useTopics", () => ({
   useTopics: vi.fn(),
 }));
 
+vi.mock("../../hooks/useUser", () => ({
+  useUser: vi.fn(() => ({
+    user: { id: 1, topicIds: [1, 2] },
+    createUserHandler: vi.fn().mockResolvedValue({ id: 1, topicIds: [1, 2] }),
+  })),
+}));
+
 const mockTopics = [
   {
     id: 1,

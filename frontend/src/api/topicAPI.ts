@@ -28,10 +28,9 @@ export const fetchTopics = async (topicIds: number[]): Promise<TopicAPI[]> => {
     if (topicIds.length === 0) {
       return [];
     }
-    const response = await axiosInstance.get("/Topics", {
-      params: { topicIds: topicIds.join(",") },
-    });
-    return response.data;
+    const requests = topicIds.map((id) => axiosInstance.get(`/Topics/${id}`));
+    const responses = await Promise.all(requests);
+    return responses.map((res) => res.data);
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       if (error.response) {
