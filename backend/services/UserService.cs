@@ -49,16 +49,16 @@ namespace backend.services
             };
         }
         
-        //seeding method to create users with preloaded data
         private async System.Threading.Tasks.Task SeedUsersAsync(int userId)
         {
+            // Retrieve all topics
             var seededTopics = await topicRepository.GetAllWithQueryAsync(query => query
                 .Include(t => t.Subtopic)
                 .Include(t => t.Task)
-                .Include(t => t.Reason)
-                .Include(t => t.Progress));
+                .ThenInclude(task => task.Questions)
+                .Include(t => t.Reason));
             
-            var userTopics = seededTopics.Select(topic => new Topic
+            var userTopics = seededTopics.Take(3).Select(topic => new Topic
             {
                 Title = topic.Title,
                 SkillLevel = topic.SkillLevel,
@@ -75,22 +75,27 @@ namespace backend.services
                     Title = topic.Task.Title,
                     TaskContent = topic.Task.TaskContent,
                     IsDone = false,
-                    TaskType = topic.Task.TaskType
+                    TaskType = topic.Task.TaskType,
+                    Questions = topic.Task.Questions.Select(q => new Question
+                    {
+                        QuestionText = q.QuestionText,
+                        CorrectAnswer = q.CorrectAnswer,
+                        Options = q.Options,
+                        CorrectOption = q.CorrectOption,
+                    }).ToList()
                 } : null,
                 Reason = topic.Reason != null ? new Reason
                 {
                     ReasonTitle = topic.Reason.ReasonTitle,
                     ReasonContent = topic.Reason.ReasonContent,
                     IsRead = false
-                } : null,
-                Progress = topic.Progress != null ? new Progress
-                {
-                    ProgressPercentage = 0,
-                    UserId = userId
                 } : null
             }).ToList();
             
-            await topicRepository.AddRangeAsync(userTopics);
+            if (userTopics.Any())
+            {
+                await topicRepository.AddRangeAsync(userTopics);
+            }
         }
         
         //Create user

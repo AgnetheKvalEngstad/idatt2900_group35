@@ -18,7 +18,6 @@ public class BackendDbContext : DbContext
     public DbSet<Subtopic> Subtopics { get; set; }
     public DbSet<Task> Tasks { get; set; }
     public DbSet<Reason> Reasons { get; set; }
-    public DbSet<Progress> Progresses { get; set; }
     public DbSet<Question> Questions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -47,12 +46,6 @@ public class BackendDbContext : DbContext
             .HasOne(t =>t.Reason)
             .WithOne(r => r.Topic)
             .HasForeignKey<Reason>(r => r.TopicId)
-            .OnDelete(DeleteBehavior.Cascade);
-        
-        modelBuilder.Entity<Topic>()
-            .HasOne(t =>t.Progress)
-            .WithOne(p => p.Topic)
-            .HasForeignKey<Progress>(p => p.TopicId)
             .OnDelete(DeleteBehavior.Cascade);
         
         //Tasks can have several questions
@@ -126,10 +119,6 @@ public class BackendDbContext : DbContext
             new Reason { Id = 3, ReasonTitle = "Hvorfor er det viktig å velge trygge nettsider?", 
                 ReasonContent = "Utrygge nettsider ", IsRead = false, TopicId = 3 }
             
-        );
-
-        modelBuilder.Entity<Progress>().HasData(
-            new Progress { Id = 1, ProgressPercentage = 0.5, TopicId = 1, UserId = 1 }
         );
 
         modelBuilder.Entity<Bonus>().HasData(
