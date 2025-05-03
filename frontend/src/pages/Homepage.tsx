@@ -35,12 +35,10 @@ export default function Homepage() {
 
       try {
         if (!cookies.userInfo?.id) {
-          console.log("No user, creating new user");
           const newUser = await createUserHandler();
           setCookie("userInfo", newUser, { path: "/" });
           setTopicIds(newUser.topicIds);
         } else {
-          console.log("User already exists", cookies.userInfo);
           const savedTopicIds = cookies.userInfo.topicIds || [];
           setTopicIds(savedTopicIds);
         }
@@ -54,7 +52,6 @@ export default function Homepage() {
 
   useEffect(() => {
     if (topicIds.length > 0) {
-      console.log("Refetching topics with IDs:", topicIds);
       refetch(topicIds);
     }
   }, [topicIds, refetch]);
