@@ -3,12 +3,13 @@ import React, { useEffect, useState } from "react";
 import DeleteDialog from "../components/dialogs/DeleteDialog";
 import TopicCard from "../components/TopicCard";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
-import GppGoodIcon from "@mui/icons-material/GppGood";
-import SpaIcon from "@mui/icons-material/Spa";
+
 import { useTopics } from "../hooks/useTopics";
 import { checkDifficulty } from "../utils/utils";
 import { useCookies } from "react-cookie";
 import { useUser } from "../hooks/useUser";
+import { useBonuses } from "../hooks/useBonuses";
+import BonusCard from "../components/BonusCard";
 
 /**
  * A React component that renders the profile page.
@@ -17,12 +18,10 @@ import { useUser } from "../hooks/useUser";
  */
 export default function ProfilePage() {
   const [open, setOpen] = React.useState(false);
-  const [cookies] = useCookies(["progress", "userInfo"]);
-  const [progress] = React.useState<{ [key: string]: number }>(
-    cookies.progress || {}
-  );
+  const [cookies] = useCookies(["userInfo", "progress"]);
 
   const { user } = useUser();
+  const { bonuses, loading: bonusLoading, error: bonusError } = useBonuses();
 
   const deleteButtonRef = React.useRef<HTMLButtonElement>(null);
 
@@ -54,37 +53,12 @@ export default function ProfilePage() {
     mye: data.filter((topic) => checkDifficulty(topic.skillLevel) === "mye"),
   };
 
-  if (loading) {
+  if (loading || bonusLoading) {
     return <div>Loading...</div>;
   }
-  if (error) {
-    return <div>Error loading topics</div>;
+  if (error || bonusError) {
+    return <div>Error loading topics/bonuses</div>;
   }
-
-  const createRewardCard = (icon: React.ElementType, title: string) => {
-    return (
-      <Card
-        raised={true}
-        sx={{
-          borderRadius: 100,
-          backgroundColor: "#0F3D75",
-        }}
-        className="flex flex-row items-center gap-2 p-4 w-65 h-16 hover:shadow-lg hover:scale-105 transition-transform duration-200"
-      >
-        {React.createElement(icon, {
-          fontSize: "large",
-          style: { color: "white" },
-        })}
-        <Typography
-          variant="body1"
-          gutterBottom={false}
-          style={{ color: "white" }}
-        >
-          {title}
-        </Typography>
-      </Card>
-    );
-  };
 
   return (
     <>
@@ -109,45 +83,38 @@ export default function ProfilePage() {
               <Typography variant="h6">
                 {user?.allUserPoints || 0} poeng!
               </Typography>
-              <Grid2 className="flex flex-row justify-center items-center space-x-2 py-2">
-                <OfflineBoltOutlinedIcon
-                  fontSize="large"
-                  className="bg-yellow-300 rounded-[50%] border-2"
-                />
-                <OfflineBoltOutlinedIcon
-                  fontSize="large"
-                  className="bg-yellow-300 rounded-[50%] border-2"
-                />
-                <OfflineBoltOutlinedIcon
-                  fontSize="large"
-                  className="bg-yellow-300 rounded-[50%] border-2"
-                />
+              <Grid2 className="flex justify-center items-center space-x-2 py-2">
+                {Array(3)
+                  .fill(null)
+                  .map((_, i) => (
+                    <OfflineBoltOutlinedIcon
+                      key={i}
+                      fontSize="large"
+                      className="bg-yellow-300 rounded-full border-2"
+                    />
+                  ))}
               </Grid2>
               <Typography variant="h6">Stå på!!</Typography>
             </Card>
 
             <Card
-              className="flex flex-col max-w-100 items-center justify-center text-center p-4 border-1 border-black"
+              className="flex flex-col max-w-111 items-center justify-center content-center text-center p-2 border-1 border-black"
               sx={{ borderRadius: 6 }}
             >
               <Typography variant="h5" className="pb-2">
-                Fullførte temaer
+                Oversikt temaer
               </Typography>
-              <Grid2 container spacing={1}>
+              <Grid2 className="flex flex-col md:flex-row justify-center items-center flex-wrap gap-2">
                 {(["ingen", "litt", "mye"] as const).flatMap((difficulty) =>
                   sortedTopics[difficulty].map((topic) => {
-                    const topicProgress = progress[topic.id] || 0;
-                    const opacity =
-                      topicProgress === 100 ? 1 : topicProgress > 0 ? 0.3 : 0.3;
-
                     return (
                       <Grid2 size={6} key={topic.id}>
                         <TopicCard
                           cardTitle={topic.title}
                           cardIcon={topic.icon}
                           difficulty={checkDifficulty(topic.skillLevel)}
+                          progress={cookies.progress?.[topic.id] || 0}
                           size="small"
-                          sx={{ opacity }}
                         />
                       </Grid2>
                     );
@@ -156,9 +123,9 @@ export default function ProfilePage() {
               </Grid2>
             </Card>
           </Grid2>
-          <Grid2 className="flex flex-col-reverse md:flex-row justify-center items-center gap-4">
+          <Grid2 className="flex flex-col-reverse md:flex-row-reverse justify-center items-center gap-4">
             <Card
-              className="flex flex-col items-center justify-center w-90 text-center p-6 border-1 border-black"
+              className="flex flex-col items-center justify-center w-90 text-center p-5 border-1 border-black"
               sx={{ borderRadius: 6 }}
             >
               <Typography variant="body1" className="pb-4">
@@ -177,12 +144,25 @@ export default function ProfilePage() {
               </Button>
             </Card>
             <Card
-              className="flex flex-col gap-2 items-center justify-center text-center p-6 border-1 border-black "
+              className="flex flex-col gap-2 items-center justify-center text-center p-4 border-1 border-black "
               sx={{ borderRadius: 6 }}
             >
-              <Typography variant="h5">Bonuser du har fått!</Typography>
-              {createRewardCard(SpaIcon, "2 for 1 på spa!")}
-              {createRewardCard(GppGoodIcon, "Pakkedeal med antivirus")}
+              <Typography variant="h5">Bonusoversikt!</Typography>
+              <Grid2 className="flex flex-col justify-center items-center gap-2">
+                {bonuses.map((bonus) => {
+                  return (
+                    <Grid2 key={bonus.id}>
+                      <BonusCard
+                        cardTitle={bonus.title}
+                        cardIcon={bonus.icon}
+                        description={bonus.description}
+                        pointsNeeded={bonus.pointsNeeded}
+                        pointsAchieved={user?.allUserPoints || 0}
+                      />
+                    </Grid2>
+                  );
+                })}
+              </Grid2>
             </Card>
           </Grid2>
         </Grid2>

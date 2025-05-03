@@ -31,7 +31,6 @@ export default function DeleteDialog({ open, onClose }: DeleteDialogProps) {
     removeCookies("userInfo", { path: "/" });
 
     onClose();
-    //go to home page
     window.location.href = "/";
   };
 

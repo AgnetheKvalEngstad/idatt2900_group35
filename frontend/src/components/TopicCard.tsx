@@ -1,4 +1,4 @@
-import { Card, Grid2, SxProps } from "@mui/material";
+import { Card, Grid2 } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import React from "react";
 import { getBackgroundColor } from "../utils/utils";
@@ -14,7 +14,7 @@ interface TopicCardProps {
   cardIcon: string;
   difficulty: string;
   size: string;
-  sx?: SxProps;
+  progress?: number;
 }
 
 interface IconDictionary<T> {
@@ -42,6 +42,7 @@ const iconDictionary: IconDictionary<React.ElementType> = {
  * @param {string} props.difficulty The difficulty level of the topic, which determines
  * the background color of the card.
  * @param {string} props.size The size of the card, which determines its width and height.
+ * @param {number} [props.progress] The progress percentage of the topic, used to show if the topic is achieved.
  *
  * @returns A styled card component with the provided title, icon, and difficulty level.
  */
@@ -50,12 +51,14 @@ export default function TopicCard({
   cardIcon,
   difficulty,
   size,
-  sx,
+  progress,
 }: TopicCardProps) {
+  const isAchieved = (progress ?? 0) >= 100;
+
   const getWidth = (size: string) => {
     switch (size) {
       case "small":
-        return 180;
+        return 200;
       case "medium":
         return 184;
       default:
@@ -65,7 +68,7 @@ export default function TopicCard({
   const getHeight = (size: string) => {
     switch (size) {
       case "small":
-        return 50;
+        return 56;
       case "medium":
         return 184;
       default:
@@ -97,7 +100,6 @@ export default function TopicCard({
         borderRadius: size == "small" ? 4 : 5,
         border: size == "small" ? 2 : 3,
         padding: size === "small" ? 1 : 2,
-        ...sx,
       }}
       variant="outlined"
       className="hover:shadow-lg hover:scale-105 transition-transform duration-200 flex justify-between"
@@ -109,6 +111,14 @@ export default function TopicCard({
             : "flex flex-row-reverse items-center justify-center gap-2 text-center"
         }`}
       >
+        {size === "small" && (
+          <Typography className="" variant="body2" component="span">
+            <Typography variant="body2" component="span">
+              {isAchieved ? "Fullført" : "Ikke fullført"}
+            </Typography>
+          </Typography>
+        )}
+
         <Typography variant={getFontSize(size)}>{cardTitle}</Typography>
         {React.createElement(iconComponent, {
           sx: { fontSize: size === "small" ? 24 : 50 },

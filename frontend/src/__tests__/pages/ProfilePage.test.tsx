@@ -7,9 +7,14 @@ import { vi } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import { useTopics } from "../../hooks/useTopics";
 import { CookiesProvider } from "react-cookie";
+import { useBonuses } from "../../hooks/useBonuses";
 
 vi.mock("../../hooks/useTopics", () => ({
   useTopics: vi.fn(),
+}));
+
+vi.mock("../../hooks/useBonuses", () => ({
+  useBonuses: vi.fn(),
 }));
 
 const mockTopics = [
@@ -40,6 +45,11 @@ const mockTopics = [
 const stableRefetch = vi.fn().mockResolvedValue(undefined);
 
 const renderWithRouter = (ui: React.ReactElement) => {
+  (useBonuses as Mock).mockReturnValue({
+    bonuses: [],
+    loading: false,
+    error: false,
+  });
   return render(<BrowserRouter>{ui}</BrowserRouter>);
 };
 
@@ -95,7 +105,7 @@ describe("ProfilePage component test", () => {
     expect(screen.getByText("Slett min data")).toBeInTheDocument();
   });
 
-  it("should render completed topics card", () => {
+  it("should render topic overview card", () => {
     (useTopics as Mock).mockReturnValue({
       topics: mockTopics,
       loading: false,
@@ -108,7 +118,7 @@ describe("ProfilePage component test", () => {
       </CookiesProvider>
     );
 
-    expect(screen.getByText("Fullførte temaer")).toBeInTheDocument();
+    expect(screen.getByText("Oversikt temaer")).toBeInTheDocument();
   });
 
   it("should open the delete dialog when the delete button is clicked", async () => {
