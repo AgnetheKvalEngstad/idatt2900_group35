@@ -51,6 +51,12 @@ export default function Homepage() {
   }, [cookies.userInfo, createUserHandler, setCookie]);
 
   useEffect(() => {
+    if (!cookies.userInfo) {
+      setTopicIds([]);
+    }
+  }, [cookies.userInfo]);
+
+  useEffect(() => {
     if (topicIds.length > 0) {
       refetch(topicIds);
     }

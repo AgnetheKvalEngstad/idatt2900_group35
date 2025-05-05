@@ -24,6 +24,7 @@ import ProgressBar from "../components/ProgressBar";
  */
 export default function TopicPage() {
   const location = useLocation();
+  const [achievedPoints, setAchievedPoints] = useState<number>(0);
 
   const { topicId, topicTitle, difficulty, reasonId, subtopicId, taskId } =
     location.state || {};
@@ -321,6 +322,8 @@ export default function TopicPage() {
                 } | null;
               };
             }) => updateAnswers(currentIndex, newAnswers)}
+            setAchievedPoints={setAchievedPoints}
+            achievedPoints={achievedPoints}
           />
         )}
         <Grid2 className="flex flex-col w-64 md:w-120 p-2">

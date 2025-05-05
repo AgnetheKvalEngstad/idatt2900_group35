@@ -9,6 +9,7 @@ vi.mock("react-confetti", () => {
   };
 });
 
+const mockSetAchievedPoints = vi.fn();
 const selectedValues = {};
 const isCorrect = {};
 const updateAnswers = () => {};
@@ -49,6 +50,7 @@ const mockTask = {
 };
 
 const mockTopicTitle = "Topic Title";
+const mockAchievedPoints = 5;
 
 describe("TopicPageCard component testing", () => {
   it("should render the topic page card", () => {
@@ -63,6 +65,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Reason Title")).toBeInTheDocument();
@@ -80,6 +84,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Subtopic Title")).toBeInTheDocument();
@@ -97,6 +103,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Sant eller usant?")).toBeInTheDocument();
@@ -114,6 +122,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Flervalg: Velg riktig svar")).toBeInTheDocument();
@@ -131,6 +141,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(
@@ -150,6 +162,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Hurra!")).toBeInTheDocument();
@@ -168,6 +182,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
 

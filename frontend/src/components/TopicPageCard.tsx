@@ -8,7 +8,7 @@ import CompletedVariant from "./variants/CompletedVariant";
 import { ReasonAPI } from "../api/reasonAPI";
 import { SubtopicAPI } from "../api/subtopicAPI";
 import { TaskAPI, updateTaskPoints } from "../api/taskAPI";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 /**
  * Represents the properties for the TopicPageCard component.
@@ -24,6 +24,8 @@ export interface TopicPageCardProps {
     | "trueFalse"
     | "multipleChoice"
     | "input";
+  setAchievedPoints: (points: number) => void;
+  achievedPoints: number;
 }
 
 /**
@@ -36,10 +38,14 @@ export interface TopicPageCardProps {
  * @param {ReasonAPI} props.reason - The reason object containing the reason title and content.
  * @param {SubtopicAPI} props.subtopic - The subtopic object containing the subtopic title and content.
  * @param {TaskAPI} props.task - The task object containing the questions and answers.
+ * @param {string} props.topicTitle - The title of the topic.
  * @param {function} props.handleBack - A function to handle the back button click.
  * @param {object} props.selectedValues - An object containing the selected values for each question.
  * @param {object} props.isCorrect - An object containing the correctness of each question.
  * @param {function} props.updateAnswers - A function to update the selected values and correctness of questions.
+ * @param {function} props.setAchievedPoints - A function to set the achieved points for the task.
+ * @param {number} props.achievedPoints - The current achieved points for the task.
+ *
  *
  * @returns A card component with the specified content variant.
  */
@@ -53,6 +59,8 @@ export default function TopicPageCard({
   selectedValues,
   isCorrect,
   updateAnswers,
+  setAchievedPoints,
+  achievedPoints,
 }: TopicPageCardProps & {
   variant:
     | "reason"
@@ -76,9 +84,8 @@ export default function TopicPageCard({
       [key: number]: { isCorrect: boolean; isAwarded: boolean } | null;
     };
   }) => void;
+  setAchievedPoints: (points: number) => void;
 }) {
-  const [achievedPoints, setAchievedPoints] = useState<number>(0);
-
   const handleInputChange = (questionId: number, value: string) => {
     const newSelectedValues = { ...selectedValues, [questionId]: value };
     updateAnswers({
@@ -127,10 +134,10 @@ export default function TopicPageCard({
     const questionPoints = task.maximumPoints / task.questions.length;
 
     if (isAnswerCorrect && !currentIsCorrect.isAwarded) {
-      setAchievedPoints((prevPoints) => {
-        const newPoints = prevPoints + questionPoints;
-        return newPoints > task.maximumPoints ? task.maximumPoints : newPoints;
-      });
+      const newPoints = achievedPoints + questionPoints;
+      setAchievedPoints(
+        newPoints > task.maximumPoints ? task.maximumPoints : newPoints
+      );
     }
 
     updateAnswers({
