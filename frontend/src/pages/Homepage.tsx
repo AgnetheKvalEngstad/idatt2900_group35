@@ -1,11 +1,12 @@
 import TopicCard from "../components/TopicCard";
 import { Grid2 } from "@mui/material";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTopics } from "../hooks/useTopics";
 import { checkDifficulty } from "../utils/utils";
 import { useCookies } from "react-cookie";
 import ProgressBar from "../components/ProgressBar";
+import { useUser } from "../hooks/useUser";
 
 /**
  * A React component that renders a homepage that displays a grid of topic cards.
@@ -17,12 +18,56 @@ import ProgressBar from "../components/ProgressBar";
  */
 export default function Homepage() {
   const cardSize: string = "medium";
-  const [cookies] = useCookies(["progress"]);
+  const [cookies, setCookie] = useCookies(["progress", "userInfo"]);
+  const { user, createUserHandler } = useUser();
   const [progress] = useState<{ [key: string]: number }>(
     cookies.progress || {}
   );
+  const hasInitialized = useRef(user?.id ? true : false);
 
-  const { topics: data, loading, error } = useTopics();
+  const [topicIds, setTopicIds] = useState<number[]>([]);
+  const { topics: data, loading, error, refetch } = useTopics();
+
+  useEffect(() => {
+    const initUser = async () => {
+      if (hasInitialized.current) return;
+      hasInitialized.current = true;
+
+      try {
+        if (!cookies.userInfo?.id) {
+          const newUser = await createUserHandler();
+          setCookie("userInfo", newUser, { path: "/" });
+          setTopicIds(newUser.topicIds);
+        } else {
+          const savedTopicIds = cookies.userInfo.topicIds || [];
+          setTopicIds(savedTopicIds);
+        }
+      } catch (err) {
+        console.error("Failed to initialize user:", err);
+      }
+    };
+
+    initUser();
+  }, [cookies.userInfo, createUserHandler, setCookie]);
+
+  useEffect(() => {
+    if (!cookies.userInfo) {
+      setTopicIds([]);
+    }
+  }, [cookies.userInfo]);
+
+  useEffect(() => {
+    if (topicIds.length > 0) {
+      refetch(topicIds);
+    }
+  }, [topicIds, refetch]);
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+  if (error) {
+    return <div>Error loading topics</div>;
+  }
 
   const sortedTopics = {
     ingen: data.filter(
@@ -31,13 +76,6 @@ export default function Homepage() {
     litt: data.filter((topic) => checkDifficulty(topic.skillLevel) === "litt"),
     mye: data.filter((topic) => checkDifficulty(topic.skillLevel) === "mye"),
   };
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-  if (error) {
-    return <div>Error loading topics</div>;
-  }
 
   return (
     <div className="flex justify-center items-center flex-grow py-4">

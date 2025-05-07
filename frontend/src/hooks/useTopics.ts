@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 import { fetchTopics, TopicAPI } from "../api/topicAPI";
 
 /**
@@ -8,23 +8,26 @@ import { fetchTopics, TopicAPI } from "../api/topicAPI";
  */
 export const useTopics = () => {
   const [topics, setTopics] = useState<TopicAPI[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<unknown>(null);
 
-  useEffect(() => {
-    const getTopics = async () => {
-      try {
-        const data = await fetchTopics();
-        setTopics(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  const refetch = useCallback(async (ids: number[]) => {
+    if (ids.length === 0) {
+      setTopics([]);
+      return;
+    }
 
-    getTopics();
+    setLoading(true);
+    try {
+      const data = await fetchTopics(ids);
+      setTopics(data);
+      setError(null);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-  return { topics, loading, error };
+  return { topics, loading, error, refetch };
 };

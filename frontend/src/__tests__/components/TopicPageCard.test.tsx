@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import TopicPageCard from "../../components/TopicPageCard";
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
@@ -9,6 +9,7 @@ vi.mock("react-confetti", () => {
   };
 });
 
+const mockSetAchievedPoints = vi.fn();
 const selectedValues = {};
 const isCorrect = {};
 const updateAnswers = () => {};
@@ -44,9 +45,12 @@ const mockTask = {
       correctOption: "null",
     },
   ],
+  maximumPoints: 10,
+  achievedPoints: 5,
 };
 
 const mockTopicTitle = "Topic Title";
+const mockAchievedPoints = 5;
 
 describe("TopicPageCard component testing", () => {
   it("should render the topic page card", () => {
@@ -61,6 +65,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Reason Title")).toBeInTheDocument();
@@ -78,6 +84,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Subtopic Title")).toBeInTheDocument();
@@ -95,6 +103,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Sant eller usant?")).toBeInTheDocument();
@@ -112,6 +122,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Flervalg: Velg riktig svar")).toBeInTheDocument();
@@ -129,6 +141,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(
@@ -148,6 +162,8 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
     expect(screen.getByText("Hurra!")).toBeInTheDocument();
@@ -166,15 +182,20 @@ describe("TopicPageCard component testing", () => {
         selectedValues={selectedValues}
         isCorrect={isCorrect}
         handleBack={handleBack}
+        setAchievedPoints={mockSetAchievedPoints}
+        achievedPoints={mockAchievedPoints}
       />
     );
 
     const buttons = screen.getAllByText("Sant");
-    buttons[0].click();
+
+    act(() => {
+      fireEvent.click(buttons[0]);
+    });
 
     expect(mockUpdateAnswers).toHaveBeenCalledWith({
       selectedValues: { 1: "true" },
-      isCorrect: { 1: true },
+      isCorrect: { 1: { isCorrect: true, isAwarded: false } },
     });
   });
 });

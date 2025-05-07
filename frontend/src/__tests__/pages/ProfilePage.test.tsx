@@ -7,9 +7,14 @@ import { vi } from "vitest";
 import { BrowserRouter } from "react-router-dom";
 import { useTopics } from "../../hooks/useTopics";
 import { CookiesProvider } from "react-cookie";
+import { useBonuses } from "../../hooks/useBonuses";
 
 vi.mock("../../hooks/useTopics", () => ({
   useTopics: vi.fn(),
+}));
+
+vi.mock("../../hooks/useBonuses", () => ({
+  useBonuses: vi.fn(),
 }));
 
 const mockTopics = [
@@ -37,12 +42,15 @@ const mockTopics = [
   },
 ];
 
+const stableRefetch = vi.fn().mockResolvedValue(undefined);
+
 const renderWithRouter = (ui: React.ReactElement) => {
-  return render(
-    <CookiesProvider>
-      <BrowserRouter>{ui}</BrowserRouter>
-    </CookiesProvider>
-  );
+  (useBonuses as Mock).mockReturnValue({
+    bonuses: [],
+    loading: false,
+    error: false,
+  });
+  return render(<BrowserRouter>{ui}</BrowserRouter>);
 };
 
 describe("ProfilePage component test", () => {
@@ -51,12 +59,18 @@ describe("ProfilePage component test", () => {
   });
 
   it("should render loading state", () => {
-    (useTopics as jest.Mock).mockReturnValue({
+    (useTopics as Mock).mockReturnValue({
       topics: [],
       loading: true,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
+
     expect(screen.getByText("Loading...")).toBeInTheDocument();
   });
 
@@ -65,8 +79,13 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
     expect(screen.getByText("Min side")).toBeInTheDocument();
   });
 
@@ -75,21 +94,31 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
 
     expect(screen.getByText("Slett min data")).toBeInTheDocument();
   });
 
-  it("should render completed topics card", () => {
+  it("should render topic overview card", () => {
     (useTopics as Mock).mockReturnValue({
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
 
-    expect(screen.getByText("Fullførte temaer")).toBeInTheDocument();
+    expect(screen.getByText("Oversikt temaer")).toBeInTheDocument();
   });
 
   it("should open the delete dialog when the delete button is clicked", async () => {
@@ -97,8 +126,13 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
 
     const deleteButton = screen.getByText("Slett min data");
     await act(async () => {
@@ -115,8 +149,13 @@ describe("ProfilePage component test", () => {
       topics: mockTopics,
       loading: false,
       error: false,
+      refetch: stableRefetch,
     });
-    renderWithRouter(<ProfilePage />);
+    renderWithRouter(
+      <CookiesProvider>
+        <ProfilePage />
+      </CookiesProvider>
+    );
 
     expect(screen.getByText("Intro to Cookies")).toBeInTheDocument();
     expect(screen.getByText("Advanced Cookies")).toBeInTheDocument();

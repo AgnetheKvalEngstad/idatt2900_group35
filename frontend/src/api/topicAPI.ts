@@ -23,10 +23,14 @@ export interface TopicAPI {
  *
  * @returns A promise that contains an array of TopicAPI objects.
  */
-export const fetchTopics = async (): Promise<TopicAPI[]> => {
+export const fetchTopics = async (topicIds: number[]): Promise<TopicAPI[]> => {
   try {
-    const response = await axiosInstance.get("/Topics");
-    return response.data;
+    if (topicIds.length === 0) {
+      return [];
+    }
+    const requests = topicIds.map((id) => axiosInstance.get(`/Topics/${id}`));
+    const responses = await Promise.all(requests);
+    return responses.map((res) => res.data);
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {
       if (error.response) {

@@ -2,6 +2,7 @@ import { Card, CardContent, Grid2, Typography } from "@mui/material";
 import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Link } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 /**
  * Component for the header of the page
@@ -9,7 +10,8 @@ import { Link } from "react-router-dom";
  * @returns Header component
  */
 export default function Header() {
-  const points: number = 1000;
+  const [cookies] = useCookies(["userInfo"]);
+
   return (
     <Grid2
       container
@@ -57,21 +59,26 @@ export default function Header() {
               borderRadius: 6,
               backgroundColor: "#0F3D75",
             }}
-            className="flex flex-col-reverse sm:w-50 md:h-12 w-26 h-24 md:gap-4 gap-0 md:justify-center p-2
+            className="flex flex-col-reverse sm:w-50 md:h-12 w-28 h-24 md:gap-4 gap-0 md:justify-center md:text-center p-2
             md:flex-row hover:shadow-lg hover:scale-105 transition-transform duration-200"
           >
-            <Typography
-              style={{
-                color: "white",
-                textAlign: "center",
-                marginTop: "auto",
-                marginBottom: "auto",
-              }}
-              variant="body1"
-            >
-              <OfflineBoltOutlinedIcon />
-              {points}
-            </Typography>
+            <Grid2 className="flex flex-row items-center gap-1">
+              <OfflineBoltOutlinedIcon
+                fontSize="large"
+                className="bg-yellow-300 rounded-full border-2 text-black"
+              />
+              <Typography
+                style={{
+                  color: "white",
+                  textAlign: "center",
+                  marginTop: "auto",
+                  marginBottom: "auto",
+                }}
+                variant="body1"
+              >
+                {cookies.userInfo?.allUserPoints ?? 0}
+              </Typography>
+            </Grid2>
 
             <Typography
               style={{
@@ -82,7 +89,7 @@ export default function Header() {
               }}
               variant="body1"
             >
-              <PersonOutlineOutlinedIcon />
+              <PersonOutlineOutlinedIcon fontSize="large" />
               Min side
             </Typography>
           </Card>

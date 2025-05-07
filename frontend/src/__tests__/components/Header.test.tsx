@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import Header from "../../components/Header";
 import "@testing-library/jest-dom";
+import { CookiesProvider } from "react-cookie";
 
 /**
  * Tests for Header component
@@ -9,9 +10,11 @@ import "@testing-library/jest-dom";
 describe("Tests for component Header", () => {
   beforeEach(() => {
     render(
-      <MemoryRouter>
-        <Header />
-      </MemoryRouter>
+      <CookiesProvider>
+        <MemoryRouter>
+          <Header />
+        </MemoryRouter>
+      </CookiesProvider>
     );
   });
 

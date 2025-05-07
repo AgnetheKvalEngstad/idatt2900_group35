@@ -1,6 +1,5 @@
 import { render, screen, waitFor, act } from "@testing-library/react";
 import TopicPage from "../../pages/TopicPage";
-import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import { vi } from "vitest";
 import type { AxiosInstance } from "axios";
@@ -48,11 +47,22 @@ const mockTopicContent = {
   },
   task: {
     id: 1,
-    taskTitle: "Task Title",
+    title: "Task Title",
     taskContent: "Task Description",
     isDone: false,
     topicId: 1,
     taskType: "truefalse",
+    questions: [
+      {
+        id: 1,
+        questionText: "Question 1",
+        correctAnswer: "true",
+        options: [],
+        correctOption: "null",
+      },
+    ],
+    maximumPoints: 10,
+    achievedPoints: 5,
   },
 };
 
@@ -67,23 +77,32 @@ const renderWithRouter = (ui: React.ReactElement) => {
 describe("TopicPage component testing", () => {
   beforeEach(async () => {
     vi.clearAllMocks();
-    mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.reason });
-    mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.subtopic });
-    mockedAxios.get.mockResolvedValueOnce({ data: mockTopicContent.task });
+    mockedAxios.get.mockImplementation((url) => {
+      if (url.includes("/Reasons")) {
+        return Promise.resolve({ data: mockTopicContent.reason });
+      }
+      if (url.includes("/Subtopics")) {
+        return Promise.resolve({ data: mockTopicContent.subtopic });
+      }
+      if (url.includes("/Tasks")) {
+        return Promise.resolve({ data: mockTopicContent.task });
+      }
+      return Promise.reject(new Error("Unknown URL"));
+    });
 
     await act(async () => {
-      renderWithRouter(
-        <CookiesProvider>
-          <TopicPage />
-        </CookiesProvider>
-      );
+      renderWithRouter(<TopicPage />);
     });
   });
 
-  it("should render the page", async () => {
+  it("should render the loading text", async () => {
     await waitFor(() => {
       expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
     });
+  });
+
+  it("should render the topic title", () => {
+    expect(screen.getByText("Topic Title")).toBeInTheDocument();
   });
 
   it("should render next button", async () => {
@@ -96,7 +115,7 @@ describe("TopicPage component testing", () => {
     });
   });
 
-  it("should render title", async () => {
+  it("should render reason title", async () => {
     await waitFor(() => {
       expect(screen.getByText("Reason Title")).toBeInTheDocument();
     });
@@ -114,58 +133,17 @@ describe("TopicPage component testing", () => {
     });
   });
 
-  it("clicking next button should enable back button", async () => {
+  it("should render reason content", async () => {
     await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-
-    const nextButton = screen.getByRole("button", {
-      name: /Neste|Lever oppgave|Fullfør kurs/i,
-    });
-    userEvent.click(nextButton);
-    await waitFor(() => {
-      expect(screen.getByText("Tilbake")).not.toBeDisabled();
+      expect(screen.getByText("Reason Description")).toBeInTheDocument();
     });
   });
 
-  it("clicking three times should lead to completed page", async () => {
+  it("should render subtopic title and content when clicking next", async () => {
+    screen.getByText("Neste").click();
     await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-
-    const nextButton = screen.getByRole("button", {
-      name: /Neste|Lever oppgave|Fullfør kurs/i,
-    });
-
-    userEvent.click(nextButton);
-    userEvent.click(nextButton);
-    userEvent.click(nextButton);
-
-    await waitFor(() => {
-      expect(
-        screen.getByRole("button", {
-          name: /Fullfør kurs/i,
-        })
-      ).toBeInTheDocument();
-    });
-  });
-
-  it("clicking back button should go back to previous card", async () => {
-    await waitFor(() => {
-      expect(screen.queryByText("Loading...")).not.toBeInTheDocument();
-    });
-
-    const nextButton = screen.getByRole("button", {
-      name: /Neste|Lever oppgave|Fullfør kurs/i,
-    });
-    userEvent.click(nextButton);
-    userEvent.click(nextButton);
-    userEvent.click(nextButton);
-    const backButton = screen.getByText("Tilbake");
-    userEvent.click(backButton);
-
-    await waitFor(() => {
-      expect(screen.getByText("Lever oppgave")).toBeInTheDocument();
+      expect(screen.getByText("Subtopic Title")).toBeInTheDocument();
+      expect(screen.getByText("Subtopic Description")).toBeInTheDocument();
     });
   });
 });

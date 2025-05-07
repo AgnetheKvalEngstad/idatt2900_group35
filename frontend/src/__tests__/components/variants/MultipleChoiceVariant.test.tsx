@@ -54,4 +54,13 @@ describe("MultipleChoiceVariant component testing", () => {
     const radioGroup = screen.getByRole("radiogroup");
     expect(radioGroup).toBeInTheDocument();
   });
+
+  it("should call handleSelectedValueChange when an option is selected", () => {
+    const radioButton = screen.getByLabelText(questions[0].options[0]);
+    radioButton.click();
+    expect(handleSelectedValueChange).toHaveBeenCalledWith(
+      questions[0].id,
+      questions[0].options[0]
+    );
+  });
 });

@@ -1,6 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import InputVariant from "../../../components/variants/InputVariant";
 import "@testing-library/jest-dom";
+import { vi } from "vitest";
 
 describe("InputVariant", () => {
   const questions = [
@@ -34,8 +35,8 @@ describe("InputVariant", () => {
     },
   ];
 
-  const handleButtonClick = () => {};
-  const handleInputChange = () => {};
+  const handleButtonClick = vi.fn();
+  const handleInputChange = vi.fn();
   const selectedValues = {};
   const isCorrect = {};
 
@@ -64,5 +65,15 @@ describe("InputVariant", () => {
       });
       expect(submitButtons.length).toBe(questions.length);
     });
+  });
+
+  it("should call handleButtonClick when the button is clicked", () => {
+    const submitButtons = screen.getAllByRole("button", {
+      name: /sjekk svar/i,
+    });
+    submitButtons.forEach((button) => {
+      button.click();
+    });
+    expect(handleButtonClick).toHaveBeenCalledTimes(questions.length);
   });
 });

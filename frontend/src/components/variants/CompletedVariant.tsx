@@ -4,6 +4,7 @@ import Confetti from "react-confetti";
 
 interface CompletedVariantProps {
   topicTitle: string;
+  points: number;
 }
 /**
  * A React component that's a variant of a topic card. Is shown when the user has completed the topic.
@@ -16,6 +17,7 @@ interface CompletedVariantProps {
  */
 export default function CompletedVariant({
   topicTitle,
+  points,
   handleBack,
 }: CompletedVariantProps & { handleBack: () => void }) {
   const { width, height } = useWindowSize();
@@ -36,10 +38,9 @@ export default function CompletedVariant({
           Du har fullført kurset <i>{topicTitle}</i>.
         </Typography>
         <Typography variant="h6">Bra jobba!</Typography>
-        <Typography variant="h6">Du fikk xxx poeng!</Typography>
+        <Typography variant="h6">Du fikk {points} poeng!</Typography>
         <Typography variant="h6">
-          Har du lyst til å prøve oppgaven en gang til, eller gå videre til
-          neste tema?
+          Har du lyst til å prøve oppgaven en gang til, eller gå videre?
         </Typography>
       </Grid2>
       <Button variant="contained" color="secondary" onClick={handleBack}>

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { fetchReason, ReasonAPI } from "../api/reasonAPI";
 
 /**
@@ -7,25 +7,29 @@ import { fetchReason, ReasonAPI } from "../api/reasonAPI";
  * @param id - The ID of the reason to fetch.
  * @returns An object containing the reason, loading state, and error state.
  */
-export const useReason = (id: number) => {
+export const useReason = (reasonId?: number) => {
   const [reason, setReason] = useState<ReasonAPI | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
 
+  const fetchData = useCallback(async () => {
+    if (reasonId == null) return;
+
+    setLoading(true);
+    try {
+      const data = await fetchReason(reasonId);
+      setReason(data);
+      setError(null);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [reasonId]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchReason(id);
-        setReason(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
-  }, [id]);
+  }, [fetchData]);
 
-  return { reason, loading, error };
+  return { reason, loading, error, refetch: fetchData };
 };

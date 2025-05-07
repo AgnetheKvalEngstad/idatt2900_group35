@@ -10,6 +10,7 @@ import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
  * @param {string[]} props.topicPageCards - An array of card identifiers.
  * @param {function} props.handleBack - A function to handle the back button click.
  * @param {function} props.handleNext - A function to handle the next button click.
+ * @param {function} props.handleTaskCompletion - A function to handle task completion.
  *
  * @returns The rendered button group component.
  */
@@ -18,12 +19,16 @@ export default function ButtonGroup({
   topicPageCards,
   handleBack,
   handleNext,
+  handleTaskCompletion,
 }: {
   currentIndex: number;
   topicPageCards: string[];
   handleBack: () => void;
   handleNext: () => void;
+  handleTaskCompletion: () => void;
 }) {
+  const isLastCard = currentIndex === topicPageCards.length - 1;
+  const isSecondLastCard = currentIndex === topicPageCards.length - 2;
   return (
     <Grid2 className="flex flex-row w-full max-w-3xl justify-between p-2">
       <Button
@@ -38,12 +43,19 @@ export default function ButtonGroup({
       <Button
         variant="contained"
         color="secondary"
-        onClick={handleNext}
+        onClick={() => {
+          if (isSecondLastCard) {
+            handleNext();
+            handleTaskCompletion();
+          } else {
+            handleNext();
+          }
+        }}
         endIcon={<ArrowForwardIcon />}
       >
-        {currentIndex === topicPageCards.length - 1
+        {isLastCard
           ? "Fullfør kurs"
-          : currentIndex === topicPageCards.length - 2
+          : isSecondLastCard
             ? "Lever oppgave"
             : "Neste"}
       </Button>

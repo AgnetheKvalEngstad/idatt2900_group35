@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { fetchTask, TaskAPI } from "../api/taskAPI";
 
 /**
@@ -7,25 +7,29 @@ import { fetchTask, TaskAPI } from "../api/taskAPI";
  * @param id - The ID of the task to fetch.
  * @returns An object containing the task, loading state, and error state.
  */
-export const useTask = (id: number) => {
+export const useTask = (taskId: number) => {
   const [task, setTask] = useState<TaskAPI | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<unknown>(null);
 
+  const fetchData = useCallback(async () => {
+    if (taskId == null) return;
+
+    setLoading(true);
+    try {
+      const data = await fetchTask(taskId);
+      setTask(data);
+      setError(null);
+    } catch (err) {
+      setError(err);
+    } finally {
+      setLoading(false);
+    }
+  }, [taskId]);
+
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await fetchTask(id);
-        setTask(data);
-      } catch (err) {
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
-  }, [id]);
+  }, [fetchData]);
 
-  return { task, loading, error };
+  return { task, loading, error, refetch: fetchData };
 };
