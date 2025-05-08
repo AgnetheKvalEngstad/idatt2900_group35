@@ -94,28 +94,50 @@ namespace backend.services
         }
         
         //Update task
-        public async System.Threading.Tasks.Task UpdateTaskAsync(TaskDto taskDto)
+        public async Task UpdateTaskAsync(TaskDto taskDto)
         {
             var task = await taskRepository.GetByIdAsync(taskDto.Id);
             if (task == null)
             {
                 throw new KeyNotFoundException($"Task with id {taskDto.Id} not found");
             }
-            task.Id = taskDto.Id;
-            task.TopicId = taskDto.TopicId;
+
             task.Title = taskDto.Title;
             task.TaskContent = taskDto.TaskContent;
             task.IsDone = taskDto.IsDone;
+            task.TopicId = taskDto.TopicId;
             task.TaskType = taskDto.TaskType;
-            task.Questions = taskDto.Questions.Select(q => new Question
-            {
-                QuestionText = q.QuestionText,
-                CorrectAnswer = q.CorrectAnswer,
-                Options = q.Options != null ? JsonSerializer.Serialize(q.Options) : null,
-                CorrectOption = q.CorrectOption,
-                TaskId = task.Id
-            }).ToList();
             task.AchievedPoints = taskDto.AchievedPoints;
+            
+            var existingQuestions = task.Questions.ToList();
+            foreach (var questionDto in taskDto.Questions)
+            {
+                var existingQuestion = existingQuestions.FirstOrDefault(q => q.Id == questionDto.Id);
+                if (existingQuestion != null)
+                {
+                    existingQuestion.QuestionText = questionDto.QuestionText;
+                    existingQuestion.CorrectAnswer = questionDto.CorrectAnswer;
+                    existingQuestion.Options = questionDto.Options != null ? JsonSerializer.Serialize(questionDto.Options) : null;
+                    existingQuestion.CorrectOption = questionDto.CorrectOption;
+                }
+                else
+                {
+                    task.Questions.Add(new Question
+                    {
+                        QuestionText = questionDto.QuestionText,
+                        CorrectAnswer = questionDto.CorrectAnswer,
+                        Options = questionDto.Options != null ? JsonSerializer.Serialize(questionDto.Options) : null,
+                        CorrectOption = questionDto.CorrectOption,
+                        TaskId = task.Id
+                    });
+                }
+            }
+            
+            var questionIdsInDto = taskDto.Questions.Select(q => q.Id).ToHashSet();
+            task.Questions = task.Questions
+                .Where(q => questionIdsInDto.Contains(q.Id))
+                .ToList();
+
             await taskRepository.UpdateAsync(task);
         }
         
