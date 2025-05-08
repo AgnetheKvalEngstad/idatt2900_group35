@@ -20,13 +20,15 @@ namespace backend.services
         public async Task<IEnumerable<UserDto>> GetAllUsersAsync()
         {
             var users = await userRepository
-                .GetAllWithQueryAsync(query => query.Include(u => u.Topics));
+                .GetAllWithQueryAsync(query => query
+                    .Include(u => u.Topics)
+                    .ThenInclude(t => t.Task));
             
             return users.Select(u => new UserDto
             {
                 Id = u.Id,
-                AllUserPoints = u.AllUserPoints,
-                TopicIds = u.Topics.Select(t => t.Id).ToList()
+                TopicIds = u.Topics.Select(t => t.Id).ToList(),
+                AllUserPoints = u.AllUserPoints
             });
         }
         
@@ -35,7 +37,9 @@ namespace backend.services
         {
             var user = 
                 await userRepository.GetByIdWithQueryAsync
-                    (id, query => query.Include(u => u.Topics));
+                    (id, query => query
+                        .Include(u => u.Topics)
+                    .ThenInclude(t => t.Task));
             
             if (user == null)
             {
@@ -44,8 +48,8 @@ namespace backend.services
             return new UserDto()
             {
                 Id = user.Id,
-                AllUserPoints = user.AllUserPoints,
-                TopicIds = user.Topics.Select(t => t.Id).ToList()
+                TopicIds = user.Topics.Select(t => t.Id).ToList(),
+                AllUserPoints = user.AllUserPoints
             };
         }
         
