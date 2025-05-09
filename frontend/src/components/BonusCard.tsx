@@ -42,6 +42,7 @@ const iconDictionary: iconDictionary<React.ElementType> = {
  * @param {string} props.description - The description of the bonus.
  * @param {number} props.pointsNeeded - The points needed to achieve the bonus.
  * @param {number} props.pointsAchieved - The points achieved by the user.
+ *
  * @returns A styled card component with the provided title, icon, and description.
  */
 export default function BonusCard({
@@ -89,12 +90,18 @@ export default function BonusCard({
         >
           {cardTitle}
         </Typography>
-        <div className="w-15">
+        <div className="w-18">
+          <Typography variant="body2" style={{ color: "white" }}></Typography>
           <Typography variant="body2" style={{ color: "white" }}>
-            Poeng:{" "}
-          </Typography>
-          <Typography variant="body2" style={{ color: "white" }}>
-            {isAchieved ? "Oppnådd!" : `${pointsAchieved} av ${pointsNeeded}`}
+            {isAchieved ? (
+              "Oppnådd!"
+            ) : (
+              <>
+                Poeng:
+                <br />
+                {pointsAchieved} av {pointsNeeded}
+              </>
+            )}
           </Typography>
         </div>
       </Card>

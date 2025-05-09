@@ -12,21 +12,33 @@ import { useBonuses } from "../hooks/useBonuses";
 import BonusCard from "../components/BonusCard";
 
 /**
- * A React component that renders the profile page.
+ * A React component that renders the profile page which displays user information,
+ * progress, and bonuses.
  *
  * @returns The rendered ProfilePage component.
  */
 export default function ProfilePage() {
   const [open, setOpen] = React.useState(false);
   const [cookies] = useCookies(["userInfo", "progress"]);
+  const userId = cookies.userInfo?.id;
 
-  const { user } = useUser();
+  const { user, fetchUserHandler } = useUser();
   const { bonuses, loading: bonusLoading, error: bonusError } = useBonuses();
 
   const deleteButtonRef = React.useRef<HTMLButtonElement>(null);
 
   const [topicIds, setTopicIds] = useState<number[]>([]);
   const { topics: data, loading, error, refetch } = useTopics();
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (userId) {
+        await fetchUserHandler(userId);
+      }
+    };
+    fetchUser();
+  }, [userId, fetchUserHandler]);
+
   useEffect(() => {
     const savedTopicIds = cookies.userInfo?.topicIds || [];
     setTopicIds(savedTopicIds);

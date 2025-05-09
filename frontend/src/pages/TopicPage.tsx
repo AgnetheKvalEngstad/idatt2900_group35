@@ -4,12 +4,12 @@ import TopicPageCard from "../components/TopicPageCard";
 import type { TopicPageCardProps } from "../components/TopicPageCard";
 import MenuBookRoundedIcon from "@mui/icons-material/MenuBookRounded";
 import CreateOutlinedIcon from "@mui/icons-material/CreateOutlined";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { useState, useEffect, useCallback, useMemo } from "react";
 import { useReason } from "../hooks/useReason";
 import { updateReasonIsRead } from "../api/reasonAPI";
 import { useTask } from "../hooks/useTask";
-import { updateTaskIsDone } from "../api/taskAPI";
+import { updateTaskIsDone, updateTaskPoints } from "../api/taskAPI";
 import { useSubtopic } from "../hooks/useSubtopic";
 import { updateSubtopicIsRead } from "../api/subtopicAPI";
 import { useCookies } from "react-cookie";
@@ -62,8 +62,6 @@ export default function TopicPage() {
     };
   }>({});
 
-  const navigate = useNavigate();
-
   const topicPageCards = useMemo(() => {
     if (!task?.taskType) return ["reason", "subtopic"];
 
@@ -95,6 +93,12 @@ export default function TopicPage() {
     return cards;
   }, [task?.taskType]);
 
+  useEffect(() => {
+    if (currentIndex === topicPageCards.length - 1) {
+      updateTaskPoints(task!, achievedPoints);
+    }
+  }, [achievedPoints, currentIndex, task, topicPageCards]);
+
   const calculateProgress = useCallback(() => {
     let completedParts = 0;
     const totalParts = topicPageCards.length - 1;
@@ -112,7 +116,7 @@ export default function TopicPage() {
       };
 
       setProgress(updatedProgress);
-      setCookie("progress", updatedProgress, { path: "/", maxAge: 360 });
+      setCookie("progress", updatedProgress, { path: "/" });
     }
 
     return progressValue;
@@ -222,7 +226,8 @@ export default function TopicPage() {
 
     if (nextIndex >= topicPageCards.length) {
       await handleCardChange(nextIndex);
-      navigate("/home");
+
+      window.location.href = "/home";
     } else {
       await handleCardChange(nextIndex);
     }
