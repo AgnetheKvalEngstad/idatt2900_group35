@@ -16,6 +16,14 @@ interface DeleteDialogProps {
   onClose: () => void;
 }
 
+/**
+ * A React component that renders a dialog for deleting user data.
+ *
+ * @param open - A boolean value that determines whether the dialog is open or not.
+ * @param onClose - A function that closes the dialog.
+ *
+ * @returns A React component for deleting user data.
+ */
 export default function DeleteDialog({ open, onClose }: DeleteDialogProps) {
   const [cookies, removeCookies] = useCookies([
     "progress",

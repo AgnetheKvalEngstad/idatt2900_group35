@@ -7,8 +7,7 @@ interface TextVariantProps {
 /**
  * A React component that renders a text variant card.
  *
- * This component displays a title and text
- * using Material-UI's `Typography` component.
+ * This component displays a title and text.
  *
  * @param {TextVariantProps} props - The props for the component.
  * @param {Object} props.content - The content to be displayed in the card.

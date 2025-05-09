@@ -20,7 +20,6 @@ export interface UserAPI {
 export const createUser = async (): Promise<UserAPI> => {
   try {
     const response = await axiosInstance.post("/Users", { id: 0 });
-    console.log("Created user:", response.data);
     return response.data;
   } catch (error: unknown) {
     if (axios.isAxiosError(error)) {

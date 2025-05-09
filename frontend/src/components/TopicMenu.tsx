@@ -17,6 +17,7 @@ interface TopicMenuProps {
  * @param {string} props.difficulty The difficulty level, which determines the button background color.
  * @param {number} props.index The index of the currently selected button.
  * @param {(index: number) => void} props.onButtonClick Function triggered when a button is clicked.
+ * @param {Array<{ title: string; icon: JSX.Element }>} props.menuItems An array of objects representing the menu items.
  *
  * @returns A Material-UI Grid2 layout containing buttons styled based on the difficulty and selection state.
  */
