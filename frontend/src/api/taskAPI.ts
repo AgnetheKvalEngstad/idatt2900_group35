@@ -130,6 +130,8 @@ export const updateTaskIsDone = async (
       isDone: done,
       topicId: task.topicId,
       taskType: task.taskType,
+      maximumPoints: task.maximumPoints,
+      achievedPoints: task.achievedPoints,
     });
   } catch (error) {
     console.error("Error updating task:", error);

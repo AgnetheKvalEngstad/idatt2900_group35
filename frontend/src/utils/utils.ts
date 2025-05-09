@@ -41,6 +41,6 @@ export const getBackgroundColor = (difficulty: string) => {
     case "mye":
       return "#E77979";
     default:
-      return "#9E9E9E";
+      return "#66DB68";
   }
 };

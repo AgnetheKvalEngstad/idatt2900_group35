@@ -11,6 +11,7 @@ interface CompletedVariantProps {
  *
  * @param {CompletedVariantProps} props - The props for the component.
  * @param {string} props.topicTitle - The title of the topic.
+ * @param {number} props.points - The number of points the user has earned.
  * @param {function} props.handleBack - A function to handle the back button click.
  *
  * @returns The CompletedVariant component.

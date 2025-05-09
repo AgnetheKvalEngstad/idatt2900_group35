@@ -35,14 +35,13 @@ const iconDictionary: IconDictionary<React.ElementType> = {
  * The card displays a title, an icon, and a difficulty level, with the background
  * color based on difficulty.
  *
- * @component
  * @param {TopicCardProps} props The props for the TopicCard component.
  * @param {string} props.cardTitle The title displayed on the card.
  * @param {string} props.cardIcon The icon displayed on the card.
  * @param {string} props.difficulty The difficulty level of the topic, which determines
  * the background color of the card.
  * @param {string} props.size The size of the card, which determines its width and height.
- * @param {number} [props.progress] The progress percentage of the topic, used to show if the topic is achieved.
+ * @param {number} props.progress The progress percentage of the topic, used to show if the topic is achieved.
  *
  * @returns A styled card component with the provided title, icon, and difficulty level.
  */

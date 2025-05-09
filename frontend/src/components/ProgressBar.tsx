@@ -23,6 +23,7 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
  * A React component that renders a progress bar.
  *
  * @param {number} value The progress value (0-100) to be displayed in the progress bar.
+ *
  * @returns The rendered progress bar component.
  */
 export default function ProgressBar({ value }: { value: number }) {

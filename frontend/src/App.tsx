@@ -8,6 +8,11 @@ import ProfilePage from "./pages/ProfilePage";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme/theme";
 
+/**
+ * Main App component that sets up the routing and layout of the application.
+ *
+ * @returns The main App component.
+ */
 function App() {
   return (
     <ThemeProvider theme={theme}>

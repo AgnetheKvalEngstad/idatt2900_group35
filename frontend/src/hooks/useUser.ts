@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { createUser, deleteUser, fetchUser, UserAPI } from "../api/userAPI";
 
 /**
@@ -38,7 +38,7 @@ export const useUser = (): UseUserResult => {
     }
   };
 
-  const fetchUserHandler = async (id: number): Promise<void> => {
+  const fetchUserHandler = useCallback(async (id: number): Promise<void> => {
     setLoading(true);
     try {
       const fetchedUser = await fetchUser(id);
@@ -49,7 +49,7 @@ export const useUser = (): UseUserResult => {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   const deleteUserHandler = async (id: number): Promise<void> => {
     setLoading(true);

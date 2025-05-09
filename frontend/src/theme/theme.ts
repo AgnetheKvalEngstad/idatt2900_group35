@@ -1,5 +1,9 @@
 import { createTheme } from "@mui/material/styles";
 
+/**
+ * Custom theme for the application.
+ * This theme defines the color palette, typography, and component styles.
+ */
 const theme = createTheme({
   palette: {
     primary: {

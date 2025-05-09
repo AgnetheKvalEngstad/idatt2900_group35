@@ -3,14 +3,26 @@ import OfflineBoltOutlinedIcon from "@mui/icons-material/OfflineBoltOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
+import { useUser } from "../hooks/useUser";
+import { useEffect } from "react";
 
 /**
- * Component for the header of the page
+ * A React component that renders a header with a home button and a profile button.
  *
- * @returns Header component
+ * @returns Header component with home and profile buttons.
  */
 export default function Header() {
   const [cookies] = useCookies(["userInfo"]);
+  const userId = cookies.userInfo?.id;
+  const { user, fetchUserHandler } = useUser();
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (userId) {
+        await fetchUserHandler(userId);
+      }
+    };
+    fetchUser();
+  }, [userId, fetchUserHandler]);
 
   return (
     <Grid2
@@ -76,7 +88,7 @@ export default function Header() {
                 }}
                 variant="body1"
               >
-                {cookies.userInfo?.allUserPoints ?? 0}
+                {user?.allUserPoints ?? 0}
               </Typography>
             </Grid2>
 

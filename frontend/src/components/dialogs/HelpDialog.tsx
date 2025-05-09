@@ -10,7 +10,7 @@ import {
 import CloseIcon from "@mui/icons-material/Close";
 
 /**
- * A reusable help dialog component that provides instructions on how to use the page.
+ * A React component that renders a dialog providing instructions on how to use the page.
  *
  * @param open - A boolean value that determines whether the dialog is open or not.
  * @param onClose - A function that closes the dialog.

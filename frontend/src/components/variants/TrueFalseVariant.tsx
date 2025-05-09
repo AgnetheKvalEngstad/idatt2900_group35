@@ -66,7 +66,7 @@ export default function TrueFalseVariant({
                   onClick={() => handleButtonClick(q.id, "true")}
                   role="true"
                 >
-                  Sant
+                  Ja
                 </Button>
                 <Button
                   variant={
@@ -75,7 +75,7 @@ export default function TrueFalseVariant({
                   onClick={() => handleButtonClick(q.id, "false")}
                   role="false"
                 >
-                  Usant
+                  Nei
                 </Button>
               </ButtonGroup>
             </Grid2>

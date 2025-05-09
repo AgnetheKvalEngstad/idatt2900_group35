@@ -7,8 +7,7 @@ import InputVariant from "./variants/InputVariant";
 import CompletedVariant from "./variants/CompletedVariant";
 import { ReasonAPI } from "../api/reasonAPI";
 import { SubtopicAPI } from "../api/subtopicAPI";
-import { TaskAPI, updateTaskPoints } from "../api/taskAPI";
-import { useCallback, useEffect } from "react";
+import { TaskAPI } from "../api/taskAPI";
 
 /**
  * Represents the properties for the TopicPageCard component.
@@ -145,32 +144,6 @@ export default function TopicPageCard({
       isCorrect: newIsCorrect,
     });
   };
-
-  const handleTaskCompletion = useCallback(async () => {
-    try {
-      if (
-        achievedPoints > task.achievedPoints &&
-        achievedPoints <= task.maximumPoints
-      ) {
-        await updateTaskPoints(task, achievedPoints);
-      }
-    } catch (error) {
-      console.error("Failed to update points:", error);
-    }
-  }, [achievedPoints, task]);
-
-  useEffect(() => {
-    const handleEvent = () => {
-      handleTaskCompletion();
-    };
-
-    const card = document.querySelector('[data-testid="topic-page-card"]');
-    card?.addEventListener("taskCompletion", handleEvent);
-
-    return () => {
-      card?.removeEventListener("taskCompletion", handleEvent);
-    };
-  }, [handleTaskCompletion]);
 
   return (
     <Card
