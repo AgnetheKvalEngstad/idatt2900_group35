@@ -187,7 +187,7 @@ describe("TopicPageCard component testing", () => {
       />
     );
 
-    const buttons = screen.getAllByText("Sant");
+    const buttons = screen.getAllByText("Ja");
 
     act(() => {
       fireEvent.click(buttons[0]);
