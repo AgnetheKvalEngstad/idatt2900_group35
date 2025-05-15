@@ -30,6 +30,7 @@ git clone https://github.com/AgnetheKvalEngstad/idatt2900_group35.git
 
 Gå til prosjektmappen og kjør:
 ```
+cd idatt2900_group35
 cd frontend
 npm install
 ```
@@ -38,4 +39,4 @@ Kjør i samme mappe i terminalen (etter `cd frontend`):
 ```
 npm run dev
 ```
-Deretter må man kjøre backend for å få tilgang til full funksjonalitet.
+Trykk på lenken som vises, og deretter må man kjøre backend for å få tilgang til full funksjonalitet.
