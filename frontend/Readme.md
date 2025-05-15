@@ -1,54 +1,37 @@
-# React + TypeScript + Vite
+# Trygg på nett - frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Introduksjon
+Velkommen til trygg på nett! En nettside hvor du lære om nettsikkerhet på en morsom måte. Se instruksjonene under for hvordan man kjører applikasjonen, lykke til og ha det gøy!
 
-Currently, two official plugins are available:
+Denne applikasjonen er en del av daget IDATT2900 - Bacheloroppgave ved NTNU våren 2025.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Teknologier
+### React og Vite
+Denne applikasjonen har blitt utviklet med React og Vite.
+### Andre teknologier
+- CSS Rammeverk: Tailwind CSS (https://tailwindcss.com/)
+- Komponenter: Material UI (https://mui.com/)
+- Testing: Vitest (https://vitest.dev/)
+- Git Commit Guidelines (https://ec.europa.eu/component-library/v1.15.0/eu/docs/conventions/git/)
 
-## Expanding the ESLint configuration
+## Kjøring og installering
+### Installering
+Klone kildekoden fra GitHub repoet
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Via SSH: git@github.com:AgnetheKvalEngstad/idatt2900_group35.git
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+Via HTTPS: https://github.com/AgnetheKvalEngstad/idatt2900_group35.git
+
+Gå til prosjektmappen og kjør:
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+cd frontend
 ```
+```
+npm install
+```
+### Kjøring av applikasjon
+Kjør i samme mappe i terminalen (etter `cd frontend`):
+```
+npm run dev
+```
+Deretter må man kjøre backend for å få tilgang til full funksjonalitet.
