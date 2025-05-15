@@ -14,19 +14,23 @@ Denne applikasjonen har blitt utviklet med React og Vite.
 - Testing: Vitest (https://vitest.dev/)
 - Git Commit Guidelines (https://ec.europa.eu/component-library/v1.15.0/eu/docs/conventions/git/)
 
-## Kjøring og installering
+## Frontend: Kjøring og installering
 ### Installering
 Klone kildekoden fra GitHub repoet
 
-Via SSH: git@github.com:AgnetheKvalEngstad/idatt2900_group35.git
+Via SSH: 
+```
+git clone git@github.com:AgnetheKvalEngstad/idatt2900_group35.git
+```
 
-Via HTTPS: https://github.com/AgnetheKvalEngstad/idatt2900_group35.git
+Via HTTPS: 
+```
+git clone https://github.com/AgnetheKvalEngstad/idatt2900_group35.git
+```
 
 Gå til prosjektmappen og kjør:
 ```
 cd frontend
-```
-```
 npm install
 ```
 ### Kjøring av applikasjon
