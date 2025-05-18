@@ -33,6 +33,21 @@ builder.Services.AddScoped<IRepository<Bonus>, Repository<Bonus>>();
 
 builder.Services.AddScoped<IRepository<Subtopic>, Repository<Subtopic>>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowLocalhost5173", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(7040);
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -43,6 +58,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+// Use the CORS policy
+app.UseCors("AllowLocalhost5173");
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
