@@ -5,6 +5,10 @@ using System.IO;
 
 namespace backend.data;
 
+/// <summary>
+/// Factory class for creating instances of BackendDbContext
+/// </summary>
+
 public class BackendDbContextFactory : IDesignTimeDbContextFactory<BackendDbContext>
 {
     public BackendDbContext CreateDbContext(string[] args)

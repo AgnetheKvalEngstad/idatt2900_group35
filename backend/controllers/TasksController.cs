@@ -4,6 +4,12 @@ using backend.dto;
 
 namespace backend.controllers
 {
+    /// <summary>
+    /// Controller for managing tasks
+    /// </summary>
+    /// <param name="taskService"></param>
+    
+    
     [ApiController]
     [Route("[controller]")]
     public class TasksController(ITaskService taskService) : ControllerBase

@@ -5,6 +5,10 @@ namespace backend.models;
 
 public class Topic
 {
+    /// <summary>
+    /// Entity that represents a topic, which is a collection of subtopics, tasks, and reasons.
+    /// Is also connected to a user.
+    /// </summary>
     public int Id { get; set; }
     
     [MaxLength(100)]

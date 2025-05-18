@@ -5,6 +5,9 @@ namespace backend.models;
 
 public class Question
 {
+    /// <summary>
+    /// Entity that represents a question that can be asked in a task
+    /// </summary>
     public int Id { get; set; }
     
     [MaxLength(1000)]

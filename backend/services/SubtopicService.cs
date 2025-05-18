@@ -6,6 +6,10 @@ namespace backend.services
 {
     public class SubtopicService(IRepository<Subtopic> subtopicRepository) : ISubtopicService
     {
+        /// <summary>
+        /// Service for managing subtopics
+        /// </summary>
+        /// <returns></returns>
         
         //Get all subtopics
         public async Task<IEnumerable<SubtopicDto>> GetAllSubtopicsAsync()

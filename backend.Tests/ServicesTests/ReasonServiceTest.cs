@@ -7,6 +7,9 @@ using Xunit;
 
 namespace backend.Tests.ServicesTests;
 
+/// <summary>
+/// This class contains unit tests for the ReasonService
+/// </summary>
 public class ReasonServiceTest
 {
     private readonly Mock<IRepository<Reason>> _reasonRepositoryMock;

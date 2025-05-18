@@ -5,6 +5,9 @@ using Moq;
 
 namespace backend.Tests.ServicesTests;
 
+/// <summary>
+/// This class contains unit tests for the TopicService
+/// </summary>
 public class TopicServiceTest
 {
     private readonly Mock<IRepository<models.Topic>> _topicRepositoryMock;

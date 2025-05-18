@@ -2,6 +2,9 @@ namespace backend.dto;
 
 public class SubtopicDto
 {
+    /// <summary>
+    /// DTO class for Subtopic
+    /// </summary>
     public int Id { get; set; }
     public string Title { get; set; } = null!;
     public string SubtopicContent { get; set; } = null!;

@@ -4,6 +4,9 @@ namespace backend.models;
 
 public class Subtopic
 {
+    /// <summary>
+    /// Entity that represents a subtopic of a topic
+    /// </summary>
     public int Id { get; set; }
     
     [MaxLength(500)]

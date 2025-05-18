@@ -6,6 +6,9 @@ using Moq;
 
 namespace backend.Tests.ControllersTests;
 
+/// <summary>
+/// This class contains unit tests for the TasksController
+/// </summary>
 public class TasksControllerTest
 {
     [Fact]

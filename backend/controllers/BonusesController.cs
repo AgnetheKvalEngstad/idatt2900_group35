@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace backend.controllers;
 
+/// <summary>
+/// Controller for managing bonuses
+/// </summary>
+/// <param name="bonusService"></param>
+
 [ApiController]
 [Route("[controller]")]
 public class BonusesController(IBonusService bonusService) : ControllerBase

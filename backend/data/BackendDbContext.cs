@@ -5,14 +5,16 @@ using backend.models;
 public class BackendDbContext : DbContext
 {
     private readonly IConfiguration _configuration;
-
-    //Constructor
+    
     public BackendDbContext(DbContextOptions<BackendDbContext> options, IConfiguration configuration) : base(options)
     {
         _configuration = configuration;
     }
     
-    //Define the tables
+   /// <summary>
+   /// Database sets for the different models
+   /// </summary>
+    
     public DbSet<User> Users { get; set; }
     public DbSet<Topic> Topics { get; set; }
     public DbSet<Subtopic> Subtopics { get; set; }
@@ -238,7 +240,10 @@ public class BackendDbContext : DbContext
             });
     }
 
-    //Connection string to the database
+    /// <summary>
+    /// Configures the database connection string
+    /// </summary>
+    /// <param name="optionsBuilder"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"));

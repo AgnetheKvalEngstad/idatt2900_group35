@@ -6,6 +6,9 @@ using Moq;
 
 namespace backend.Tests.ControllersTests;
 
+/// <summary>
+/// This class contains unit tests for the BonusesController
+/// </summary>
 public class BonusesControllerTest
 {
     [Fact]

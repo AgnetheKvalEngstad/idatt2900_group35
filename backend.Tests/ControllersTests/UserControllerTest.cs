@@ -7,6 +7,9 @@ using Moq;
 
 namespace backend.Tests.ControllersTests;
 
+/// <summary>
+/// This class contains unit tests for the UsersController
+/// </summary>
 public class UserControllerTest
 {
     [Fact]

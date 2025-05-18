@@ -11,7 +11,11 @@ namespace backend.services
 {
 
     public class TaskService(IRepository<backend.models.Task> taskRepository) : ITaskService
-    { 
+    {
+        /// <summary>
+        /// Service for managing tasks
+        /// </summary>
+        /// <returns></returns>
         
         //Get all tasks
         public async Task<IEnumerable<TaskDto>> GetAllTasksAsync()

@@ -4,6 +4,10 @@ using backend.repositories;
 
 namespace backend.services
 {
+    /// <summary>
+    /// Service for managing reasons
+    /// </summary>
+    /// <param name="reasonRepository"></param>
 
     public class ReasonService(IRepository<Reason> reasonRepository) : IReasonService
     {

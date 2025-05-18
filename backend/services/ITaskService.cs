@@ -2,6 +2,10 @@ using backend.dto;
 
 namespace backend.services;
 
+/// <summary>
+/// Interface for managing tasks
+/// </summary>
+
 public interface ITaskService
 {
     Task<IEnumerable<TaskDto>> GetAllTasksAsync();

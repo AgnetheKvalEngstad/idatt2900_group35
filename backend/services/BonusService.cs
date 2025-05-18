@@ -4,6 +4,10 @@ using backend.repositories;
 
 namespace backend.services;
 
+/// <summary>
+/// Service for managing bonuses
+/// </summary>
+/// <param name="bonusRepository"></param>
 public class BonusService(IRepository<Bonus> bonusRepository) : IBonusService
 {
     //Get all bonuses

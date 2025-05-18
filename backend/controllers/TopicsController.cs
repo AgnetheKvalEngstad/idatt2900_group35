@@ -4,6 +4,11 @@ using backend.dto;
 
 namespace backend.controllers
 {
+    /// <summary>
+    /// Controller for managing topics
+    /// </summary>
+    /// <param name="topicService"></param>
+    
     [ApiController]
     [Route("[controller]")]
     public class TopicsController(ITopicService topicService) : ControllerBase

@@ -5,6 +5,9 @@ namespace backend.models;
 
 public class Task
 {
+    /// <summary>
+    /// Entity that represents a task that can be assigned to a topic
+    /// </summary>
     public int Id { get; set; }
     
     [MaxLength(100)]

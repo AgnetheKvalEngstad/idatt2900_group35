@@ -11,6 +11,10 @@ namespace backend.services
 
     public class TopicService(IRepository<Topic> topicRepository) : ITopicService
     {
+        /// <summary>
+        /// Service for managing topics
+        /// </summary>
+        /// <returns></returns>
         //Get all topics
         public async Task<IEnumerable<TopicDto>> GetAllTopicsAsync()
         {

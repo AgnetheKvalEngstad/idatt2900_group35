@@ -2,6 +2,9 @@ using backend.dto;
 
 namespace backend.services
 {
+    /// <summary>
+    /// Interface for managing users
+    /// </summary>
 
     public interface IUserService
     {

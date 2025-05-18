@@ -4,6 +4,10 @@ using backend.data;
 
 namespace backend.repositories
 {
+    /// <summary>
+    ///  Repository interface for CRUD operations and queries.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Repository<T> : IRepository<T> where T : class
     {
         private readonly BackendDbContext _context;

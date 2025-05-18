@@ -10,6 +10,12 @@ namespace backend.services
     {
         private readonly IRepository<User> userRepository;
         private readonly IRepository<Topic> topicRepository;
+        
+        /// <summary>
+        /// Service for managing users
+        /// </summary>
+        /// <param name="userRepository"></param>
+        /// <param name="topicRepository"></param>
 
         public UserService(IRepository<User> userRepository, IRepository<Topic> topicRepository)
         {
