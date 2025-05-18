@@ -9,6 +9,9 @@ using Task = System.Threading.Tasks.Task;
 
 namespace backend.Tests.ServicesTests;
 
+/// <summary>
+/// This class contains unit tests for the TaskService
+/// </summary>
 public class TaskServiceTest
 {
     private readonly Mock<IRepository<models.Task>> _taskRepositoryMock;

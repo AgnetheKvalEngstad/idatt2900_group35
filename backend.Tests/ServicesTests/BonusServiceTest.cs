@@ -6,6 +6,9 @@ using Moq;
 
 namespace backend.Tests.ServicesTests;
 
+/// <summary>
+/// This class contains unit tests for the BonusService
+/// </summary>
 public class BonusServiceTest
 {
     private readonly Mock<IRepository<Bonus>> _bonusRepositoryMock;

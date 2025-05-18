@@ -6,6 +6,9 @@ using Moq;
 
 namespace backend.Tests.ServicesTests;
 
+/// <summary>
+/// This class contains unit tests for the SubtopicService
+/// </summary>
 public class SubtopicServiceTest
 {
     private readonly Mock <IRepository<Subtopic>> _subtopicRepositoryMock;

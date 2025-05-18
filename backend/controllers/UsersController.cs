@@ -4,6 +4,12 @@ using backend.dto;
 
 namespace backend.controllers
 {
+    
+    /// <summary>
+    /// Controller for managing users
+    /// </summary>
+    /// <param name="userService"></param>
+    
     [ApiController]
     [Route("[controller]")]
     public class UsersController(IUserService userService) : ControllerBase

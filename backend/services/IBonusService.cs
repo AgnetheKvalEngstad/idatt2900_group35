@@ -2,6 +2,9 @@ using backend.dto;
 
 namespace backend.services;
 
+/// <summary>
+/// Interface for managing bonuses
+/// </summary>
 public interface IBonusService
 {
     Task<IEnumerable<BonusDto>> GetAllBonusesAsync();

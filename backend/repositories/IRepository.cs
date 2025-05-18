@@ -2,6 +2,10 @@ using System.Linq.Expressions;
 
 namespace backend.repositories
 {
+    /// <summary>
+    /// Interface for a repository pattern with CRUD operations and queries.
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public interface IRepository<T> where T : class
     {
         //Get an entity by id

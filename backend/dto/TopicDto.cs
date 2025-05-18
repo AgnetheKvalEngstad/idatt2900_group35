@@ -4,6 +4,9 @@ namespace backend.dto;
 
 public class TopicDto
 {
+    /// <summary>
+    /// DTO class for Topic
+    /// </summary>
     public int Id { get; set; }
     public string Title { get; set; } = null!;
     public string SkillLevel { get; set; } = null!;

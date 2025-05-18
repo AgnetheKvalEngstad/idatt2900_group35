@@ -2,6 +2,9 @@ namespace backend.dto;
 
 public class TaskDto
 {
+    /// <summary>
+    /// DTO class for Task
+    /// </summary>
     public int Id { get; set; }
     public string Title { get; set; } = null!;
     public string TaskContent { get; set; } = null!;

@@ -2,6 +2,9 @@ using backend.dto;
 
 namespace backend.services;
 
+/// <summary>
+/// Interface for managing topics
+/// </summary>
 public interface ITopicService
 {
     Task<IEnumerable<TopicDto>> GetAllTopicsAsync();

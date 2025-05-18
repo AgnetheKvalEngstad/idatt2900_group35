@@ -6,7 +6,9 @@ using repositories;
 using models;
 using dto;
 
-
+/// <summary>
+/// This class contains unit tests for the UserService
+/// </summary>
 public class UserServiceTests
 {
     private readonly Mock<IRepository<User>> _userRepositoryMock;

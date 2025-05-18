@@ -4,6 +4,9 @@ namespace backend.models;
 
 public class Reason
 {
+    /// <summary>
+    /// Entity that represents a reason for a topic
+    /// </summary>
     public int Id { get; init; }
     
     [MaxLength(500)]

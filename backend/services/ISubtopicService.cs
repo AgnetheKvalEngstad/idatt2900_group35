@@ -1,6 +1,9 @@
 using backend.dto;
 namespace backend.services
 {
+    /// <summary>
+    /// Interface for managing subtopics
+    /// </summary>
 
     public interface ISubtopicService
     {

@@ -4,6 +4,11 @@ using backend.dto;
 
 namespace backend.controllers
 {
+    /// <summary>
+    /// Controller for managing reasons
+    /// </summary>
+    /// <param name="reasonService"></param>
+    
     [ApiController]
     [Route("[controller]")]
     public class ReasonsController(IReasonService reasonService) : ControllerBase

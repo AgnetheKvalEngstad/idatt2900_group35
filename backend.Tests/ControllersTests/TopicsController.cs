@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace backend.Tests.ControllersTests;
 
+/// <summary>
+/// This class contains unit tests for the TopicsController
+/// </summary>
 public class TopicsControllerTests
 {
     [Fact]
