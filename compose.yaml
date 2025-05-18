@@ -1,20 +1,6 @@
 ﻿version: '3.8'
 
 services:
-  backend:
-    image: backend
-    build:
-      context: .
-      dockerfile: backend/Dockerfile
-    ports:
-      - "8082:80"
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ConnectionStrings__DefaultConnection=Host=localhost;Database=backendDb;Username=postgres;Password=password;Port=5434
-    volumes:
-      - ./backend:/app
-    depends_on:
-      - db
 
   db:
     image: postgres:latest
@@ -26,6 +12,21 @@ services:
       - "5434:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+      args:
+        BUILD_CONFIGURATION: Release
+    ports:
+      - "7040:7040"
+    depends_on:
+      - db
+    environment:
+    
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Host=db;Database=backendDb;Username=postgres;Password=password;Port=5432
 
 volumes:
   db_data:
