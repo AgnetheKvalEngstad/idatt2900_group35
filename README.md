@@ -33,7 +33,20 @@ Via HTTPS:
 ```
 git clone https://github.com/AgnetheKvalEngstad/idatt2900_group35.git
 ```
+## Docker
+For å kjøre applikasjonen i docker må man ha docker kjørende i f.eks. [Docker Desktop](https://www.docker.com/products/docker-desktop/), videre kjører man:
 
+**Windows:**
+```
+cd idatt2900_group35
+docker-compose up --build
+```
+**Mac:**
+```
+cd idatt2900_group35
+docker compose up --build
+```
+Gå inn på http://localhost:5173
 ## Frontend: Kjøring og installering
 ### Installering
 Gå til prosjektmappen og kjør:
