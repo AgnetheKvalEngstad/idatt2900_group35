@@ -35,7 +35,7 @@ dotnet restore
 
 ### Kjøring av backend
 For å starte databasen gå til prosjektmappen og kjør
-````
+```
 docker compose up
 ```
 For å starte backend programmet gå til prosjektmappen og kjør
