@@ -1,0 +1,64 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tests for component TopicMenu > should render TopicMenu 1`] = `
+<ForwardRef(Grid)
+  alignItems="center"
+  className="p-8 md:pr-10 w-80"
+  container={true}
+  direction="column"
+  justifyContent="center"
+  spacing={3}
+>
+  <ForwardRef(Button)
+    className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
+    fullWidth={true}
+    onClick={[Function]}
+    size="large"
+    startIcon={<Memo />}
+    style={
+      {
+        "backgroundColor": "white",
+        "border": "2px solid #66DB68",
+        "color": "black",
+      }
+    }
+    variant="contained"
+  >
+    Subtopic 1
+  </ForwardRef(Button)>
+  <ForwardRef(Button)
+    className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
+    fullWidth={true}
+    onClick={[Function]}
+    size="large"
+    startIcon={<Memo />}
+    style={
+      {
+        "backgroundColor": "#66DB68",
+        "border": "1px solid black",
+        "color": "black",
+      }
+    }
+    variant="contained"
+  >
+    Subtopic 2
+  </ForwardRef(Button)>
+  <ForwardRef(Button)
+    className="hover:shadow-lg hover:scale-105 transition-transform duration-200"
+    fullWidth={true}
+    onClick={[Function]}
+    size="large"
+    startIcon={<Memo />}
+    style={
+      {
+        "backgroundColor": "#66DB68",
+        "border": "1px solid black",
+        "color": "black",
+      }
+    }
+    variant="contained"
+  >
+    Subtopic 3
+  </ForwardRef(Button)>
+</ForwardRef(Grid)>
+`;

@@ -1,0 +1,43 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Tests for component TopicCard > should render TopicCard 1`] = `
+<ForwardRef(Card)
+  className="hover:shadow-lg hover:scale-105 transition-transform duration-200 flex justify-between"
+  sx={
+    {
+      "backgroundColor": "#66DB68",
+      "border": 3,
+      "borderRadius": 5,
+      "height": 184,
+      "padding": 2,
+      "width": 184,
+    }
+  }
+  variant="outlined"
+>
+  <ForwardRef(Grid)
+    className="flex flex-col items-center justify-between gap-2 text-center w-full"
+  >
+    <ForwardRef(Typography)
+      variant="h6"
+    >
+      Test card
+    </ForwardRef(Typography)>
+    <Memo
+      sx={
+        {
+          "fontSize": 50,
+        }
+      }
+    />
+    <ForwardRef(Typography)
+      className=""
+      variant="body2"
+    >
+      Krever 
+      ingen
+       erfaring
+    </ForwardRef(Typography)>
+  </ForwardRef(Grid)>
+</ForwardRef(Card)>
+`;

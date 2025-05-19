@@ -1,0 +1,9 @@
+.idea/
+.DS_Store
+Folder.DotSettings.user
+backend/bin/
+backend/obj/
+backend.Tests/bin/
+backend.Tests/obj/
+backend.Tests/TestResults
+idatt2900_group35.sln.DotSettings.user
